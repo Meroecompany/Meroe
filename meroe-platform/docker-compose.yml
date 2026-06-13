@@ -1,0 +1,45 @@
+version: '3.9'
+services:
+  api:
+    build: .
+    ports: ["4000:4000"]
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://meroe:meroe123@postgres:5432/meroe_db
+      JWT_SECRET: dev_secret_change_in_production_64chars_minimum_here
+      REFRESH_TOKEN_SECRET: dev_refresh_secret_also_change_64chars_minimum
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      SMTP_HOST: mailhog
+      SMTP_PORT: 1025
+      SMTP_USER: test@meroe.local
+      SMTP_PASS: ""
+    depends_on:
+      postgres: { condition: service_healthy }
+    volumes:
+      - ./src:/app/src:ro
+      - ./logs:/app/logs
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: meroe
+      POSTGRES_PASSWORD: meroe123
+      POSTGRES_DB: meroe_db
+    ports: ["5432:5432"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./sql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U meroe -d meroe_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports: ["1025:1025","8025:8025"]
+    # Ver emails de teste em http://localhost:8025
+
+volumes:
+  pgdata:

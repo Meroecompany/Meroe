@@ -1,0 +1,275 @@
+/* ============================================================
+   MEROE Platform v2 — Shared CSS (platform.css)
+   Elimina a duplicação de :root e estilos base nos 4 ficheiros HTML
+   Importar em: login, register, dashboard, admin, forgot-password
+   ============================================================ */
+
+/* ── VARIÁVEIS ─────────────────────────────────────────────── */
+:root {
+  --azul:      #0A1628;
+  --azul-mid:  #0E1F3D;
+  --azul-clr:  #162B55;
+  --ouro:      #C9820A;
+  --ouro-clr:  #E8A020;
+  --ouro-pale: #F5C842;
+  --branco:    #F0F4FA;
+  --cinza:     #8A97AA;
+  --cinza-clr: #C5CFD9;
+  --preto:     #050C18;
+  --verde:     #1A9E75;
+  --vermelho:  #E05252;
+  --laranja:   #EF9F27;
+  --roxo:      #7C6FD4;
+  --trans:     0.3s cubic-bezier(0.4,0,0.2,1);
+  --radius:    4px;
+}
+
+/* ── RESET ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--azul);
+  color: var(--branco);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+a { color: var(--ouro); text-decoration: none; }
+a:hover { color: var(--ouro-clr); }
+button { font-family: inherit; cursor: pointer; }
+
+/* ── SCROLLBAR ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--preto); }
+::-webkit-scrollbar-thumb { background: var(--ouro); border-radius: 2px; }
+
+/* ── FORMULÁRIOS ────────────────────────────────────────────── */
+input, select, textarea {
+  background: rgba(10, 22, 40, 0.8);
+  border: 1px solid rgba(138, 151, 170, 0.25);
+  border-radius: var(--radius);
+  padding: .75rem 1rem;
+  font-family: 'Barlow', sans-serif;
+  font-size: .9rem;
+  color: var(--branco);
+  transition: border-color var(--trans);
+  outline: none;
+  width: 100%;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--ouro); }
+input.error, select.error { border-color: var(--vermelho); }
+select option { background: var(--azul-mid); color: var(--branco); }
+label {
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--cinza);
+}
+.field { display: flex; flex-direction: column; gap: .4rem; margin-bottom: .8rem; }
+.field-err { font-size: .75rem; color: var(--vermelho); margin-top: 2px; display: none; }
+.field-err.show { display: block; }
+
+/* ── BOTÕES ─────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  font-family: 'Barlow', sans-serif;
+  font-size: .82rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--radius);
+  padding: .85rem 1.6rem;
+  cursor: pointer;
+  transition: all var(--trans);
+}
+.btn-primary { background: var(--ouro); color: var(--preto); }
+.btn-primary:hover:not(:disabled) { background: var(--ouro-clr); }
+.btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+.btn-ghost { background: transparent; color: var(--cinza); border: 1px solid rgba(138,151,170,.25); }
+.btn-ghost:hover { border-color: var(--ouro); color: var(--ouro); }
+.btn-sm { font-size: .75rem; padding: .55rem 1.2rem; }
+.btn-full { width: 100%; }
+.btn-danger { background: rgba(224,82,82,.12); color: var(--vermelho); border: 1px solid rgba(224,82,82,.3); }
+.btn-danger:hover { background: var(--vermelho); color: #fff; }
+
+/* ── ALERTAS ────────────────────────────────────────────────── */
+.alert {
+  padding: .8rem 1rem;
+  border-radius: var(--radius);
+  font-size: .85rem;
+  display: none;
+  gap: .6rem;
+  align-items: flex-start;
+  line-height: 1.5;
+}
+.alert.show { display: flex; }
+.alert-err { background: rgba(224,82,82,.1); border: 1px solid rgba(224,82,82,.4); color: #FF8F8F; }
+.alert-ok  { background: rgba(26,158,117,.1); border: 1px solid rgba(26,158,117,.4); color: var(--verde); }
+.alert-warn { background: rgba(239,159,39,.1); border: 1px solid rgba(239,159,39,.4); color: var(--laranja); }
+
+/* ── SPINNER ────────────────────────────────────────────────── */
+.spinner {
+  display: inline-block;
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,.2);
+  border-top-color: var(--ouro);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  vertical-align: middle;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── SKELETON LOADING ───────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,.04) 25%, rgba(255,255,255,.08) 50%, rgba(255,255,255,.04) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+  height: 1em;
+}
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+/* ── MODAL ──────────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75);
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--azul-mid);
+  border: 1px solid rgba(201,130,10,.2);
+  border-radius: 10px;
+  width: 100%; max-width: 540px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 2rem;
+  position: relative;
+}
+.modal-close {
+  position: absolute; top: 1rem; right: 1rem;
+  background: none; border: none;
+  color: var(--cinza); font-size: 1.3rem;
+  line-height: 1; cursor: pointer;
+}
+.modal-close:hover { color: var(--vermelho); }
+.modal-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.3rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .06em;
+  color: var(--ouro); margin-bottom: 1.5rem;
+}
+.modal-footer {
+  display: flex; justify-content: flex-end; gap: .8rem;
+  margin-top: 1.5rem; padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+
+/* ── TOPBAR ─────────────────────────────────────────────────── */
+.topbar {
+  background: rgba(5,12,24,.97);
+  border-bottom: 1px solid rgba(201,130,10,.2);
+  padding: .8rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.topbar-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.5rem; font-weight: 800;
+  color: var(--branco); text-decoration: none;
+}
+.topbar-logo span {
+  color: var(--ouro); font-size: .55rem; display: block;
+  letter-spacing: .25em; font-family: 'Barlow', sans-serif;
+  font-weight: 300; text-transform: uppercase;
+}
+.topbar-nav { display: flex; align-items: center; gap: 1rem; }
+
+/* ── BOTÕES VOLTAR/SAIR (novo v2) ───────────────────────────── */
+.nav-back {
+  display: flex; align-items: center; gap: .4rem;
+  background: transparent;
+  border: 1px solid rgba(138,151,170,.2);
+  color: var(--cinza);
+  font-family: 'Barlow', sans-serif;
+  font-size: .75rem; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: .35rem .9rem; border-radius: var(--radius);
+  cursor: pointer; transition: all var(--trans);
+  text-decoration: none;
+}
+.nav-back:hover { border-color: var(--ouro); color: var(--ouro); }
+.nav-back svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+.logout-btn {
+  background: transparent;
+  border: 1px solid rgba(138,151,170,.2);
+  color: var(--cinza);
+  font-family: 'Barlow', sans-serif;
+  font-size: .75rem; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: .35rem .9rem; border-radius: var(--radius);
+  cursor: pointer; transition: all var(--trans);
+}
+.logout-btn:hover { border-color: var(--vermelho); color: var(--vermelho); }
+
+/* ── CARD ───────────────────────────────────────────────────── */
+.card {
+  background: var(--azul-mid);
+  border: 1px solid rgba(201,130,10,.12);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.card-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.1rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .06em;
+  color: var(--ouro);
+  margin-bottom: 1.2rem;
+  padding-bottom: .7rem;
+  border-bottom: 1px solid rgba(201,130,10,.15);
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+/* ── PAGINAÇÃO ──────────────────────────────────────────────── */
+.pagination {
+  display: flex; align-items: center; gap: .5rem;
+  padding: 1rem 1.5rem; justify-content: flex-end;
+  border-top: 1px solid rgba(255,255,255,.06);
+  font-size: .82rem; color: var(--cinza);
+}
+.page-btn {
+  background: rgba(255,255,255,.06); border: none;
+  color: var(--branco); width: 30px; height: 30px;
+  border-radius: var(--radius); cursor: pointer;
+  font-size: .85rem; transition: all var(--trans);
+}
+.page-btn:hover { background: rgba(201,130,10,.2); color: var(--ouro); }
+.page-btn.active { background: var(--ouro); color: var(--preto); }
+.page-btn:disabled { opacity: .3; cursor: not-allowed; }
+
+/* ── EMPTY STATE ────────────────────────────────────────────── */
+.empty-state { text-align: center; padding: 3rem; color: var(--cinza); font-size: .9rem; }
+
+/* ── TAGS ───────────────────────────────────────────────────── */
+.tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .3rem; }
+.tag { font-size: .72rem; padding: .25rem .7rem; border-radius: 2px; }
+.tag-cert   { background: rgba(201,130,10,.12); border: 1px solid rgba(201,130,10,.25); color: var(--ouro-clr); }
+.tag-skill  { background: rgba(26,158,117,.1);  border: 1px solid rgba(26,158,117,.25); color: var(--verde); }
+.tag-ai     { background: rgba(83,74,183,.15);  border: 1px solid rgba(83,74,183,.3);   color: #A090FF; }
+
+/* ── RESPONSIVO ─────────────────────────────────────────────── */
+@media (max-width: 650px) {
+  .topbar { padding: .7rem 1rem; }
+  .card { padding: 1rem; }
+}

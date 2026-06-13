@@ -1,0 +1,10 @@
+{
+  "testEnvironment": "node",
+  "testMatch": ["**/tests/**/*.test.js"],
+  "collectCoverageFrom": ["src/**/*.js", "!src/scripts/**"],
+  "coverageThreshold": {
+    "global": { "branches": 5, "functions": 15, "lines": 20 }
+  },
+  "testTimeout": 10000,
+  "verbose": true
+}

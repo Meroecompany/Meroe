@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Meu Perfil — MEROE Digital</title>
+<meta name="robots" content="noindex"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230A1628'/><text y='.9em' font-size='60' font-family='Arial' font-weight='900' fill='%23C9820A' x='50' text-anchor='middle' dominant-baseline='middle' dy='0.05em'>M</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="platform.css"/>
+<style>
+body { display:flex; flex-direction:column; }
+
+/* TOPBAR */
+.topbar-right { display:flex; align-items:center; gap:.8rem; }
+.notif-btn { position:relative; background:none; border:none; cursor:pointer; color:var(--cinza); font-size:1.2rem; padding:.3rem; transition:color var(--trans); }
+.notif-btn:hover { color:var(--ouro); }
+.notif-badge { position:absolute; top:-2px; right:-2px; background:var(--vermelho); color:#fff; font-size:.6rem; font-weight:700; width:16px; height:16px; border-radius:50%; display:none; align-items:center; justify-content:center; }
+.notif-badge.show { display:flex; }
+.user-info { display:flex; align-items:center; gap:.6rem; font-size:.82rem; color:var(--cinza); }
+.user-avatar { width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--ouro),#8B5E0A); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.85rem; color:var(--preto); flex-shrink:0; }
+
+/* LAYOUT */
+.page { flex:1; max-width:1000px; margin:0 auto; width:100%; padding:2rem 2rem 4rem; }
+
+/* STATUS BANNER */
+.status-banner { border-radius:8px; padding:1.2rem 1.5rem; margin-bottom:2rem; display:flex; align-items:center; gap:1rem; border:1px solid; }
+.status-banner.pending   { background:rgba(239,159,39,.08); border-color:rgba(239,159,39,.3); }
+.status-banner.approved  { background:rgba(26,158,117,.08); border-color:rgba(26,158,117,.3); }
+.status-banner.incomplete{ background:rgba(138,151,170,.08); border-color:rgba(138,151,170,.2); }
+.status-banner.rejected  { background:rgba(224,82,82,.08); border-color:rgba(224,82,82,.3); }
+.status-banner.suspended { background:rgba(124,111,212,.08); border-color:rgba(124,111,212,.3); }
+.status-icon { font-size:1.8rem; flex-shrink:0; }
+.status-title { font-size:.9rem; font-weight:600; margin-bottom:.2rem; }
+.status-text  { font-size:.82rem; color:var(--cinza-clr); line-height:1.5; }
+
+/* PROFILE */
+.profile-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.profile-field { display:flex; flex-direction:column; gap:.3rem; }
+.pf-label { font-size:.68rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--cinza); }
+.pf-value { font-size:.9rem; color:var(--branco); }
+.pf-value.empty { color:var(--cinza); font-style:italic; font-size:.85rem; }
+.edit-btn { font-size:.7rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase; background:rgba(201,130,10,.1); color:var(--ouro); border:1px solid rgba(201,130,10,.25); padding:.35rem .9rem; border-radius:var(--radius); cursor:pointer; transition:all var(--trans); }
+.edit-btn:hover { background:var(--ouro); color:var(--preto); }
+
+/* AI SCORE */
+.score-ring { width:80px; height:80px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-direction:column; background:conic-gradient(var(--ouro) 0% var(--pct,0%), rgba(255,255,255,.06) var(--pct,0%) 100%); position:relative; flex-shrink:0; }
+.score-ring::after { content:''; position:absolute; inset:8px; border-radius:50%; background:var(--azul-mid); }
+.score-val { position:relative; z-index:1; font-family:'Barlow Condensed',sans-serif; font-size:1.4rem; font-weight:800; color:var(--ouro); line-height:1; }
+.score-lbl { position:relative; z-index:1; font-size:.55rem; letter-spacing:.1em; text-transform:uppercase; color:var(--cinza); }
+.ai-row { display:flex; gap:1.5rem; align-items:flex-start; }
+.ai-details { flex:1; }
+
+/* NOTIFICAÇÕES */
+.notif-list { display:flex; flex-direction:column; gap:.6rem; }
+.notif-item { background:rgba(10,22,40,.6); border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); padding:.8rem 1rem; display:flex; gap:.8rem; align-items:flex-start; cursor:pointer; transition:all var(--trans); }
+.notif-item.unread { border-color:rgba(201,130,10,.2); background:rgba(201,130,10,.04); }
+.notif-dot { width:8px; height:8px; border-radius:50%; background:var(--ouro); flex-shrink:0; margin-top:.3rem; }
+.notif-dot.read { background:transparent; border:1px solid rgba(255,255,255,.15); }
+.notif-title { font-size:.85rem; font-weight:500; margin-bottom:.2rem; }
+.notif-body  { font-size:.8rem; color:var(--cinza-clr); line-height:1.5; }
+.notif-time  { font-size:.72rem; color:var(--cinza); margin-top:.3rem; }
+
+/* UPLOAD */
+.upload-zone { border:2px dashed rgba(201,130,10,.25); border-radius:var(--radius); padding:1.5rem; text-align:center; cursor:pointer; transition:all var(--trans); background:rgba(10,22,40,.5); position:relative; font-size:.85rem; color:var(--cinza-clr); }
+.upload-zone:hover { border-color:var(--ouro); }
+.upload-zone input { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+.cv-preview { display:flex; align-items:center; gap:.8rem; background:rgba(26,158,117,.08); border:1px solid rgba(26,158,117,.25); border-radius:var(--radius); padding:.8rem 1rem; margin-top:.8rem; }
+.cv-name { flex:1; font-size:.85rem; color:var(--verde); }
+
+/* MODAL FORMS */
+.form-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+
+/* PROGRESS BAR DE PERFIL */
+.profile-progress { background:rgba(255,255,255,.06); border-radius:var(--radius); height:6px; margin-bottom:1.5rem; overflow:hidden; }
+.profile-progress-fill { height:100%; background:linear-gradient(90deg,var(--ouro),var(--ouro-clr)); border-radius:var(--radius); transition:width .5s ease; }
+.progress-label { font-size:.75rem; color:var(--cinza); margin-bottom:.4rem; display:flex; justify-content:space-between; }
+
+@media(max-width:650px){
+  .profile-grid { grid-template-columns:1fr; }
+  .form-grid-2  { grid-template-columns:1fr; }
+  .ai-row       { flex-direction:column; }
+  .page         { padding:1rem 1rem 3rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR com botões Voltar + Sair no canto superior esquerdo -->
+<header class="topbar">
+  <div style="display:flex;align-items:center;gap:.8rem">
+    <!-- BOTÃO VOLTAR ao website (esquerda) -->
+    <a href="../index.html" class="nav-back" aria-label="Voltar ao website">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Website
+    </a>
+    <a href="../index.html" class="topbar-logo" style="text-decoration:none">MEROE<span>Portal do Técnico</span></a>
+  </div>
+  <div class="topbar-right">
+    <button class="notif-btn" onclick="toggleNotifPanel()" aria-label="Ver notificações" title="Notificações">
+      🔔 <span class="notif-badge" id="notifBadge"></span>
+    </button>
+    <div class="user-info">
+      <div class="user-avatar" id="userAvatar">?</div>
+    </div>
+    <!-- BOTÃO SAIR (direita) -->
+    <button class="logout-btn" onclick="logout()" aria-label="Terminar sessão">Sair</button>
+  </div>
+</header>
+
+<main class="page" role="main">
+
+  <!-- PROGRESSO DO PERFIL -->
+  <div style="margin-bottom:1.5rem">
+    <div class="progress-label">
+      <span>Completude do perfil</span>
+      <span id="progressPct">–</span>
+    </div>
+    <div class="profile-progress">
+      <div class="profile-progress-fill" id="progressBar" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- STATUS BANNER -->
+  <div class="status-banner incomplete" id="statusBanner">
+    <div class="status-icon" id="statusIcon">⏳</div>
+    <div>
+      <div class="status-title" id="statusTitle">A carregar perfil...</div>
+      <div class="status-text" id="statusText"></div>
+    </div>
+  </div>
+
+  <!-- PERFIL BÁSICO -->
+  <div class="card">
+    <div class="card-title">
+      Perfil Profissional
+      <button class="edit-btn" onclick="openEdit('basic')" aria-label="Editar perfil básico">✏ Editar</button>
+    </div>
+    <div class="profile-grid" id="basicGrid">
+      <div class="profile-field"><div class="pf-label">Nome</div><div class="pf-value skeleton" id="pf-name" style="height:1.1em;width:70%">&nbsp;</div></div>
+      <div class="profile-field"><div class="pf-label">Email</div><div class="pf-value skeleton" id="pf-email" style="height:1.1em;width:80%">&nbsp;</div></div>
+      <div class="profile-field"><div class="pf-label">Disciplina</div><div class="pf-value skeleton" id="pf-discipline" style="height:1.1em;width:60%">&nbsp;</div></div>
+      <div class="profile-field"><div class="pf-label">Senioridade</div><div class="pf-value skeleton" id="pf-seniority" style="height:1.1em;width:50%">&nbsp;</div></div>
+      <div class="profile-field"><div class="pf-label">Experiência</div><div class="pf-value skeleton" id="pf-exp" style="height:1.1em;width:40%">&nbsp;</div></div>
+      <div class="profile-field"><div class="pf-label">Localização</div><div class="pf-value skeleton" id="pf-location" style="height:1.1em;width:55%">&nbsp;</div></div>
+      <div class="profile-field" style="grid-column:1/-1"><div class="pf-label">Resumo</div><div class="pf-value skeleton" id="pf-summary" style="height:2.5em;width:100%">&nbsp;</div></div>
+    </div>
+  </div>
+
+  <!-- CERTIFICAÇÕES E SKILLS -->
+  <div class="card">
+    <div class="card-title">Certificações &amp; Skills <button class="edit-btn" onclick="openEdit('certs')">✏ Editar</button></div>
+    <div class="profile-field" style="margin-bottom:1rem">
+      <div class="pf-label">Certificações</div>
+      <div class="tags" id="certsTags"><span class="pf-value empty">–</span></div>
+    </div>
+    <div class="profile-field">
+      <div class="pf-label">Skills Técnicas</div>
+      <div class="tags" id="skillsTags"><span class="pf-value empty">–</span></div>
+    </div>
+  </div>
+
+  <!-- ANÁLISE IA -->
+  <div class="card" id="aiCard" style="display:none">
+    <div class="card-title">Análise por Inteligência Artificial</div>
+    <div class="ai-row">
+      <div class="score-ring" id="scoreRing" style="--pct:0%">
+        <div class="score-val" id="scoreVal">–</div>
+        <div class="score-lbl">Score</div>
+      </div>
+      <div class="ai-details">
+        <div style="display:flex;flex-direction:column;gap:.3rem;margin-bottom:.8rem">
+          <div class="pf-label">Resumo gerado pela IA</div>
+          <div class="pf-value" id="aiSummary" style="font-size:.88rem;color:var(--cinza-clr);line-height:1.6">–</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.3rem">
+          <div class="pf-label">Tags automáticas</div>
+          <div class="tags" id="aiTags"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CURRICULUM VITAE -->
+  <div class="card">
+    <div class="card-title">Curriculum Vitae</div>
+    <div id="cvSection">
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="cvFile" accept=".pdf" onchange="handleCV(this.files[0])" aria-label="Seleccionar CV em PDF"/>
+        <div style="font-size:2rem;margin-bottom:.5rem">📄</div>
+        <div>Clique ou arraste o seu CV em PDF (máx 10 MB)</div>
+        <div style="font-size:.75rem;margin-top:.4rem;color:var(--cinza)">Apenas ficheiros PDF são aceites</div>
+      </div>
+    </div>
+    <div id="cvStatus" style="margin-top:.8rem;font-size:.82rem;color:var(--cinza)" aria-live="polite"></div>
+  </div>
+
+  <!-- DISPONIBILIDADE -->
+  <div class="card">
+    <div class="card-title">Disponibilidade <button class="edit-btn" onclick="openEdit('avail')">✏ Editar</button></div>
+    <div class="profile-grid">
+      <div class="profile-field">
+        <div class="pf-label">Disponível para TARs</div>
+        <div class="pf-value" id="pf-tars">–</div>
+      </div>
+      <div class="profile-field">
+        <div class="pf-label">Disponível a partir de</div>
+        <div class="pf-value" id="pf-avail-from">–</div>
+      </div>
+      <div class="profile-field" style="grid-column:1/-1">
+        <div class="pf-label">Notas</div>
+        <div class="pf-value" id="pf-avail-notes">–</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEGURANÇA -->
+  <div class="card">
+    <div class="card-title">Segurança da Conta</div>
+    <div class="profile-grid">
+      <div class="profile-field">
+        <div class="pf-label">Autenticação MFA</div>
+        <div class="pf-value" id="pf-mfa">–</div>
+      </div>
+      <div class="profile-field">
+        <div class="pf-label">Email verificado</div>
+        <div class="pf-value" id="pf-verified">–</div>
+      </div>
+    </div>
+    <div style="margin-top:1rem;display:flex;gap:.7rem;flex-wrap:wrap">
+      <button class="btn btn-ghost btn-sm" onclick="openEdit('security')">🔒 Alterar Password</button>
+      <button class="btn btn-ghost btn-sm" id="mfaBtn" onclick="setupMFA()">🛡 Configurar MFA</button>
+    </div>
+  </div>
+
+  <!-- NOTIFICAÇÕES -->
+  <div class="card" id="notifPanel">
+    <div class="card-title">
+      Notificações
+      <button class="edit-btn" onclick="markAllRead()">Marcar todas lidas</button>
+    </div>
+    <div class="notif-list" id="notifList">
+      <div class="empty-state">A carregar...</div>
+    </div>
+  </div>
+
+</main>
+
+<!-- MODAL EDIÇÃO -->
+<div class="modal-overlay" id="editModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()" aria-label="Fechar">✕</button>
+    <div class="modal-title" id="modalTitle">Editar</div>
+    <div id="modalBody"></div>
+    <div class="modal-footer" id="modalFooter">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary btn-sm" id="saveBtn" onclick="saveEdit()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = (location.hostname==='localhost'||location.hostname.includes('127'))
+  ? 'http://localhost:4000/api' : '/api';
+
+let profileData = null;
+let currentEditSection = null;
+
+// ── AUTH ──────────────────────────────────────────────────────
+function getToken() {
+  const t = sessionStorage.getItem('meroe_token');
+  if (!t) { window.location.href = 'login.html'; return null; }
+  return t;
+}
+function authHdr() {
+  return { 'Content-Type':'application/json', Authorization:`Bearer ${getToken()}` };
+}
+
+// ── LOGOUT ────────────────────────────────────────────────────
+async function logout() {
+  try {
+    await fetch(`${API}/auth/logout`, { method:'POST', headers:authHdr(), credentials:'include' });
+  } catch {}
+  sessionStorage.clear();
+  window.location.href = 'login.html';
+}
+
+// ── CALCULAR PROGRESSO DO PERFIL ──────────────────────────────
+function calcProgress(p) {
+  const fields = [
+    p.full_name, p.discipline, p.seniority_level,
+    p.experience_years, p.location_country,
+    p.professional_summary, p.cv_url,
+    p.certifications?.length, p.skills?.length,
+  ];
+  const filled = fields.filter(f => f !== null && f !== undefined && f !== '' && f !== 0 && f !== false).length;
+  return Math.round((filled / fields.length) * 100);
+}
+
+// ── CARREGAR PERFIL ───────────────────────────────────────────
+async function loadProfile() {
+  const token = getToken();
+  if (!token) return;
+
+  const user = JSON.parse(sessionStorage.getItem('meroe_user') || '{}');
+  if (['super_admin','recruiter'].includes(user.role)) {
+    window.location.href = 'admin.html'; return;
+  }
+
+  document.getElementById('userAvatar').textContent = (user.email||'?')[0].toUpperCase();
+
+  try {
+    const r = await fetch(`${API}/profiles/me`, { headers:authHdr(), credentials:'include' });
+    if (r.status === 401) { window.location.href = 'login.html'; return; }
+    if (!r.ok) throw new Error('Erro ao carregar perfil');
+    profileData = await r.json();
+    renderProfile(profileData);
+    loadNotifications();
+  } catch (err) {
+    document.getElementById('statusTitle').textContent = 'Erro ao carregar perfil';
+    document.getElementById('statusText').textContent = 'Verifique a sua ligação e recarregue a página.';
+  }
+}
+
+// ── RENDERIZAR PERFIL ─────────────────────────────────────────
+function renderProfile(p) {
+  // Avatar
+  const initials = (p.full_name||'?').split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+  document.getElementById('userAvatar').textContent = initials;
+
+  // Progresso
+  const pct = calcProgress(p);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+
+  // Status banner
+  const statuses = {
+    incomplete: { cls:'incomplete', icon:'📋', title:'Perfil incompleto', text:'Complete o seu perfil e faça upload do CV para submeter à análise.' },
+    pending:    { cls:'pending',    icon:'⏳', title:'Perfil em análise', text:'A equipa MEROE está a rever o seu perfil. Receberá uma notificação em breve.' },
+    approved:   { cls:'approved',   icon:'✅', title:'Perfil aprovado!',  text:'O seu perfil está activo. Pode ser contactado para projectos e TARs em Angola.' },
+    rejected:   { cls:'rejected',   icon:'❌', title:'Perfil devolvido',  text: p.rejection_reason ? `Motivo: ${p.rejection_reason}` : 'O seu perfil precisa de revisão. Actualize os dados e resubmeta.' },
+    suspended:  { cls:'suspended',  icon:'⛔', title:'Perfil suspenso',   text:'Contacte a equipa MEROE para mais informações.' },
+  };
+  const st = statuses[p.status] || statuses.incomplete;
+  const banner = document.getElementById('statusBanner');
+  banner.className = `status-banner ${st.cls}`;
+  document.getElementById('statusIcon').textContent  = st.icon;
+  document.getElementById('statusTitle').textContent = st.title;
+  document.getElementById('statusText').textContent  = st.text;
+
+  // Campos
+  const setVal = (id, val) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.className = 'pf-value' + (val ? '' : ' empty');
+    el.textContent = val || '–';
+    el.style.height = '';
+    el.style.width  = '';
+  };
+  setVal('pf-name',       p.full_name);
+  setVal('pf-email',      p.email);
+  setVal('pf-discipline', p.discipline);
+  setVal('pf-seniority',  { junior:'Junior', mid:'Mid-level', senior:'Senior', lead:'Lead', expert:'Expert' }[p.seniority_level]);
+  setVal('pf-exp',        p.experience_years != null ? `${p.experience_years} anos` : null);
+  setVal('pf-location',   [p.location_city, p.location_country].filter(Boolean).join(', ') || null);
+  setVal('pf-summary',    p.professional_summary);
+
+  // Segurança
+  setVal('pf-mfa',      p.mfa_enabled ? '🛡 Activado' : '⚠ Não configurado');
+  setVal('pf-verified', p.is_verified ? '✅ Verificado' : '❌ Não verificado');
+  document.getElementById('mfaBtn').textContent = p.mfa_enabled ? '🛡 Gerir MFA' : '🛡 Activar MFA';
+
+  // Certificações
+  const certs = Array.isArray(p.certifications) ? p.certifications : JSON.parse(p.certifications||'[]');
+  const certsEl = document.getElementById('certsTags');
+  certsEl.innerHTML = certs.length
+    ? certs.map(c=>`<span class="tag tag-cert">${c.name||c}</span>`).join('')
+    : '<span class="pf-value empty">Nenhuma certificação</span>';
+
+  // Skills
+  const skills = p.skills || [];
+  document.getElementById('skillsTags').innerHTML = skills.length
+    ? skills.map(s=>`<span class="tag tag-skill">${s}</span>`).join('')
+    : '<span class="pf-value empty">Nenhuma skill</span>';
+
+  // AI Score
+  if (p.ai_score != null) {
+    document.getElementById('aiCard').style.display = '';
+    const score = Math.round(p.ai_score);
+    document.getElementById('scoreRing').style.setProperty('--pct', `${score}%`);
+    document.getElementById('scoreVal').textContent = score;
+    document.getElementById('aiSummary').textContent = p.professional_summary || '–';
+    document.getElementById('aiTags').innerHTML = (p.ai_tags||[]).map(t=>`<span class="tag tag-ai">${t}</span>`).join('');
+  }
+
+  // Disponibilidade
+  setVal('pf-tars',       p.available_for_tars ? '✅ Sim' : '❌ Não');
+  setVal('pf-avail-from', p.availability_from ? new Date(p.availability_from).toLocaleDateString('pt-PT') : null);
+  setVal('pf-avail-notes', p.availability_notes);
+
+  // CV
+  renderCV(p);
+}
+
+function renderCV(p) {
+  const cvSection = document.getElementById('cvSection');
+  if (p.cv_url) {
+    cvSection.innerHTML = `
+      <div class="cv-preview">
+        <span>📎</span>
+        <span class="cv-name">${p.cv_filename || 'curriculum.pdf'}</span>
+        <a href="${p.cv_url}" target="_blank" rel="noopener noreferrer" style="font-size:.78rem;color:var(--ouro);font-weight:600;letter-spacing:.1em;text-transform:uppercase">Ver ↗</a>
+        <button onclick="replaceCV()" style="font-size:.72rem;background:none;border:none;color:var(--cinza);cursor:pointer;text-decoration:underline">Substituir</button>
+      </div>`;
+    if (p.ai_score == null) {
+      document.getElementById('cvStatus').innerHTML = '🤖 CV enviado — aguarda análise IA...';
+    }
+  }
+}
+
+// ── CV UPLOAD ─────────────────────────────────────────────────
+async function handleCV(file) {
+  if (!file) return;
+  if (file.type !== 'application/pdf') { showToast('Apenas PDF aceite.', 'err'); return; }
+  if (file.size > 10*1024*1024) { showToast('Ficheiro demasiado grande (máx 10MB).', 'err'); return; }
+
+  const cvStatus = document.getElementById('cvStatus');
+  cvStatus.innerHTML = '<span class="spinner"></span> A enviar CV...';
+
+  const fd = new FormData();
+  fd.append('cv', file);
+
+  try {
+    const r = await fetch(`${API}/upload/cv`, {
+      method: 'POST',
+      headers: { Authorization:`Bearer ${getToken()}` },
+      credentials: 'include',
+      body: fd,
+    });
+    const d = await r.json();
+    if (!r.ok) { cvStatus.textContent = '❌ ' + (d.error||'Erro no upload.'); return; }
+    cvStatus.innerHTML = '✅ CV enviado! A analisar com IA... <span class="spinner"></span>';
+    setTimeout(() => { cvStatus.textContent = ''; loadProfile(); }, 3000);
+  } catch {
+    cvStatus.textContent = '❌ Erro de ligação. Tente novamente.';
+  }
+}
+
+function replaceCV() {
+  document.getElementById('cvSection').innerHTML = `
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="cvFile" accept=".pdf" onchange="handleCV(this.files[0])" aria-label="CV PDF"/>
+      <div style="font-size:2rem;margin-bottom:.5rem">📄</div>
+      <div>Clique ou arraste o novo CV em PDF</div>
+    </div>`;
+}
+
+// ── NOTIFICAÇÕES ──────────────────────────────────────────────
+async function loadNotifications() {
+  try {
+    const r = await fetch(`${API}/profiles/me/notifications`, { headers:authHdr(), credentials:'include' });
+    const data = await r.json();
+    const list   = document.getElementById('notifList');
+    const badge  = document.getElementById('notifBadge');
+    const unread = data.filter(n => !n.is_read).length;
+
+    if (unread > 0) { badge.textContent = unread > 9 ? '9+' : unread; badge.classList.add('show'); }
+    else badge.classList.remove('show');
+
+    if (!data.length) { list.innerHTML = '<div class="empty-state">Sem notificações</div>'; return; }
+    list.innerHTML = data.map(n => `
+      <div class="notif-item ${n.is_read?'':'unread'}" onclick="markRead('${n.id}',this)">
+        <div class="notif-dot ${n.is_read?'read':''}"></div>
+        <div>
+          <div class="notif-title">${n.title}</div>
+          <div class="notif-body">${n.body||''}</div>
+          <div class="notif-time">${new Date(n.created_at).toLocaleString('pt-PT')}</div>
+        </div>
+      </div>`).join('');
+  } catch {}
+}
+
+async function markRead(id, el) {
+  await fetch(`${API}/profiles/me/notifications/${id}/read`, { method:'PATCH', headers:authHdr(), credentials:'include' }).catch(()=>{});
+  el.classList.remove('unread');
+  el.querySelector('.notif-dot')?.classList.add('read');
+}
+
+async function markAllRead() {
+  const unreads = document.querySelectorAll('.notif-item.unread');
+  for (const el of unreads) {
+    const id = el.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+    if (id) await markRead(id, el).catch(()=>{});
+  }
+  document.getElementById('notifBadge').classList.remove('show');
+}
+
+function toggleNotifPanel() {
+  document.getElementById('notifPanel').scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+// ── SETUP MFA ─────────────────────────────────────────────────
+async function setupMFA() {
+  try {
+    const r = await fetch(`${API}/auth/mfa/setup`, { method:'POST', headers:authHdr(), credentials:'include' });
+    const d = await r.json();
+    if (!r.ok) { showToast(d.error, 'err'); return; }
+
+    document.getElementById('modalTitle').textContent = 'Configurar MFA';
+    document.getElementById('modalBody').innerHTML = `
+      <p style="font-size:.85rem;color:var(--cinza-clr);margin-bottom:1rem;line-height:1.6">
+        Digitalize este QR code com o Google Authenticator ou Authy. Depois introduza o código gerado.
+      </p>
+      <div style="text-align:center;margin-bottom:1.2rem">
+        <img src="${d.qr}" alt="QR MFA" style="width:180px;height:180px;border-radius:8px"/>
+      </div>
+      <div class="field">
+        <label>Código de verificação (6 dígitos)</label>
+        <input type="text" id="mfaCodeInput" inputmode="numeric" maxlength="6" placeholder="000000" style="text-align:center;letter-spacing:.3em;font-size:1.2rem"/>
+      </div>`;
+    document.getElementById('modalFooter').innerHTML = `
+      <button class="btn btn-ghost btn-sm" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary btn-sm" onclick="confirmMFA()">Activar MFA</button>`;
+    document.getElementById('editModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  } catch { showToast('Erro ao configurar MFA', 'err'); }
+}
+
+async function confirmMFA() {
+  const code = document.getElementById('mfaCodeInput')?.value;
+  if (!code || code.length !== 6) { showToast('Código deve ter 6 dígitos', 'err'); return; }
+  try {
+    const r = await fetch(`${API}/auth/mfa/confirm`, {
+      method:'POST', headers:authHdr(), credentials:'include',
+      body: JSON.stringify({ code }),
+    });
+    const d = await r.json();
+    if (!r.ok) { showToast(d.error, 'err'); return; }
+    showToast('MFA activado com sucesso!', 'ok');
+    closeModal();
+    loadProfile();
+  } catch { showToast('Erro ao activar MFA', 'err'); }
+}
+
+// ── TOAST ─────────────────────────────────────────────────────
+function showToast(msg, type = 'ok') {
+  let t = document.getElementById('toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'toast';
+    t.style.cssText = `position:fixed;bottom:2rem;right:2rem;z-index:999;padding:.8rem 1.4rem;border-radius:6px;font-size:.85rem;max-width:340px;transition:opacity .3s`;
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.background = type === 'err' ? 'rgba(224,82,82,.95)' : 'rgba(26,158,117,.95)';
+  t.style.color = '#fff';
+  t.style.opacity = '1';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => { t.style.opacity = '0'; }, 3500);
+}
+
+// ── MODAL DE EDIÇÃO ───────────────────────────────────────────
+const DISCIPLINES = ['','Mechanical Engineering','Electrical Engineering','Civil Engineering','Process Engineering','Instrumentation & Control','Pipeline Engineering','Structural Engineering','HSE / Safety','Project Management','Operations & Maintenance','Inspection & QC','Commissioning','Welding & Fabrication','Rotating Equipment','Supply Chain / Procurement'];
+const CERTS_LIST  = ['API 510','API 570','API 653','ASME','NEBOSH IGC','NEBOSH NGC','BOSIET','HUET','IWCF','OPITO','ISO 9001','PMP','CSWIP 3.1','AWS CWI','GWO Basic Safety'];
+
+const MODAL_CONTENT = {
+  basic: {
+    title: 'Editar Perfil Básico',
+    html: (p) => `
+      <div class="form-grid-2">
+        <div class="field" style="grid-column:1/-1"><label>Nome completo</label><input id="e-full_name" value="${esc(p.full_name)}" maxlength="255"/></div>
+        <div class="field"><label>Telefone</label><input id="e-phone" value="${esc(p.phone)}" maxlength="50"/></div>
+        <div class="field"><label>Cidade</label><input id="e-location_city" value="${esc(p.location_city)}" maxlength="100"/></div>
+        <div class="field"><label>País</label><input id="e-location_country" value="${esc(p.location_country||'Angola')}" maxlength="100"/></div>
+        <div class="field"><label>Disciplina</label>
+          <select id="e-discipline">${DISCIPLINES.map(d=>`<option ${p.discipline===d?'selected':''}>${d}</option>`).join('')}</select>
+        </div>
+        <div class="field"><label>Senioridade</label>
+          <select id="e-seniority_level">
+            ${[['','Seleccionar…'],['junior','Junior'],['mid','Mid-level'],['senior','Senior'],['lead','Lead'],['expert','Expert']].map(([v,l])=>`<option value="${v}" ${p.seniority_level===v?'selected':''}>${l}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field"><label>Anos de experiência</label><input type="number" id="e-experience_years" value="${p.experience_years||0}" min="0" max="60"/></div>
+        <div class="field"><label>Taxa diária USD</label><input type="number" id="e-daily_rate_usd" value="${p.daily_rate_usd||''}" min="0" max="100000"/></div>
+        <div class="field" style="grid-column:1/-1"><label>LinkedIn</label><input type="url" id="e-linkedin_url" value="${esc(p.linkedin_url)}" maxlength="500" placeholder="https://linkedin.com/in/…"/></div>
+        <div class="field" style="grid-column:1/-1"><label>Resumo profissional</label><textarea id="e-professional_summary" maxlength="2000" style="min-height:100px">${esc(p.professional_summary)}</textarea></div>
+      </div>`,
+    getData: () => ({
+      full_name:            gv('e-full_name'),
+      phone:                gv('e-phone'),
+      location_city:        gv('e-location_city'),
+      location_country:     gv('e-location_country'),
+      discipline:           gv('e-discipline'),
+      seniority_level:      gv('e-seniority_level') || null,
+      experience_years:     parseInt(gv('e-experience_years'))||0,
+      daily_rate_usd:       parseFloat(gv('e-daily_rate_usd'))||null,
+      linkedin_url:         gv('e-linkedin_url'),
+      professional_summary: gv('e-professional_summary'),
+    }),
+  },
+  certs: {
+    title: 'Editar Certificações & Skills',
+    html: (p) => {
+      const myCerts  = (Array.isArray(p.certifications) ? p.certifications : JSON.parse(p.certifications||'[]')).map(c=>c.name||c);
+      const mySkills = (p.skills||[]).join(', ');
+      return `
+        <div class="field">
+          <label>Certificações</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-top:.3rem">
+            ${CERTS_LIST.map(c=>`<label style="display:flex;align-items:center;gap:.5rem;font-size:.82rem;letter-spacing:0;text-transform:none;color:var(--cinza-clr);background:rgba(10,22,40,.5);padding:.4rem .6rem;border-radius:var(--radius);cursor:pointer"><input type="checkbox" value="${c}" ${myCerts.includes(c)?'checked':''} style="accent-color:var(--ouro)"/> ${c}</label>`).join('')}
+          </div>
+        </div>
+        <div class="field" style="margin-top:1rem">
+          <label>Skills técnicas (separadas por vírgula)</label>
+          <input id="e-skills" value="${esc(mySkills)}" maxlength="1000" placeholder="AutoCAD, PDMS, SAP PM…"/>
+        </div>`;
+    },
+    getData: () => ({
+      certifications: [...document.querySelectorAll('#modalBody input[type=checkbox]:checked')].map(c=>({name:c.value})),
+      skills: (gv('e-skills')||'').split(',').map(s=>s.trim()).filter(Boolean),
+    }),
+  },
+  avail: {
+    title: 'Editar Disponibilidade',
+    html: (p) => `
+      <div class="field">
+        <label style="display:flex;align-items:center;gap:.8rem;text-transform:none;letter-spacing:0;font-size:.9rem;cursor:pointer">
+          <input type="checkbox" id="e-available_for_tars" ${p.available_for_tars?'checked':''} style="width:18px;height:18px;accent-color:var(--ouro)"/>
+          Disponível para Turnarounds e Shutdowns (TARs)
+        </label>
+      </div>
+      <div class="form-grid-2">
+        <div class="field"><label>Disponível a partir de</label><input type="date" id="e-availability_from" value="${(p.availability_from||'').split('T')[0]}"/></div>
+        <div class="field" style="grid-column:1/-1"><label>Notas de disponibilidade</label><input id="e-availability_notes" value="${esc(p.availability_notes)}" maxlength="500" placeholder="Ex: Disponível para 3 meses a partir de Julho 2026"/></div>
+      </div>`,
+    getData: () => ({
+      available_for_tars: document.getElementById('e-available_for_tars')?.checked,
+      availability_from:  gv('e-availability_from') || null,
+      availability_notes: gv('e-availability_notes'),
+    }),
+  },
+  security: {
+    title: 'Alterar Password',
+    html: () => `
+      <div class="field"><label>Password actual</label><input type="password" id="e-current_password" autocomplete="current-password"/></div>
+      <div class="field"><label>Nova password</label><input type="password" id="e-new_password" autocomplete="new-password"/></div>
+      <div class="field"><label>Confirmar nova password</label><input type="password" id="e-confirm_password" autocomplete="new-password"/></div>
+      <p style="font-size:.78rem;color:var(--cinza);margin-top:.5rem">Mínimo 8 caracteres com maiúsculas, minúsculas, números e símbolos.</p>`,
+    getData: () => ({
+      current_password: gv('e-current_password'),
+      new_password:     gv('e-new_password'),
+      confirm_password: gv('e-confirm_password'),
+    }),
+  },
+};
+
+function esc(v) { return (v||'').toString().replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+function gv(id)  { return document.getElementById(id)?.value?.trim() || ''; }
+
+function openEdit(section) {
+  if (!profileData && section !== 'security') return;
+  currentEditSection = section;
+  const content = MODAL_CONTENT[section];
+  document.getElementById('modalTitle').textContent = content.title;
+  document.getElementById('modalBody').innerHTML    = content.html(profileData || {});
+  document.getElementById('modalFooter').innerHTML  = `
+    <button class="btn btn-ghost btn-sm" onclick="closeModal()">Cancelar</button>
+    <button class="btn btn-primary btn-sm" id="saveBtn" onclick="saveEdit()">Guardar</button>`;
+  document.getElementById('editModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('modalBody').querySelector('input,select,textarea')?.focus();
+}
+
+function closeModal() {
+  document.getElementById('editModal').classList.remove('open');
+  document.body.style.overflow = '';
+  currentEditSection = null;
+}
+
+async function saveEdit() {
+  if (!currentEditSection) return;
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> A guardar…';
+
+  const data = MODAL_CONTENT[currentEditSection].getData();
+
+  // Validação especial para password
+  if (currentEditSection === 'security') {
+    if (data.new_password !== data.confirm_password) {
+      showToast('As passwords não coincidem', 'err');
+      btn.disabled = false; btn.textContent = 'Guardar'; return;
+    }
+    try {
+      const r = await fetch(`${API}/auth/change-password`, {
+        method:'POST', headers:authHdr(), credentials:'include',
+        body: JSON.stringify({ current_password: data.current_password, new_password: data.new_password }),
+      });
+      const d = await r.json();
+      if (!r.ok) { showToast(d.error, 'err'); btn.disabled=false; btn.textContent='Guardar'; return; }
+      showToast('Password alterada! Faça login novamente.', 'ok');
+      closeModal();
+      setTimeout(logout, 1500);
+    } catch { showToast('Erro de ligação', 'err'); btn.disabled=false; btn.textContent='Guardar'; }
+    return;
+  }
+
+  try {
+    const r = await fetch(`${API}/profiles/me`, {
+      method:'PUT', headers:authHdr(), credentials:'include',
+      body: JSON.stringify(data),
+    });
+    const d = await r.json();
+    if (!r.ok) { showToast(d.error||'Erro ao guardar', 'err'); btn.disabled=false; btn.textContent='Guardar'; return; }
+    profileData = { ...profileData, ...d };
+    renderProfile(profileData);
+    closeModal();
+    showToast('Alterações guardadas!', 'ok');
+  } catch {
+    showToast('Erro de ligação', 'err');
+    btn.disabled=false; btn.textContent='Guardar';
+  }
+}
+
+// Fechar modal no overlay + ESC
+document.getElementById('editModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('editModal')) closeModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ── AUTO-REFRESH TOKEN (a cada 12 min) ───────────────────────
+setInterval(async () => {
+  try {
+    const r = await fetch(`${API}/auth/refresh`, { method:'POST', credentials:'include' });
+    if (r.ok) {
+      const d = await r.json();
+      sessionStorage.setItem('meroe_token', d.accessToken);
+    } else {
+      window.location.href = 'login.html';
+    }
+  } catch {}
+}, 12 * 60 * 1000);
+
+// ── INICIAR ───────────────────────────────────────────────────
+loadProfile();
+</script>
+</body>
+</html>

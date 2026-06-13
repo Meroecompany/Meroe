@@ -1,0 +1,34 @@
+# ============================================================
+# MEROE — Root Git Ignore
+# ============================================================
+
+# Carpetas y archivos del sistema
+.DS_Store
+Thumbs.db
+*.log
+*.zip
+
+# Respaldos y PDFs de pliegos
+backups/
+RFP_MEROE-DIGITAL-2026-001.pdf
+
+# Dependencias locales y compilaciones
+**/node_modules/
+**/dist/
+**/build/
+**/coverage/
+.nyc_output/
+
+# Entornos y secretos (¡NUNCA SUBIR AL REPOSITORIO!)
+**/.env
+**/.env.local
+**/.env.production
+**/.env.development
+**/*.pem
+**/*.key
+**/google-services.json
+**/google-service-account.json
+
+# Integraciones de despliegue
+**/.vercel/
+**/.railway/
