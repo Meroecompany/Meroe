@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Admin — MEROE Digital</title>
+<meta name="robots" content="noindex"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230A1628'/><text y='.9em' font-size='60' font-family='Arial' font-weight='900' fill='%23C9820A' x='50' text-anchor='middle' dominant-baseline='middle' dy='0.05em'>M</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="platform.css"/>
+<style>
+body { display:flex; }
+
+/* SIDEBAR */
+:root { --sidebar:240px; }
+.sidebar { width:var(--sidebar); background:var(--preto); border-right:1px solid rgba(201,130,10,.15); display:flex; flex-direction:column; position:fixed; top:0; left:0; bottom:0; z-index:50; transition:transform var(--trans); }
+.sidebar-logo { padding:1.3rem 1.5rem; border-bottom:1px solid rgba(201,130,10,.15); }
+.sidebar-logo .logo { font-family:'Barlow Condensed',sans-serif; font-size:1.6rem; font-weight:800; }
+.sidebar-logo .sub  { font-size:.55rem; letter-spacing:.25em; color:var(--ouro); text-transform:uppercase; font-weight:300; }
+.sidebar-nav { flex:1; padding:1rem 0; overflow-y:auto; }
+.nav-item { display:flex; align-items:center; gap:.8rem; padding:.75rem 1.5rem; font-size:.82rem; font-weight:500; letter-spacing:.06em; color:var(--cinza); cursor:pointer; transition:all var(--trans); border:none; background:none; width:100%; text-align:left; }
+.nav-item:hover { color:var(--branco); background:rgba(255,255,255,.04); }
+.nav-item.active { color:var(--ouro); background:rgba(201,130,10,.08); border-right:2px solid var(--ouro); }
+.nav-icon { font-size:1rem; width:20px; text-align:center; flex-shrink:0; }
+.nav-badge { background:var(--vermelho); color:#fff; font-size:.6rem; font-weight:700; padding:.15rem .45rem; border-radius:10px; margin-left:auto; }
+.sidebar-footer { padding:1rem 1.5rem; border-top:1px solid rgba(255,255,255,.06); }
+.user-chip { display:flex; align-items:center; gap:.7rem; margin-bottom:.8rem; }
+.avatar { width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--ouro),#8B5E0A); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.85rem; color:var(--preto); flex-shrink:0; }
+.user-email { font-size:.75rem; color:var(--cinza); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+/* MAIN */
+.main { flex:1; margin-left:var(--sidebar); display:flex; flex-direction:column; min-height:100vh; }
+.topbar-admin { background:rgba(5,12,24,.97); border-bottom:1px solid rgba(201,130,10,.12); padding:.9rem 2rem; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:40; }
+.page-title { font-family:'Barlow Condensed',sans-serif; font-size:1.4rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; }
+.content { padding:2rem; flex:1; }
+
+/* STATS */
+.stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin-bottom:2rem; }
+.stat-card { background:var(--azul-mid); border:1px solid rgba(201,130,10,.12); border-radius:8px; padding:1.2rem; position:relative; overflow:hidden; }
+.stat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--accent,var(--ouro)); }
+.stat-num   { font-family:'Barlow Condensed',sans-serif; font-size:2.2rem; font-weight:800; color:var(--accent,var(--ouro)); line-height:1; }
+.stat-label { font-size:.72rem; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--cinza); margin-top:.3rem; }
+
+/* TABLE */
+.table-wrap { background:var(--azul-mid); border:1px solid rgba(201,130,10,.12); border-radius:8px; overflow:hidden; }
+.table-header { padding:1.2rem 1.5rem; border-bottom:1px solid rgba(255,255,255,.06); display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
+.table-title  { font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--ouro); flex:1; }
+.search-box { display:flex; align-items:center; gap:.5rem; background:rgba(10,22,40,.8); border:1px solid rgba(138,151,170,.2); border-radius:var(--radius); padding:.4rem .8rem; flex:1; max-width:280px; }
+.search-box input { background:none; border:none; outline:none; font-family:'Barlow',sans-serif; font-size:.85rem; color:var(--branco); width:100%; }
+.filter-select { background:rgba(10,22,40,.8); border:1px solid rgba(138,151,170,.2); border-radius:var(--radius); padding:.4rem .8rem; font-family:'Barlow',sans-serif; font-size:.82rem; color:var(--branco); outline:none; cursor:pointer; }
+.filter-select option { background:var(--azul-mid); }
+table { width:100%; border-collapse:collapse; }
+th { font-size:.68rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--cinza); padding:.8rem 1rem; text-align:left; border-bottom:1px solid rgba(255,255,255,.06); white-space:nowrap; }
+td { font-size:.85rem; padding:.8rem 1rem; border-bottom:1px solid rgba(255,255,255,.04); vertical-align:middle; }
+tr:last-child td { border-bottom:none; }
+tr:hover td { background:rgba(255,255,255,.02); }
+.score-pill { display:inline-flex; align-items:center; font-size:.75rem; font-weight:700; padding:.25rem .6rem; border-radius:3px; }
+.score-high { background:rgba(26,158,117,.15); color:var(--verde); }
+.score-mid  { background:rgba(239,159,39,.15); color:var(--laranja); }
+.score-low  { background:rgba(224,82,82,.15); color:var(--vermelho); }
+.status-pill { font-size:.68rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; padding:.25rem .7rem; border-radius:2px; }
+.s-pending   { background:rgba(239,159,39,.12); color:var(--laranja); border:1px solid rgba(239,159,39,.3); }
+.s-approved  { background:rgba(26,158,117,.12); color:var(--verde);   border:1px solid rgba(26,158,117,.3); }
+.s-rejected  { background:rgba(224,82,82,.12);  color:var(--vermelho);border:1px solid rgba(224,82,82,.3); }
+.s-incomplete{ background:rgba(138,151,170,.1); color:var(--cinza);   border:1px solid rgba(138,151,170,.2); }
+.s-suspended { background:rgba(124,111,212,.1); color:var(--roxo);    border:1px solid rgba(124,111,212,.3); }
+.actions-cell { display:flex; gap:.4rem; flex-wrap:wrap; }
+.btn-ok     { background:rgba(26,158,117,.15); color:var(--verde);    border:1px solid rgba(26,158,117,.3); }
+.btn-ok:hover     { background:var(--verde); color:#fff; }
+.btn-warn   { background:rgba(224,82,82,.12); color:var(--vermelho);  border:1px solid rgba(224,82,82,.3); }
+.btn-warn:hover   { background:var(--vermelho); color:#fff; }
+.loading-row td { text-align:center; padding:2rem; color:var(--cinza); }
+
+/* AI SEARCH */
+.ai-search-box { background:var(--azul-mid); border:1px solid rgba(201,130,10,.2); border-radius:8px; padding:1.5rem; margin-bottom:1.5rem; }
+.ai-search-title { font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:700; text-transform:uppercase; color:var(--ouro); margin-bottom:1rem; display:flex; align-items:center; gap:.5rem; }
+.ai-textarea { width:100%; background:rgba(10,22,40,.8); border:1px solid rgba(138,151,170,.2); border-radius:var(--radius); padding:.9rem 1rem; font-family:'Barlow',sans-serif; font-size:.9rem; color:var(--branco); outline:none; resize:vertical; min-height:90px; transition:border-color var(--trans); margin-bottom:1rem; }
+.ai-textarea:focus { border-color:var(--ouro); }
+.ai-filters { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:.7rem; margin-bottom:1rem; }
+.ai-filter-field { display:flex; flex-direction:column; gap:.3rem; }
+.ai-filter-label { font-size:.65rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--cinza); }
+.ai-filter-input,.ai-filter-select { background:rgba(10,22,40,.8); border:1px solid rgba(138,151,170,.2); border-radius:var(--radius); padding:.5rem .7rem; font-family:'Barlow',sans-serif; font-size:.82rem; color:var(--branco); outline:none; width:100%; }
+.ai-filter-select option { background:var(--azul-mid); }
+.match-card { background:var(--azul-mid); border:1px solid rgba(201,130,10,.12); border-radius:8px; padding:1.2rem; margin-bottom:.8rem; display:flex; gap:1rem; align-items:flex-start; transition:border-color var(--trans); }
+.match-card:hover { border-color:rgba(201,130,10,.3); }
+.match-rank { font-family:'Barlow Condensed',sans-serif; font-size:2rem; font-weight:800; color:rgba(255,255,255,.12); width:36px; flex-shrink:0; line-height:1; }
+.match-info { flex:1; }
+.match-name { font-size:1rem; font-weight:600; margin-bottom:.2rem; }
+.match-meta { font-size:.8rem; color:var(--cinza); margin-bottom:.6rem; }
+.match-justification { font-size:.85rem; color:var(--cinza-clr); line-height:1.6; font-style:italic; border-left:2px solid rgba(201,130,10,.3); padding-left:.8rem; margin-bottom:.6rem; }
+.match-tags { display:flex; flex-wrap:wrap; gap:.4rem; }
+.match-tag { font-size:.7rem; padding:.2rem .6rem; border-radius:2px; }
+.tag-strength { background:rgba(26,158,117,.1); color:var(--verde); border:1px solid rgba(26,158,117,.2); }
+.tag-gap      { background:rgba(224,82,82,.08); color:var(--vermelho); border:1px solid rgba(224,82,82,.2); }
+.rec-badge { font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:.25rem .7rem; border-radius:2px; }
+.rec-strong { background:rgba(26,158,117,.15); color:var(--verde); }
+.rec-yes   { background:rgba(201,130,10,.1);   color:var(--ouro); }
+.rec-maybe { background:rgba(138,151,170,.1);  color:var(--cinza); }
+.rec-no    { background:rgba(224,82,82,.1);    color:var(--vermelho); }
+
+/* MODAL REJEIÇÃO */
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.75); z-index:200; display:none; align-items:center; justify-content:center; padding:1rem; }
+.modal-overlay.open { display:flex; }
+.modal { background:var(--azul-mid); border:1px solid rgba(201,130,10,.2); border-radius:10px; width:100%; max-width:480px; padding:1.5rem; position:relative; }
+
+@media(max-width:768px) {
+  .sidebar { transform:translateX(-100%); }
+  .sidebar.open { transform:translateX(0); }
+  .main { margin-left:0; }
+  .stats-grid { grid-template-columns:1fr 1fr; }
+  .ai-filters { grid-template-columns:1fr 1fr; }
+  th:nth-child(n+4), td:nth-child(n+4) { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar" role="navigation" aria-label="Menu de administração">
+  <div class="sidebar-logo">
+    <div class="logo">MEROE</div>
+    <div class="sub">Painel Admin</div>
+  </div>
+  <nav class="sidebar-nav">
+    <button class="nav-item active" onclick="showSection('dashboard')" id="nav-dashboard">
+      <span class="nav-icon">📊</span> Dashboard
+    </button>
+    <button class="nav-item" onclick="showSection('candidates')" id="nav-candidates">
+      <span class="nav-icon">👥</span> Candidatos
+      <span class="nav-badge" id="pendingBadge" style="display:none"></span>
+    </button>
+    <button class="nav-item" onclick="showSection('ai-search')" id="nav-ai-search">
+      <span class="nav-icon">🤖</span> Pesquisa IA
+    </button>
+    <button class="nav-item" onclick="showSection('pools')" id="nav-pools">
+      <span class="nav-icon">🗂</span> Talent Pools
+    </button>
+    <button class="nav-item" onclick="exportCSV()" id="nav-export">
+      <span class="nav-icon">📥</span> Exportar CSV
+    </button>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="user-chip">
+      <div class="avatar" id="sidebarAvatar">A</div>
+      <div class="user-email" id="sidebarEmail">admin@meroe</div>
+    </div>
+    <!-- BOTÃO SAIR no sidebar -->
+    <button class="logout-btn" style="width:100%" onclick="logout()">Terminar Sessão</button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar-admin">
+    <div style="display:flex;align-items:center;gap:.8rem">
+      <!-- BOTÃO VOLTAR — canto superior esquerdo -->
+      <button class="btn btn-ghost btn-sm" onclick="toggleSidebar()" id="menuToggle" style="display:none">☰</button>
+      <div class="page-title" id="pageTitle">Dashboard</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:.8rem">
+      <!-- BOTÃO VOLTAR AO WEBSITE -->
+      <a href="../index.html" class="nav-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Website
+      </a>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div id="sec-dashboard">
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card"><div class="stat-num" id="st-technicians">–</div><div class="stat-label">Técnicos Registados</div></div>
+        <div class="stat-card" style="--accent:var(--laranja)"><div class="stat-num" id="st-pending" style="color:var(--laranja)">–</div><div class="stat-label">Pendentes Aprovação</div></div>
+        <div class="stat-card" style="--accent:var(--verde)"><div class="stat-num" id="st-approved" style="color:var(--verde)">–</div><div class="stat-label">Aprovados</div></div>
+        <div class="stat-card" style="--accent:var(--roxo)"><div class="stat-num" id="st-tars" style="color:var(--roxo)">–</div><div class="stat-label">Disponíveis TARs</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-pools">–</div><div class="stat-label">Talent Pools</div></div>
+        <div class="stat-card" style="--accent:var(--verde)"><div class="stat-num" id="st-partners" style="color:var(--verde)">–</div><div class="stat-label">Parceiros</div></div>
+      </div>
+      <div class="table-wrap">
+        <div class="table-header"><div class="table-title">Registos recentes</div></div>
+        <table><thead><tr><th>Nome</th><th>Disciplina</th><th>Status</th><th>Data</th></tr></thead>
+        <tbody id="recentBody"><tr class="loading-row"><td colspan="4"><span class="spinner"></span> A carregar…</td></tr></tbody></table>
+      </div>
+    </div>
+
+    <!-- CANDIDATOS -->
+    <div id="sec-candidates" style="display:none">
+      <div class="table-wrap">
+        <div class="table-header">
+          <div class="table-title">Candidatos</div>
+          <div class="search-box">
+            <span>🔍</span>
+            <input type="text" id="searchInput" placeholder="Pesquisar nome ou email…" oninput="debounceSearch()" aria-label="Pesquisar candidatos"/>
+          </div>
+          <select class="filter-select" id="statusFilter" onchange="loadCandidates(1)" aria-label="Filtrar por status">
+            <option value="">Todos os status</option>
+            <option value="pending">Pendente</option>
+            <option value="approved">Aprovado</option>
+            <option value="rejected">Rejeitado</option>
+            <option value="incomplete">Incompleto</option>
+          </select>
+          <select class="filter-select" id="disciplineFilter" onchange="loadCandidates(1)" aria-label="Filtrar por disciplina">
+            <option value="">Todas as disciplinas</option>
+            <option>Mechanical Engineering</option>
+            <option>Electrical Engineering</option>
+            <option>Civil Engineering</option>
+            <option>Process Engineering</option>
+            <option>Instrumentation &amp; Control</option>
+            <option>Pipeline Engineering</option>
+            <option>HSE / Safety</option>
+            <option>Project Management</option>
+          </select>
+        </div>
+        <table>
+          <thead><tr><th>Nome</th><th>Disciplina</th><th>Score IA</th><th>Status</th><th>Data</th><th>Acções</th></tr></thead>
+          <tbody id="candidatesBody"><tr class="loading-row"><td colspan="6"><span class="spinner"></span> A carregar…</td></tr></tbody>
+        </table>
+        <div class="pagination" id="candidatesPagination"></div>
+      </div>
+    </div>
+
+    <!-- AI SEARCH -->
+    <div id="sec-ai-search" style="display:none">
+      <div class="ai-search-box">
+        <div class="ai-search-title">🤖 Pesquisa Inteligente de Candidatos</div>
+        <textarea class="ai-textarea" id="aiJobDesc" placeholder="Descreva o perfil que procura: disciplina, anos de experiência, certificações necessárias, disponibilidade, localização…" rows="4"></textarea>
+        <div class="ai-filters">
+          <div class="ai-filter-field">
+            <div class="ai-filter-label">Disciplina</div>
+            <select class="ai-filter-select" id="ai-discipline">
+              <option value="">Todas</option>
+              <option>Mechanical Engineering</option><option>Electrical Engineering</option>
+              <option>Civil Engineering</option><option>Process Engineering</option>
+              <option>Instrumentation &amp; Control</option><option>Pipeline Engineering</option>
+              <option>HSE / Safety</option><option>Project Management</option>
+            </select>
+          </div>
+          <div class="ai-filter-field">
+            <div class="ai-filter-label">Exp. Mínima (anos)</div>
+            <input class="ai-filter-input" type="number" id="ai-min-exp" min="0" max="40" placeholder="0"/>
+          </div>
+          <div class="ai-filter-field">
+            <div class="ai-filter-label">Senioridade</div>
+            <select class="ai-filter-select" id="ai-seniority">
+              <option value="">Todos</option>
+              <option value="junior">Junior</option><option value="mid">Mid</option>
+              <option value="senior">Senior</option><option value="lead">Lead</option><option value="expert">Expert</option>
+            </select>
+          </div>
+          <div class="ai-filter-field">
+            <div class="ai-filter-label">Disp. TARs</div>
+            <select class="ai-filter-select" id="ai-tars">
+              <option value="">Todos</option><option value="true">Disponível</option><option value="false">Não disponível</option>
+            </select>
+          </div>
+          <div class="ai-filter-field">
+            <div class="ai-filter-label">Nº de resultados</div>
+            <input class="ai-filter-input" type="number" id="ai-max" min="1" max="20" value="10"/>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="aiSearchBtn" onclick="runAISearch()">🤖 Pesquisar com IA</button>
+      </div>
+      <div id="aiResults"></div>
+    </div>
+
+    <!-- TALENT POOLS -->
+    <div id="sec-pools" style="display:none">
+      <div style="display:flex;justify-content:flex-end;margin-bottom:1rem">
+        <button class="btn btn-primary btn-sm" onclick="openCreatePool()">+ Nova Pool</button>
+      </div>
+      <div id="poolsList"><div class="empty-state"><span class="spinner"></span></div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL REJEIÇÃO -->
+<div class="modal-overlay" id="rejectModal">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('rejectModal').classList.remove('open')" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--cinza);font-size:1.2rem;cursor:pointer">✕</button>
+    <div class="modal-title">Motivo de Rejeição</div>
+    <div class="field">
+      <label>Motivo (mínimo 10 caracteres)</label>
+      <textarea id="rejectReason" style="background:rgba(10,22,40,.8);border:1px solid rgba(138,151,170,.2);border-radius:var(--radius);padding:.7rem .9rem;font-family:'Barlow',sans-serif;font-size:.88rem;color:var(--branco);outline:none;resize:vertical;min-height:80px;width:100%" placeholder="Ex: CV incompleto — falta informação sobre certificações"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" onclick="document.getElementById('rejectModal').classList.remove('open')">Cancelar</button>
+      <button class="btn btn-warn btn-sm" id="confirmRejectBtn" onclick="confirmReject()">Rejeitar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = (location.hostname==='localhost'||location.hostname.includes('127'))
+  ? 'http://localhost:4000/api' : '/api';
+
+let currentRejectId = null;
+let searchTimer     = null;
+let currentPage     = 1;
+
+// ── AUTH ──────────────────────────────────────────────────────
+function getToken() {
+  const t = sessionStorage.getItem('meroe_token');
+  if (!t) { window.location.href = 'login.html'; return null; }
+  return t;
+}
+function authHdr() {
+  return { 'Content-Type':'application/json', Authorization:`Bearer ${getToken()}` };
+}
+
+function logout() {
+  fetch(`${API}/auth/logout`, { method:'POST', headers:authHdr(), credentials:'include' }).catch(()=>{});
+  sessionStorage.clear();
+  window.location.href = 'login.html';
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+function init() {
+  const user = JSON.parse(sessionStorage.getItem('meroe_user') || '{}');
+  if (!['super_admin','recruiter'].includes(user.role)) {
+    window.location.href = 'dashboard.html'; return;
+  }
+  const av = (user.email||'A')[0].toUpperCase();
+  document.getElementById('sidebarAvatar').textContent = av;
+  document.getElementById('sidebarEmail').textContent  = user.email || '';
+  loadDashboard();
+}
+
+// ── NAVEGAÇÃO ─────────────────────────────────────────────────
+function showSection(name) {
+  ['dashboard','candidates','ai-search','pools'].forEach(s => {
+    document.getElementById(`sec-${s}`).style.display = s === name ? '' : 'none';
+    const nav = document.getElementById(`nav-${s}`);
+    if (nav) nav.classList.toggle('active', s === name);
+  });
+  document.getElementById('pageTitle').textContent = {
+    dashboard: 'Dashboard', candidates: 'Candidatos',
+    'ai-search': 'Pesquisa IA', pools: 'Talent Pools',
+  }[name] || name;
+
+  if (name === 'candidates') loadCandidates(1);
+  if (name === 'pools')      loadPools();
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────────
+async function loadDashboard() {
+  try {
+    const r = await fetch(`${API}/admin/dashboard`, { headers:authHdr(), credentials:'include' });
+    if (r.status === 401) { window.location.href = 'login.html'; return; }
+    const d = await r.json();
+    const s = d.stats || {};
+    document.getElementById('st-technicians').textContent = s.total_technicians || 0;
+    document.getElementById('st-pending').textContent     = s.pending_approval  || 0;
+    document.getElementById('st-approved').textContent    = s.approved_profiles  || 0;
+    document.getElementById('st-tars').textContent        = s.available_for_tars || 0;
+    document.getElementById('st-pools').textContent       = s.active_pools       || 0;
+    document.getElementById('st-partners').textContent    = s.total_partners     || 0;
+
+    const pending = parseInt(s.pending_approval) || 0;
+    const badge   = document.getElementById('pendingBadge');
+    if (pending > 0) { badge.textContent = pending > 99 ? '99+' : pending; badge.style.display = ''; }
+
+    const tbody = document.getElementById('recentBody');
+    tbody.innerHTML = (d.recent||[]).map(r => `
+      <tr>
+        <td>${esc(r.full_name)}</td>
+        <td style="color:var(--cinza)">${esc(r.discipline||'–')}</td>
+        <td><span class="status-pill s-${r.status}">${r.status}</span></td>
+        <td style="color:var(--cinza);font-size:.8rem">${new Date(r.created_at).toLocaleDateString('pt-PT')}</td>
+      </tr>`).join('') || '<tr><td colspan="4" class="empty-state">Sem registos</td></tr>';
+  } catch (err) {
+    document.getElementById('recentBody').innerHTML = '<tr><td colspan="4" style="color:var(--vermelho);text-align:center;padding:1.5rem">Erro ao carregar dashboard</td></tr>';
+  }
+}
+
+// ── CANDIDATOS ────────────────────────────────────────────────
+function debounceSearch() {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => loadCandidates(1), 400);
+}
+
+async function loadCandidates(page = 1) {
+  currentPage = page;
+  const tbody      = document.getElementById('candidatesBody');
+  const pagination = document.getElementById('candidatesPagination');
+  tbody.innerHTML  = '<tr class="loading-row"><td colspan="6"><span class="spinner"></span></td></tr>';
+
+  const params = new URLSearchParams({
+    page,
+    limit: 20,
+    search:     document.getElementById('searchInput')?.value || '',
+    status:     document.getElementById('statusFilter')?.value || '',
+    discipline: document.getElementById('disciplineFilter')?.value || '',
+  });
+
+  try {
+    const r = await fetch(`${API}/admin/candidates?${params}`, { headers:authHdr(), credentials:'include' });
+    const d = await r.json();
+    const rows = d.data || [];
+
+    tbody.innerHTML = rows.length ? rows.map(c => {
+      const score     = c.ai_score != null ? c.ai_score : null;
+      const scoreHtml = score != null ? `<span class="score-pill ${score>=70?'score-high':score>=40?'score-mid':'score-low'}">${Math.round(score)}</span>` : '<span style="color:var(--cinza)">–</span>';
+      return `<tr>
+        <td>
+          <div style="font-weight:500">${esc(c.full_name)}</div>
+          <div style="font-size:.78rem;color:var(--cinza)">${esc(c.email)}</div>
+        </td>
+        <td style="color:var(--cinza)">${esc(c.discipline||'–')}</td>
+        <td>${scoreHtml}</td>
+        <td><span class="status-pill s-${c.status}">${c.status}</span></td>
+        <td style="color:var(--cinza);font-size:.78rem">${new Date(c.created_at).toLocaleDateString('pt-PT')}</td>
+        <td>
+          <div class="actions-cell">
+            ${c.cv_url ? `<a href="${c.cv_url}" target="_blank" class="btn btn-ghost btn-sm">📄 CV</a>` : ''}
+            ${c.status==='pending' ? `
+              <button class="btn btn-ok btn-sm"   onclick="approveCandidate('${c.id}')">✓ Aprovar</button>
+              <button class="btn btn-warn btn-sm" onclick="openReject('${c.id}')">✕ Rejeitar</button>
+            ` : ''}
+            ${c.status==='approved' ? `<button class="btn btn-warn btn-sm" onclick="openReject('${c.id}')">Suspender</button>` : ''}
+          </div>
+        </td>
+      </tr>`;
+    }).join('') : '<tr><td colspan="6" class="empty-state">Nenhum candidato encontrado</td></tr>';
+
+    // Paginação
+    const pg = d.pagination || {};
+    if (pg.totalPages > 1) {
+      const btns = [];
+      if (pg.page > 1) btns.push(`<button class="page-btn" onclick="loadCandidates(${pg.page-1})">‹</button>`);
+      for (let i = Math.max(1,pg.page-2); i <= Math.min(pg.totalPages, pg.page+2); i++) {
+        btns.push(`<button class="page-btn${i===pg.page?' active':''}" onclick="loadCandidates(${i})">${i}</button>`);
+      }
+      if (pg.page < pg.totalPages) btns.push(`<button class="page-btn" onclick="loadCandidates(${pg.page+1})">›</button>`);
+      pagination.innerHTML = `<span>${pg.total} resultados</span>${btns.join('')}`;
+    } else {
+      pagination.innerHTML = `<span>${pg.total || rows.length} resultados</span>`;
+    }
+  } catch {
+    tbody.innerHTML = '<tr><td colspan="6" style="color:var(--vermelho);text-align:center;padding:1.5rem">Erro ao carregar candidatos</td></tr>';
+  }
+}
+
+async function approveCandidate(id) {
+  if (!confirm('Aprovar este candidato?')) return;
+  try {
+    const r = await fetch(`${API}/admin/candidates/${id}/approve`, { method:'PATCH', headers:authHdr(), credentials:'include' });
+    const d = await r.json();
+    if (!r.ok) { alert(d.error); return; }
+    loadCandidates(currentPage);
+    loadDashboard();
+  } catch { alert('Erro ao aprovar candidato'); }
+}
+
+function openReject(id) {
+  currentRejectId = id;
+  document.getElementById('rejectReason').value = '';
+  document.getElementById('rejectModal').classList.add('open');
+}
+
+async function confirmReject() {
+  const reason = document.getElementById('rejectReason').value.trim();
+  if (!reason || reason.length < 10) { alert('Motivo deve ter mínimo 10 caracteres'); return; }
+  const btn = document.getElementById('confirmRejectBtn');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>';
+  try {
+    const r = await fetch(`${API}/admin/candidates/${currentRejectId}/reject`, {
+      method:'PATCH', headers:authHdr(), credentials:'include',
+      body: JSON.stringify({ reason }),
+    });
+    const d = await r.json();
+    if (!r.ok) { alert(d.error); btn.disabled=false; btn.textContent='Rejeitar'; return; }
+    document.getElementById('rejectModal').classList.remove('open');
+    loadCandidates(currentPage);
+    loadDashboard();
+  } catch {
+    alert('Erro ao rejeitar');
+    btn.disabled=false; btn.textContent='Rejeitar';
+  }
+}
+
+// ── AI SEARCH ─────────────────────────────────────────────────
+async function runAISearch() {
+  const desc = document.getElementById('aiJobDesc').value.trim();
+  if (!desc || desc.length < 20) { alert('Descreva o perfil com pelo menos 20 caracteres.'); return; }
+
+  const btn = document.getElementById('aiSearchBtn');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> A pesquisar…';
+  document.getElementById('aiResults').innerHTML = '<div style="text-align:center;padding:2rem;color:var(--cinza)"><span class="spinner"></span> A avaliar candidatos com IA…</div>';
+
+  const body = {
+    job_description:    desc,
+    discipline:         document.getElementById('ai-discipline').value,
+    min_experience:     parseInt(document.getElementById('ai-min-exp').value) || 0,
+    seniority_level:    document.getElementById('ai-seniority').value,
+    available_for_tars: document.getElementById('ai-tars').value === 'true' ? true : document.getElementById('ai-tars').value === 'false' ? false : undefined,
+    max_results:        parseInt(document.getElementById('ai-max').value) || 10,
+  };
+
+  try {
+    const r = await fetch(`${API}/ai/match`, {
+      method:'POST', headers:authHdr(), credentials:'include',
+      body: JSON.stringify(body),
+    });
+    const d = await r.json();
+
+    if (!r.ok) { document.getElementById('aiResults').innerHTML = `<div style="color:var(--vermelho);padding:1rem">${d.error}</div>`; return; }
+
+    const matches = d.matches || [];
+    if (!matches.length) {
+      document.getElementById('aiResults').innerHTML = '<div class="empty-state">Nenhum candidato encontrado com os critérios.</div>';
+      return;
+    }
+
+    const recClass = { strong_yes:'rec-strong', yes:'rec-yes', maybe:'rec-maybe', no:'rec-no' };
+    document.getElementById('aiResults').innerHTML = `
+      <div style="margin-bottom:1rem;font-size:.82rem;color:var(--cinza)">${matches.length} candidatos encontrados e avaliados pela IA</div>
+      ${matches.map((m,i) => `
+        <div class="match-card">
+          <div class="match-rank">#${i+1}</div>
+          <div class="match-info">
+            <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.3rem">
+              <div class="match-name">${esc(m.full_name)}</div>
+              <span class="rec-badge ${recClass[m.recommendation]||'rec-maybe'}">${m.recommendation?.replace('_',' ')||'?'}</span>
+              <span class="score-pill ${m.ai_score>=70?'score-high':m.ai_score>=40?'score-mid':'score-low'}">${Math.round(m.ai_score||0)}/100</span>
+            </div>
+            <div class="match-meta">${esc(m.discipline||'–')} · ${m.experience_years} anos · ${esc(m.location||'–')}</div>
+            <div class="match-justification">${esc(m.justification||'–')}</div>
+            <div class="match-tags">
+              ${(m.strengths||[]).map(s=>`<span class="match-tag tag-strength">✓ ${esc(s)}</span>`).join('')}
+              ${(m.gaps||[]).map(g=>`<span class="match-tag tag-gap">⚠ ${esc(g)}</span>`).join('')}
+            </div>
+          </div>
+        </div>`).join('')}`;
+  } catch { document.getElementById('aiResults').innerHTML = '<div style="color:var(--vermelho);padding:1rem">Erro na pesquisa IA. Tente novamente.</div>'; }
+  finally { btn.disabled=false; btn.textContent='🤖 Pesquisar com IA'; }
+}
+
+// ── TALENT POOLS ──────────────────────────────────────────────
+async function loadPools() {
+  try {
+    const r = await fetch(`${API}/admin/pools`, { headers:authHdr(), credentials:'include' });
+    const pools = await r.json();
+    const el = document.getElementById('poolsList');
+    if (!pools.length) { el.innerHTML = '<div class="empty-state">Nenhuma talent pool criada ainda.</div>'; return; }
+    el.innerHTML = pools.map(p => `
+      <div class="card" style="margin-bottom:1rem">
+        <div class="card-title">${esc(p.name)} <span style="font-size:.75rem;color:var(--cinza);font-weight:400">${p.member_count} membros</span></div>
+        <div style="font-size:.85rem;color:var(--cinza-clr)">${esc(p.description||'–')}</div>
+        <div style="font-size:.75rem;color:var(--cinza);margin-top:.5rem">Criada por: ${esc(p.created_by_email||'?')} · ${new Date(p.created_at).toLocaleDateString('pt-PT')}</div>
+      </div>`).join('');
+  } catch { document.getElementById('poolsList').innerHTML = '<div class="empty-state" style="color:var(--vermelho)">Erro ao carregar pools</div>'; }
+}
+
+function openCreatePool() {
+  const name = prompt('Nome da nova Talent Pool:');
+  if (!name || !name.trim()) return;
+  const desc = prompt('Descrição (opcional):') || '';
+  createPool(name.trim(), desc.trim());
+}
+
+async function createPool(name, description) {
+  try {
+    const r = await fetch(`${API}/admin/pools`, {
+      method:'POST', headers:authHdr(), credentials:'include',
+      body: JSON.stringify({ name, description }),
+    });
+    const d = await r.json();
+    if (!r.ok) { alert(d.error); return; }
+    loadPools();
+  } catch { alert('Erro ao criar pool'); }
+}
+
+// ── EXPORT CSV ────────────────────────────────────────────────
+async function exportCSV() {
+  const status = prompt('Status a exportar (approved/pending/all):', 'approved') || 'approved';
+  try {
+    const r = await fetch(`${API}/admin/export/csv?status=${status}`, { headers:authHdr(), credentials:'include' });
+    if (!r.ok) { const d=await r.json(); alert(d.error); return; }
+    const blob = await r.blob();
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = `meroe-candidatos-${status}-${Date.now()}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  } catch { alert('Erro ao exportar CSV'); }
+}
+
+// ── UTILS ─────────────────────────────────────────────────────
+function esc(v) { return (v||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// AUTO-REFRESH TOKEN
+setInterval(async () => {
+  try {
+    const r = await fetch(`${API}/auth/refresh`, { method:'POST', credentials:'include' });
+    if (r.ok) { const d=await r.json(); sessionStorage.setItem('meroe_token',d.accessToken); }
+    else window.location.href = 'login.html';
+  } catch {}
+}, 12 * 60 * 1000);
+
+// Fechar modais no overlay
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(el => el.classList.remove('open'));
+});
+
+// Responsivo: mostrar botão menu em mobile
+if (window.innerWidth <= 768) {
+  document.getElementById('menuToggle').style.display = '';
+}
+
+init();
+</script>
+</body>
+</html>

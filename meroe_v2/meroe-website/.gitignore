@@ -1,0 +1,29 @@
+# SEGURANÇA — Nunca enviar para o GitHub
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Dependências
+node_modules/
+.next/
+out/
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Vercel
+.vercel/
+
+# Ficheiros sensíveis
+secrets/
+*.pem
+*.key
+google-service-account.json

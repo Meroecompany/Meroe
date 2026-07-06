@@ -6,35 +6,22 @@
 
 /* ── VARIÁVEIS ─────────────────────────────────────────────── */
 :root {
-  /* Vibrant & Premium Colors */
-  --azul:      #040D1A;
-  --azul-mid:  #0A1A33;
-  --azul-clr:  #102A52;
-  --ouro:      #E69500;
-  --ouro-clr:  #FFB01A;
-  --ouro-pale: #FFDA73;
-  --branco:    #FAFCFF;
-  --cinza:     #9BA8B8;
-  --cinza-clr: #D4DBE2;
-  --preto:     #02060C;
-  --verde:     #1E8A4A;
+  --azul:      #0A1628;
+  --azul-mid:  #0E1F3D;
+  --azul-clr:  #162B55;
+  --ouro:      #C9820A;
+  --ouro-clr:  #E8A020;
+  --ouro-pale: #F5C842;
+  --branco:    #F0F4FA;
+  --cinza:     #8A97AA;
+  --cinza-clr: #C5CFD9;
+  --preto:     #050C18;
+  --verde:     #1A9E75;
   --vermelho:  #E05252;
   --laranja:   #EF9F27;
   --roxo:      #7C6FD4;
-  
-  /* Modern Accents */
-  --accent-glow: rgba(230, 149, 0, 0.4);
-  --linha:     rgba(230, 149, 0, 0.35);
-  
-  /* Glassmorphism */
-  --glass-bg:    rgba(10, 26, 51, 0.4);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  --glass-blur:  blur(12px);
-
-  /* Effects */
-  --trans:     0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  --radius:    8px;
+  --trans:     0.3s cubic-bezier(0.4,0,0.2,1);
+  --radius:    4px;
 }
 
 /* ── RESET ──────────────────────────────────────────────────── */
@@ -42,9 +29,7 @@
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
   font-family: 'Barlow', sans-serif;
-  background:
-    linear-gradient(160deg, rgba(4,13,26,0.88) 0%, rgba(10,26,51,0.85) 50%, rgba(16,42,82,0.82) 100%),
-    url('../images/platform_bg.jpg') center/cover no-repeat fixed;
+  background: var(--azul);
   color: var(--branco);
   line-height: 1.6;
   min-height: 100vh;
@@ -60,19 +45,18 @@ button { font-family: inherit; cursor: pointer; }
 
 /* ── FORMULÁRIOS ────────────────────────────────────────────── */
 input, select, textarea {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
+  background: rgba(10, 22, 40, 0.8);
+  border: 1px solid rgba(138, 151, 170, 0.25);
   border-radius: var(--radius);
   padding: .75rem 1rem;
   font-family: 'Barlow', sans-serif;
   font-size: .9rem;
   color: var(--branco);
-  transition: all var(--trans);
+  transition: border-color var(--trans);
   outline: none;
   width: 100%;
 }
-input:focus, select:focus, textarea:focus { border-color: var(--ouro); box-shadow: 0 0 10px var(--accent-glow); }
+input:focus, select:focus, textarea:focus { border-color: var(--ouro); }
 input.error, select.error { border-color: var(--vermelho); }
 select option { background: var(--azul-mid); color: var(--branco); }
 label {
@@ -162,11 +146,9 @@ label {
 }
 .modal-overlay.open { display: flex; }
 .modal {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  border-radius: 12px;
+  background: var(--azul-mid);
+  border: 1px solid rgba(201,130,10,.2);
+  border-radius: 10px;
   width: 100%; max-width: 540px;
   max-height: 90vh;
   overflow-y: auto;
@@ -194,10 +176,8 @@ label {
 
 /* ── TOPBAR ─────────────────────────────────────────────────── */
 .topbar {
-  background: rgba(4, 13, 26, 0.85);
-  backdrop-filter: var(--glass-blur);
-  border-bottom: 1px solid var(--glass-border);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  background: rgba(5,12,24,.97);
+  border-bottom: 1px solid rgba(201,130,10,.2);
   padding: .8rem 2rem;
   display: flex; align-items: center; justify-content: space-between;
   position: sticky; top: 0; z-index: 100;
@@ -244,16 +224,12 @@ label {
 
 /* ── CARD ───────────────────────────────────────────────────── */
 .card {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  border-radius: var(--radius);
+  background: var(--azul-mid);
+  border: 1px solid rgba(201,130,10,.12);
+  border-radius: 8px;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
-  transition: all var(--trans);
 }
-.card:hover { border-color: rgba(255, 255, 255, 0.15); box-shadow: 0 12px 40px rgba(0,0,0,0.5); }
 .card-title {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 1.1rem; font-weight: 700;

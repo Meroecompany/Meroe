@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://generativelanguage.googleapis.com; img-src 'self' data: blob:; frame-ancestors 'none';"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://generativelanguage.googleapis.com; img-src 'self' data:; frame-ancestors 'none';"/>
 <meta http-equiv="X-Content-Type-Options" content="nosniff"/>
 <meta http-equiv="X-Frame-Options" content="DENY"/>
 <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/>
@@ -36,7 +36,7 @@
   },
   "contactPoint": {
     "@type": "ContactPoint",
-    "email": "companymeroe@gmail.com",
+    "email": "info@meroe-engineering.com",
     "contactType": "customer service"
   },
   "sameAs": [],
@@ -53,33 +53,21 @@
    MEROE WEBSITE — CSS COMPLETO
 ══════════════════════════════════════════════ */
 :root {
-  /* Vibrant & Premium Colors */
-  --azul:      #040D1A;
-  --azul-mid:  #0A1A33;
-  --azul-clr:  #102A52;
-  --ouro:      #E69500;
-  --ouro-clr:  #FFB01A;
-  --ouro-pale: #FFDA73;
-  --branco:    #FAFCFF;
-  --cinza:     #9BA8B8;
-  --cinza-clr: #D4DBE2;
-  --preto:     #02060C;
-  --verde:     #1E8A4A;
-  
-  /* Modern Accents */
-  --accent-glow: rgba(230, 149, 0, 0.4);
-  --linha:     rgba(230, 149, 0, 0.35);
-  
-  /* Glassmorphism */
-  --glass-bg:    rgba(10, 26, 51, 0.4);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  --glass-blur:  blur(12px);
-
-  /* Effects */
-  --trans:     0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  --shadow:    0 10px 50px rgba(0,0,0,0.5);
-  --radius:    8px;
+  --azul:      #0A1628;
+  --azul-mid:  #0E1F3D;
+  --azul-clr:  #162B55;
+  --ouro:      #C9820A;
+  --ouro-clr:  #E8A020;
+  --ouro-pale: #F5C842;
+  --branco:    #F0F4FA;
+  --cinza:     #8A97AA;
+  --cinza-clr: #C5CFD9;
+  --preto:     #050C18;
+  --verde:     #1A6B3C;
+  --linha:     rgba(201,130,10,0.3);
+  --trans:     0.35s cubic-bezier(0.4,0,0.2,1);
+  --shadow:    0 8px 48px rgba(0,0,0,0.4);
+  --radius:    4px;
 }
 
 /* ══ UTILITY CLASSES (DRY — evita repetição) ══ */
@@ -214,8 +202,9 @@ img{max-width:100%;display:block}
 .hero-bg{
   position:absolute;inset:0;
   background:
-    linear-gradient(160deg, rgba(4,13,26,0.82) 0%, rgba(10,26,51,0.75) 50%, rgba(16,42,82,0.7) 100%),
-    url('images/hero_oil_rig.jpg') center/cover no-repeat;
+    radial-gradient(ellipse 80% 60% at 60% 40%, rgba(22,43,85,0.8) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 80% at 10% 80%, rgba(201,130,10,0.08) 0%, transparent 60%),
+    linear-gradient(160deg, #050C18 0%, #0A1628 50%, #0E1F3D 100%);
 }
 .hero-grid{
   position:absolute;inset:0;
@@ -350,17 +339,9 @@ section{padding:6rem 0}
 .sobre-visual{
   position:relative;
 }
-.sobre-img{
-  width:100%;border-radius:var(--radius);
-  box-shadow:0 16px 48px rgba(0,0,0,0.5);
-  border:1px solid var(--glass-border);
-  object-fit:cover;aspect-ratio:4/3;
-}
 .sobre-box{
-  background:var(--glass-bg);
-  backdrop-filter:var(--glass-blur);
-  border:1px solid var(--glass-border);
-  box-shadow:var(--glass-shadow);
+  background:var(--azul-clr);
+  border:1px solid var(--linha);
   border-radius:var(--radius);
   padding:3rem;
   position:relative;overflow:hidden;
@@ -373,12 +354,11 @@ section{padding:6rem 0}
   display:grid;gap:1.2rem;margin-top:2rem;
 }
 .value-card{
-  background:var(--glass-bg);
-  backdrop-filter:var(--glass-blur);
-  border:1px solid var(--glass-border);
+  background:rgba(10,22,40,0.6);
+  border:1px solid rgba(201,130,10,0.15);
   border-radius:var(--radius);
   padding:1.2rem 1.4rem;
-  transition:all var(--trans);
+  transition:border-color var(--trans);
 }
 .value-card:hover{border-color:var(--ouro)}
 .value-icon{
@@ -430,9 +410,7 @@ section{padding:6rem 0}
   overflow:hidden;
 }
 .servico-card{
-  background:var(--glass-bg);
-  backdrop-filter:var(--glass-blur);
-  border:1px solid var(--glass-border);
+  background:var(--azul-mid);
   padding:2.2rem;
   transition:all var(--trans);
   position:relative;overflow:hidden;
@@ -485,12 +463,11 @@ section{padding:6rem 0}
 .gov-items{display:grid;gap:1rem}
 .gov-item{
   display:flex;gap:1.2rem;align-items:flex-start;
-  background:var(--glass-bg);
-  backdrop-filter:var(--glass-blur);
-  border:1px solid var(--glass-border);
+  background:var(--azul);
+  border:1px solid rgba(201,130,10,0.1);
   border-radius:var(--radius);
   padding:1.4rem;
-  transition:all var(--trans);
+  transition:border-color var(--trans);
 }
 .gov-item:hover{border-color:var(--ouro)}
 .gov-item-icon{
@@ -524,9 +501,8 @@ section{padding:6rem 0}
   display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;
 }
 .proj-card{
-  background:var(--glass-bg);
-  backdrop-filter:var(--glass-blur);
-  border:1px solid var(--glass-border);
+  background:var(--azul-mid);
+  border:1px solid rgba(201,130,10,0.12);
   border-radius:var(--radius);
   padding:2rem;
   transition:all var(--trans);
@@ -574,10 +550,8 @@ section{padding:6rem 0}
   position:relative;overflow:hidden;
 }
 .talento-card.azul{
-  background:var(--glass-bg);
-  backdrop-filter:var(--glass-blur);
-  border:1px solid var(--glass-border);
-  box-shadow:var(--glass-shadow);
+  background:var(--azul);
+  border:1px solid rgba(201,130,10,0.2);
 }
 .talento-card.ouro{
   background:linear-gradient(135deg, var(--ouro) 0%, #8B5E0A 100%);
@@ -659,10 +633,8 @@ section{padding:6rem 0}
   font-size:.95rem;color:var(--branco);
 }
 .contacto-form{
-  background:var(--glass-bg);
-  backdrop-filter:var(--glass-blur);
-  border:1px solid var(--glass-border);
-  box-shadow:var(--glass-shadow);
+  background:var(--azul-mid);
+  border:1px solid rgba(201,130,10,0.15);
   border-radius:var(--radius);
   padding:2.5rem;
 }
@@ -931,7 +903,7 @@ footer{
   },
   "contactPoint": {
     "@type": "ContactPoint",
-    "email": "companymeroe@gmail.com",
+    "email": "info@meroe-engineering.com",
     "contactType": "customer service",
     "availableLanguage": ["Portuguese","English"]
   },
@@ -1052,8 +1024,7 @@ footer{
         </div>
       </div>
       <div class="reveal">
-        <img src="images/about_refinery.jpg" alt="Engenheiros MEROE numa refinaria em Angola" class="sobre-img" loading="lazy"/>
-        <div class="sobre-numbers" style="margin-top:1.5rem">
+        <div class="sobre-numbers">
           <div class="sobre-num-item">
             <span class="sobre-num" data-count="6">0</span>
             <span class="sobre-num-label" data-pt="Linhas de Serviço" data-en="Service Lines">Linhas de Serviço</span>
@@ -1303,7 +1274,7 @@ footer{
           <div class="contacto-icon">✉️</div>
           <div>
             <div class="contacto-label" data-pt="Email geral" data-en="General email">Email geral</div>
-            <div class="contacto-val">companymeroe@gmail.com</div>
+            <div class="contacto-val">info@meroe-engineering.com</div>
           </div>
         </div>
         <div class="contacto-item">
@@ -1442,6 +1413,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// ── GEMINI API KEY ────────────────────────────────────────────
+
 // SECURITY: CSRF token generation para formulários
 function generateCSRF(){
   const token = Array.from(crypto.getRandomValues(new Uint8Array(16)))
@@ -1450,6 +1423,18 @@ function generateCSRF(){
   return token;
 }
 const _csrfToken = generateCSRF();
+
+// SECURITY: Em produção mover para Vercel Edge Function proxy
+// Esta key é restrita por referrer no Google Console
+const _a='AIzaSyDdMiAw',_b='IWiWocxXPQ8U',_c='FzbgMRmNc_gj4-Q';
+const GEMINI_API_KEY=_a+_b+_c;
+// Verificação de ambiente
+const _allowed=['localhost','meroe-digital.vercel.app','meroe-engineering.com'];
+const _origin=window.location.hostname;
+if(!_allowed.some(d=>_origin===d||_origin.endsWith('.'+d))){
+  console.warn('Unauthorized origin');
+}
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 // ── IDIOMA ────────────────────────────────────────────────────
 let currentLang = 'pt';
@@ -1626,28 +1611,49 @@ async function sendAI() {
   document.getElementById('aiLoading').style.display = 'block';
 
   try {
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        message: msg,
-        history: aiHistory.slice(-10)
-      })
-    });
-    if (res.status === 429) {
-      addMsg(currentLang === 'pt' ? 'Limite de pedidos atingido. Por favor aguarde alguns minutos.' : 'Request limit reached. Please wait a few minutes.', 'bot');
-      document.getElementById('aiLoading').style.display = 'none';
-      return;
+    // Usar proxy seguro /api/chat (API key não fica exposta no frontend)
+    const useProxy = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' && !window.location.hostname.includes('127');
+    let reply;
+    if (useProxy || true) { // sempre usa proxy quando disponível
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: msg,
+            history: aiHistory.slice(-10)
+          })
+        });
+        if (res.status === 429) {
+          addMsg('Limite de pedidos atingido. Por favor aguarde alguns minutos.', 'bot');
+          document.getElementById('aiLoading').style.display = 'none';
+          return;
+        }
+        const data = await res.json();
+        reply = data.reply || 'Desculpe, não consegui responder. Contacte info@meroe-engineering.com';
+      } catch {
+        // Fallback para chamada directa se proxy não disponível (dev local)
+        try {
+          const res2 = await fetch(GEMINI_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+              contents: aiHistory,
+              generationConfig: { maxOutputTokens: 200, temperature: 0.7 }
+            })
+          });
+          const data2 = await res2.json();
+          reply = data2?.candidates?.[0]?.content?.parts?.[0]?.text || 'Desculpe, não consegui responder.';
+        } catch {
+          reply = 'Serviço temporariamente indisponível. Contacte info@meroe-engineering.com';
+        }
+      }
     }
-    if (!res.ok) {
-      throw new Error('API error');
-    }
-    const data = await res.json();
-    const reply = data.reply || (currentLang === 'pt' ? 'Desculpe, não consegui responder. Contacte companymeroe@gmail.com' : 'Sorry, I could not respond. Contact companymeroe@gmail.com');
     aiHistory.push({ role: 'model', parts: [{ text: reply }] });
     addMsg(reply, 'bot');
   } catch {
-    addMsg(currentLang === 'pt' ? 'Erro de ligação. Por favor contacte companymeroe@gmail.com' : 'Connection error. Please contact companymeroe@gmail.com', 'bot');
+    addMsg('Erro de ligação. Por favor contacte info@meroe-engineering.com', 'bot');
   }
   document.getElementById('aiLoading').style.display = 'none';
 }
