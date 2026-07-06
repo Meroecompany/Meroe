@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Entrar — MEROE Digital</title>
+<meta name="robots" content="noindex"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230A1628'/><text y='.9em' font-size='60' font-family='Arial' font-weight='900' fill='%23C9820A' x='50' text-anchor='middle' dominant-baseline='middle' dy='0.05em'>M</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="platform.css"/>
+<style>
+body { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:2rem 5%; }
+
+/* BACK NAV */
+.top-nav { position:fixed; top:1rem; left:1rem; z-index:50; }
+
+/* CARD */
+.card {
+  background:var(--azul-mid); border:1px solid rgba(201,130,10,.2);
+  border-radius:10px; padding:2.5rem; width:100%; max-width:420px; position:relative;
+}
+.card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--ouro),var(--ouro-clr),transparent);
+  border-radius:10px 10px 0 0;
+}
+.logo { font-family:'Barlow Condensed',sans-serif; font-size:2rem; font-weight:800; text-align:center; margin-bottom:.3rem; }
+.logo-sub { font-size:.6rem; letter-spacing:.28em; color:var(--ouro); text-transform:uppercase; text-align:center; margin-bottom:2rem; font-weight:300; }
+h1 { font-family:'Barlow Condensed',sans-serif; font-size:1.4rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:.3rem; text-align:center; }
+.subtitle { font-size:.85rem; color:var(--cinza); text-align:center; margin-bottom:2rem; }
+
+.mfa-field { display:none; }
+.mfa-field.show { display:flex; flex-direction:column; gap:.4rem; margin-top:.5rem; }
+
+.links { display:flex; justify-content:space-between; margin-top:1.2rem; font-size:.82rem; }
+.links a { color:var(--cinza); transition:color var(--trans); }
+.links a:hover { color:var(--ouro); }
+.divider { display:flex; align-items:center; gap:1rem; margin:1.5rem 0; color:var(--cinza); font-size:.78rem; }
+.divider::before,.divider::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.08); }
+</style>
+</head>
+<body>
+
+<!-- BOTÃO VOLTAR — canto superior esquerdo -->
+<div class="top-nav">
+  <a href="../index.html" class="nav-back" aria-label="Voltar ao website">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Website
+  </a>
+</div>
+
+<div class="card" role="main">
+  <div class="logo">MEROE</div>
+  <div class="logo-sub">Plataforma de Talentos</div>
+  <h1>Entrar na conta</h1>
+  <p class="subtitle">Aceda ao seu perfil profissional</p>
+
+  <div class="alert alert-err" id="errBox" role="alert" aria-live="assertive"><span>⚠</span><span id="errMsg"></span></div>
+  <div class="alert alert-ok"  id="okBox"  role="status" aria-live="polite"><span>✓</span><span id="okMsg"></span></div>
+
+  <div class="field">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" autocomplete="email" required placeholder="nome@email.com"/>
+  </div>
+
+  <div class="field">
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" autocomplete="current-password" required placeholder="••••••••"/>
+  </div>
+
+  <div class="mfa-field" id="mfaField">
+    <label for="mfa_code">Código de autenticação (6 dígitos)</label>
+    <input type="text" id="mfa_code" name="mfa_code" inputmode="numeric" pattern="\d{6}" maxlength="6" autocomplete="one-time-code" placeholder="000000"/>
+  </div>
+
+  <button class="btn btn-primary btn-full" id="loginBtn" onclick="doLogin()" style="margin-top:.8rem">
+    Entrar
+  </button>
+
+  <div class="links">
+    <a href="forgot-password.html">Esqueci a password</a>
+    <a href="register.html">Criar conta</a>
+  </div>
+</div>
+
+<script>
+const API = (location.hostname === 'localhost' || location.hostname.includes('127'))
+  ? 'http://localhost:4000/api' : '/api';
+
+// Mostrar mensagem de email verificado
+const params = new URLSearchParams(location.search);
+if (params.get('verified') === '1') {
+  const ok = document.getElementById('okBox');
+  document.getElementById('okMsg').textContent = 'Email verificado! Pode agora fazer login.';
+  ok.classList.add('show');
+}
+if (params.get('reset') === '1') {
+  const ok = document.getElementById('okBox');
+  document.getElementById('okMsg').textContent = 'Password alterada com sucesso. Faça login.';
+  ok.classList.add('show');
+}
+
+// ── LOGIN ─────────────────────────────────────────────────────
+async function doLogin() {
+  const btn   = document.getElementById('loginBtn');
+  const email = document.getElementById('email').value.trim();
+  const pass  = document.getElementById('password').value;
+  const mfa   = document.getElementById('mfa_code').value.trim();
+
+  clearAlerts();
+
+  if (!email || !pass) return showErr('Por favor preencha email e password.');
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> A entrar...';
+
+  try {
+    const body = { email, password: pass };
+    if (mfa) body.mfa_code = mfa;
+
+    const r = await fetch(`${API}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(body),
+    });
+    const d = await r.json();
+
+    if (r.status === 200 && d.mfa_required) {
+      document.getElementById('mfaField').classList.add('show');
+      document.getElementById('mfa_code').focus();
+      showOk('Introduza o código da sua app autenticadora.');
+      btn.disabled = false;
+      btn.textContent = 'Verificar';
+      return;
+    }
+
+    if (!r.ok) {
+      showErr(d.error || 'Erro ao entrar. Tente novamente.');
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+      return;
+    }
+
+    // Guardar token e user em sessionStorage
+    sessionStorage.setItem('meroe_token', d.accessToken);
+    sessionStorage.setItem('meroe_user', JSON.stringify(d.user));
+
+    // Redirecionar conforme papel
+    const role = d.user?.role;
+    if (['super_admin', 'recruiter'].includes(role)) {
+      window.location.href = 'admin.html';
+    } else {
+      window.location.href = 'dashboard.html';
+    }
+
+  } catch {
+    showErr('Erro de ligação. Verifique a sua internet e tente novamente.');
+    btn.disabled = false;
+    btn.textContent = 'Entrar';
+  }
+}
+
+function showErr(msg) {
+  document.getElementById('errMsg').textContent = msg;
+  document.getElementById('errBox').classList.add('show');
+  document.getElementById('okBox').classList.remove('show');
+}
+function showOk(msg) {
+  document.getElementById('okMsg').textContent = msg;
+  document.getElementById('okBox').classList.add('show');
+  document.getElementById('errBox').classList.remove('show');
+}
+function clearAlerts() {
+  document.getElementById('errBox').classList.remove('show');
+  document.getElementById('okBox').classList.remove('show');
+}
+
+// Enter key
+document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+// Limpar token antigo ao chegar ao login
+sessionStorage.removeItem('meroe_token');
+sessionStorage.removeItem('meroe_user');
+</script>
+</body>
+</html>

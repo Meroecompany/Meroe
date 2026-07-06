@@ -1,0 +1,66 @@
+# MEROE Platform v2 — Docker Compose (desenvolvimento local)
+# USO: docker compose up
+# Ver emails de teste: http://localhost:8025
+version: '3.9'
+
+services:
+  api:
+    build: .
+    ports: ["4000:4000"]
+    environment:
+      NODE_ENV: development
+      PORT: 4000
+      DATABASE_URL: postgresql://meroe:meroe123@postgres:5432/meroe_db
+      JWT_SECRET: dev_secret_change_in_production_64chars_minimum_here_AAAA
+      JWT_EXPIRES_IN: 15m
+      REFRESH_TOKEN_SECRET: dev_refresh_secret_change_in_production_64chars_minimum_BBBB
+      REFRESH_TOKEN_EXPIRES_IN: 7d
+      COOKIE_SECRET: dev_cookie_secret_32chars_minimum_CC
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID:-}
+      FIREBASE_CLIENT_EMAIL: ${FIREBASE_CLIENT_EMAIL:-}
+      FIREBASE_PRIVATE_KEY: ${FIREBASE_PRIVATE_KEY:-}
+      FIREBASE_STORAGE_BUCKET: ${FIREBASE_STORAGE_BUCKET:-}
+      SMTP_HOST: mailhog
+      SMTP_PORT: 1025
+      SMTP_USER: test@meroe.local
+      SMTP_PASS: ""
+      APP_URL: http://localhost:4000
+      ALLOWED_ORIGINS: http://localhost:5500,http://127.0.0.1:5500,http://localhost:3000
+      LOG_LEVEL: debug
+    depends_on:
+      postgres: { condition: service_healthy }
+    volumes:
+      - ./src:/app/src:ro
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:4000/api/health/ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: meroe
+      POSTGRES_PASSWORD: meroe123
+      POSTGRES_DB: meroe_db
+    ports: ["5432:5432"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./sql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U meroe -d meroe_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports: ["1025:1025", "8025:8025"]
+    restart: unless-stopped
+
+volumes:
+  pgdata:

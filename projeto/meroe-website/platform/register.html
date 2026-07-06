@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Registo de Técnico — MEROE Digital</title>
+<meta name="robots" content="noindex"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230A1628'/><text y='.9em' font-size='60' font-family='Arial' font-weight='900' fill='%23C9820A' x='50' text-anchor='middle' dominant-baseline='middle' dy='0.05em'>M</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="platform.css"/>
+<style>
+body { min-height:100vh; }
+.topbar { background:rgba(5,12,24,.97); border-bottom:1px solid rgba(201,130,10,.3); padding:.9rem 5%; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
+.main  { max-width:760px; margin:0 auto; padding:3rem 5% 5rem; }
+.steps { display:flex; gap:0; margin-bottom:2.5rem; border-radius:var(--radius); overflow:hidden; border:1px solid rgba(201,130,10,.2); }
+.step  { flex:1; padding:.7rem; text-align:center; font-size:.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--cinza); background:var(--azul-mid); transition:all var(--trans); border-right:1px solid rgba(201,130,10,.15); }
+.step:last-child { border-right:none; }
+.step.active { background:rgba(201,130,10,.12); color:var(--ouro); }
+.step.done   { background:rgba(26,158,117,.1); color:var(--verde); }
+.form-card { background:var(--azul-mid); border:1px solid rgba(201,130,10,.15); border-radius:8px; padding:2rem; margin-bottom:1.5rem; }
+.form-card-title { font-family:'Barlow Condensed',sans-serif; font-size:1.3rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--ouro); margin-bottom:1.5rem; padding-bottom:.8rem; border-bottom:1px solid rgba(201,130,10,.2); }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.field.full { grid-column:1/-1; }
+label .req { color:var(--ouro); margin-left:2px; }
+textarea { min-height:100px; resize:vertical; }
+.check-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:.5rem; margin-top:.3rem; }
+.check-item { display:flex; align-items:center; gap:.6rem; background:rgba(10,22,40,.5); border:1px solid rgba(201,130,10,.1); border-radius:var(--radius); padding:.5rem .8rem; cursor:pointer; transition:all var(--trans); }
+.check-item:hover { border-color:var(--ouro); }
+.check-item input[type=checkbox] { width:16px; height:16px; cursor:pointer; accent-color:var(--ouro); flex-shrink:0; }
+.check-item label { font-size:.82rem; font-weight:400; letter-spacing:0; text-transform:none; color:var(--cinza-clr); cursor:pointer; }
+.toggle-row { display:flex; align-items:center; gap:1rem; padding:.8rem 0; }
+.toggle { position:relative; width:48px; height:26px; flex-shrink:0; }
+.toggle input { opacity:0; width:0; height:0; }
+.toggle-slider { position:absolute; inset:0; background:rgba(138,151,170,.3); border-radius:13px; cursor:pointer; transition:var(--trans); }
+.toggle-slider::before { content:''; position:absolute; width:20px; height:20px; left:3px; top:3px; background:var(--cinza); border-radius:50%; transition:var(--trans); }
+.toggle input:checked+.toggle-slider { background:rgba(201,130,10,.4); }
+.toggle input:checked+.toggle-slider::before { transform:translateX(22px); background:var(--ouro); }
+.upload-zone { border:2px dashed rgba(201,130,10,.3); border-radius:var(--radius); padding:2rem; text-align:center; cursor:pointer; transition:all var(--trans); background:rgba(10,22,40,.5); position:relative; }
+.upload-zone:hover,.upload-zone.dragover { border-color:var(--ouro); background:rgba(201,130,10,.05); }
+.upload-zone input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; }
+.upload-preview { display:none; align-items:center; gap:.8rem; background:rgba(26,158,117,.1); border:1px solid rgba(26,158,117,.3); border-radius:var(--radius); padding:.8rem 1rem; margin-top:1rem; }
+.upload-preview.show { display:flex; }
+.pass-strength { height:4px; border-radius:2px; background:rgba(255,255,255,.1); margin-top:.5rem; }
+.pass-strength-fill { height:100%; border-radius:2px; transition:all var(--trans); width:0; }
+.btn-row { display:flex; justify-content:space-between; gap:1rem; margin-top:2rem; }
+.success-screen { display:none; text-align:center; padding:3rem 1rem; }
+@media(max-width:600px) { .form-grid{grid-template-columns:1fr} .btn-row{flex-direction:column} .steps{font-size:.65rem} }
+</style>
+</head>
+<body>
+<nav class="topbar" role="navigation">
+  <div style="display:flex;align-items:center;gap:.8rem">
+    <!-- BOTÃO VOLTAR — canto superior esquerdo -->
+    <a href="../index.html" class="nav-back" aria-label="Voltar ao website">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Website
+    </a>
+    <a href="../index.html" style="font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:800;color:var(--branco);text-decoration:none">MEROE</a>
+  </div>
+  <div style="display:flex;gap:1.5rem;align-items:center;font-size:.8rem">
+    <a href="login.html" style="color:var(--cinza);font-weight:500;letter-spacing:.08em">Já tenho conta →</a>
+  </div>
+</nav>
+
+<main class="main" role="main">
+  <div style="text-align:center;margin-bottom:2.5rem">
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:2.2rem;font-weight:800;text-transform:uppercase;margin-bottom:.5rem">Registe o seu <span style="color:var(--ouro)">Perfil Técnico</span></h1>
+    <p style="color:var(--cinza-clr);font-size:.95rem">Aceda a oportunidades em Oil & Gas, TARs e projectos de engenharia em Angola</p>
+  </div>
+
+  <div class="steps" role="progressbar" aria-label="Progresso do registo">
+    <div class="step active" id="si1" aria-current="step">1. Conta</div>
+    <div class="step" id="si2">2. Perfil</div>
+    <div class="step" id="si3">3. Experiência</div>
+    <div class="step" id="si4">4. CV</div>
+  </div>
+
+  <div class="alert alert-err" id="gErr" role="alert" aria-live="assertive"><span>⚠</span><span id="gErrMsg"></span></div>
+
+  <!-- STEP 1 — Dados de acesso -->
+  <div id="s1">
+    <div class="form-card">
+      <div class="form-card-title">Dados de acesso</div>
+      <div class="form-grid">
+        <div class="field full">
+          <label for="full_name">Nome completo <span class="req">*</span></label>
+          <input id="full_name" type="text" autocomplete="name" maxlength="255" placeholder="Nome e Apelido"/>
+          <span class="field-err" id="e-full_name">Nome obrigatório (mínimo 2 caracteres)</span>
+        </div>
+        <div class="field">
+          <label for="email">Email <span class="req">*</span></label>
+          <input id="email" type="email" autocomplete="email" maxlength="255" placeholder="seu@email.com"/>
+          <span class="field-err" id="e-email">Email inválido</span>
+        </div>
+        <div class="field">
+          <label for="phone">Telefone</label>
+          <input id="phone" type="tel" autocomplete="tel" maxlength="50" placeholder="+244 9xx xxx xxx"/>
+        </div>
+        <div class="field">
+          <label for="password">Password <span class="req">*</span></label>
+          <input id="password" type="password" autocomplete="new-password" maxlength="128" placeholder="Mínimo 8 caracteres"/>
+          <div class="pass-strength"><div class="pass-strength-fill" id="pStr"></div></div>
+          <small id="pHint" style="font-size:.72rem;color:var(--cinza)">Use maiúsculas, minúsculas, números e símbolos</small>
+          <span class="field-err" id="e-password">Password fraca — mínimo 8 char com maiúsculas, minúsculas, números e símbolo</span>
+        </div>
+        <div class="field">
+          <label for="password2">Confirmar password <span class="req">*</span></label>
+          <input id="password2" type="password" autocomplete="new-password" maxlength="128" placeholder="Repetir password"/>
+          <span class="field-err" id="e-password2">Passwords não coincidem</span>
+        </div>
+        <div class="field">
+          <label for="role">Tipo de conta <span class="req">*</span></label>
+          <select id="role">
+            <option value="technician">Técnico / Especialista</option>
+            <option value="partner">Empresa Parceira</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top:1rem;font-size:.82rem;color:var(--cinza)">
+        Ao continuar aceita os <a href="../terms.html" target="_blank" rel="noopener">Termos de Uso</a> e <a href="../privacy.html" target="_blank" rel="noopener">Política de Privacidade</a>.
+      </div>
+    </div>
+    <div class="btn-row"><span></span><button class="btn btn-primary" onclick="next(1)" type="button">Continuar →</button></div>
+  </div>
+
+  <!-- STEP 2 — Informação profissional -->
+  <div id="s2" style="display:none">
+    <div class="form-card">
+      <div class="form-card-title">Informação profissional</div>
+      <div class="form-grid">
+        <div class="field"><label for="nationality">Nacionalidade</label><input id="nationality" type="text" maxlength="100" placeholder="Ex: Angolana"/></div>
+        <div class="field"><label for="location_city">Cidade</label><input id="location_city" type="text" maxlength="100" placeholder="Ex: Luanda"/></div>
+        <div class="field">
+          <label for="location_country">País</label>
+          <select id="location_country">
+            <option value="Angola" selected>Angola</option>
+            <option>Portugal</option><option>Brasil</option><option>Moçambique</option>
+            <option>Nigéria</option><option>África do Sul</option>
+            <option>Reino Unido</option><option>França</option><option>Outro</option>
+          </select>
+        </div>
+        <div class="field"><label for="linkedin_url">LinkedIn (opcional)</label><input id="linkedin_url" type="url" maxlength="500" placeholder="https://linkedin.com/in/..."/></div>
+        <div class="field">
+          <label for="discipline">Disciplina <span class="req">*</span></label>
+          <select id="discipline">
+            <option value="">Seleccionar...</option>
+            <option>Mechanical Engineering</option><option>Electrical Engineering</option>
+            <option>Civil Engineering</option><option>Process Engineering</option>
+            <option>Instrumentation &amp; Control</option><option>Pipeline Engineering</option>
+            <option>Structural Engineering</option><option>HSE / Safety</option>
+            <option>Project Management</option><option>Operations &amp; Maintenance</option>
+            <option>Inspection &amp; QC</option><option>Commissioning</option>
+            <option>Welding &amp; Fabrication</option><option>Rotating Equipment</option>
+            <option>Supply Chain / Procurement</option>
+          </select>
+          <span class="field-err" id="e-discipline">Disciplina obrigatória</span>
+        </div>
+        <div class="field">
+          <label for="seniority_level">Senioridade <span class="req">*</span></label>
+          <select id="seniority_level">
+            <option value="">Seleccionar...</option>
+            <option value="junior">Junior (0-3 anos)</option>
+            <option value="mid">Mid-level (3-7 anos)</option>
+            <option value="senior">Senior (7-15 anos)</option>
+            <option value="lead">Lead / Principal (15+)</option>
+            <option value="expert">Expert / Consultor</option>
+          </select>
+          <span class="field-err" id="e-seniority_level">Nível obrigatório</span>
+        </div>
+        <div class="field">
+          <label for="experience_years">Anos de experiência <span class="req">*</span></label>
+          <input id="experience_years" type="number" min="0" max="60" placeholder="Ex: 8"/>
+          <span class="field-err" id="e-experience_years">Valor inválido (0–60)</span>
+        </div>
+        <div class="field">
+          <label for="daily_rate_usd">Taxa diária USD (opcional)</label>
+          <input id="daily_rate_usd" type="number" min="0" max="10000" placeholder="Ex: 350"/>
+        </div>
+        <div class="field full">
+          <label for="professional_summary">Resumo profissional</label>
+          <textarea id="professional_summary" maxlength="2000" placeholder="Descreva a sua experiência em Oil & Gas, projectos relevantes e especialização..."></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="prev(2)" type="button">← Voltar</button>
+      <button class="btn btn-primary" onclick="next(2)" type="button">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 — Certificações, Skills, Disponibilidade -->
+  <div id="s3" style="display:none">
+    <div class="form-card">
+      <div class="form-card-title">Certificações</div>
+      <div class="check-grid" id="certs"></div>
+    </div>
+    <div class="form-card">
+      <div class="form-card-title">Skills Técnicas</div>
+      <div class="field">
+        <label for="skills_input">Skills (separadas por vírgula)</label>
+        <input id="skills_input" type="text" maxlength="1000" placeholder="Ex: AutoCAD, PDMS, SAP PM, HAZOP, P&ID, Primavera P6"/>
+      </div>
+      <div style="margin-top:.8rem" id="skills-tags" aria-label="Skills seleccionadas"></div>
+    </div>
+    <div class="form-card">
+      <div class="form-card-title">Línguas</div>
+      <div id="langs">
+        <div class="form-grid lang-row" style="margin-bottom:.8rem">
+          <div class="field"><label>Língua</label><input type="text" class="lang-name" placeholder="Ex: Português" maxlength="50"/></div>
+          <div class="field"><label>Nível</label>
+            <select class="lang-level">
+              <option value="native">Nativo</option><option value="fluent">Fluente</option>
+              <option value="intermediate">Intermédio</option><option value="basic">Básico</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <button type="button" onclick="addLang()" style="font-size:.78rem;color:var(--ouro);background:none;border:none;cursor:pointer;padding:.3rem 0;letter-spacing:.1em">+ Adicionar língua</button>
+    </div>
+    <div class="form-card">
+      <div class="form-card-title">Disponibilidade para TARs</div>
+      <div class="toggle-row">
+        <label class="toggle">
+          <input type="checkbox" id="available_for_tars" checked aria-label="Disponível para TARs"/>
+          <span class="toggle-slider"></span>
+        </label>
+        <span style="font-size:.9rem;color:var(--cinza-clr)">Disponível para Turnarounds e Shutdowns (TARs)</span>
+      </div>
+      <div class="form-grid" style="margin-top:1rem">
+        <div class="field"><label for="availability_from">Disponível a partir de</label><input type="date" id="availability_from"/></div>
+        <div class="field full"><label for="availability_notes">Notas</label><input type="text" id="availability_notes" maxlength="500" placeholder="Ex: Disponível para projecto de 3 meses a partir de Julho 2026"/></div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="prev(3)" type="button">← Voltar</button>
+      <button class="btn btn-primary" onclick="next(3)" type="button">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4 — CV -->
+  <div id="s4" style="display:none">
+    <div class="form-card">
+      <div class="form-card-title">Curriculum Vitae</div>
+      <p style="color:var(--cinza-clr);font-size:.9rem;margin-bottom:1.5rem">Faça upload do seu CV em PDF. O Gemini AI irá analisá-lo e preencher automaticamente o seu perfil.</p>
+      <div class="upload-zone" id="uZone">
+        <input type="file" id="cvFile" accept=".pdf" aria-label="Seleccionar CV em PDF"/>
+        <div style="font-size:2.5rem;margin-bottom:.8rem">📄</div>
+        <div style="font-size:.9rem;color:var(--cinza-clr)">Arraste o PDF aqui ou clique para seleccionar</div>
+        <div style="font-size:.78rem;color:var(--cinza);margin-top:.3rem">Apenas PDF · Máximo 10 MB</div>
+      </div>
+      <div class="upload-preview" id="uPrev">
+        <span>📎</span>
+        <span id="uName" style="flex:1;font-size:.88rem;color:var(--verde)"></span>
+        <button type="button" onclick="rmFile()" style="background:none;border:none;color:var(--cinza);cursor:pointer;font-size:1.1rem" aria-label="Remover ficheiro">✕</button>
+      </div>
+    </div>
+    <div class="form-card" style="border-color:rgba(26,158,117,.2)">
+      <div style="display:flex;gap:1rem;align-items:flex-start">
+        <span style="font-size:1.5rem">🤖</span>
+        <div>
+          <div style="font-size:.85rem;font-weight:600;color:var(--verde);margin-bottom:.3rem">Análise por IA Gemini</div>
+          <div style="font-size:.85rem;color:var(--cinza-clr);line-height:1.6">Após submissão, o sistema irá extrair automaticamente disciplina, certificações, anos de experiência, skills e gerar um score de compatibilidade com projectos O&G.</div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="prev(4)" type="button">← Voltar</button>
+      <button class="btn btn-primary" id="subBtn" onclick="submitAll()" type="button">Submeter Registo ✓</button>
+    </div>
+  </div>
+
+  <!-- SUCESSO -->
+  <div class="success-screen" id="successScreen" aria-live="polite">
+    <div style="font-size:4rem;margin-bottom:1rem">✅</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:800;text-transform:uppercase;color:var(--verde);margin-bottom:.8rem">Registo submetido!</div>
+    <p style="color:var(--cinza-clr);line-height:1.7;max-width:480px;margin:0 auto 2rem">O seu perfil foi enviado para análise. Verifique o seu email para confirmar a sua conta. Após aprovação, poderá ser contactado para oportunidades.</p>
+    <a href="login.html" class="btn btn-primary" style="display:inline-flex">Entrar na minha conta →</a>
+  </div>
+</main>
+
+<script>
+const API = (location.hostname==='localhost'||location.hostname.includes('127'))?'http://localhost:4000/api':'/api';
+
+const CERTS = ['API 510','API 570','API 653','API 580','ASME','NEBOSH IGC','NEBOSH NGC','IOSH','BOSIET','HUET','IWCF','OPITO','ISO 9001','ISO 14001','PMP','PRINCE2','Six Sigma','Primavera P6','CSWIP 3.1','CSWIP 3.2','AWS CWI','GWO Basic Safety'];
+const certsEl = document.getElementById('certs');
+CERTS.forEach(c => {
+  const id = 'c-' + c.replace(/\s/g,'-').replace(/[^A-Za-z0-9-]/g,'');
+  const div = document.createElement('div');
+  div.className = 'check-item';
+  div.innerHTML = `<input type="checkbox" id="${id}" value="${c}"/><label for="${id}">${c}</label>`;
+  certsEl.appendChild(div);
+});
+
+// ── Password strength ──────────────────────────────────────────
+document.getElementById('password').addEventListener('input', function() {
+  const v = this.value; let s = 0;
+  if(v.length>=8)s++; if(v.length>=12)s++;
+  if(/[A-Z]/.test(v))s++; if(/[a-z]/.test(v))s++;
+  if(/\d/.test(v))s++; if(/[^A-Za-z0-9]/.test(v))s++;
+  const f = document.getElementById('pStr'), h = document.getElementById('pHint');
+  f.style.width = Math.round(s/6*100)+'%';
+  f.style.background = s<3?'#E05252':s<5?'#EF9F27':'#1A9E75';
+  h.textContent = s<3?'Fraca':s<5?'Razoável':'Forte ✓'; h.style.color = f.style.background;
+});
+
+// ── Skills tags (preview) ─────────────────────────────────────
+document.getElementById('skills_input').addEventListener('input', function() {
+  const tags = this.value.split(',').map(s=>s.trim()).filter(Boolean);
+  // Safe: textContent used, no innerHTML with user data
+  document.getElementById('skills-tags').innerHTML = '';
+  tags.forEach(t => {
+    const span = document.createElement('span');
+    span.textContent = t;
+    span.style.cssText = 'display:inline-block;background:rgba(201,130,10,.12);border:1px solid rgba(201,130,10,.25);color:var(--ouro);padding:.25rem .7rem;border-radius:2px;font-size:.78rem;margin:.2rem';
+    document.getElementById('skills-tags').appendChild(span);
+  });
+});
+
+// ── Línguas ───────────────────────────────────────────────────
+function addLang() {
+  const d = document.createElement('div');
+  d.className = 'form-grid lang-row';
+  d.style.marginBottom = '.8rem';
+  d.innerHTML = `<div class="field"><input type="text" class="lang-name" placeholder="Ex: Inglês" maxlength="50"/></div>
+    <div class="field" style="display:flex;gap:.5rem;align-items:flex-end">
+      <select class="lang-level" style="flex:1">
+        <option value="native">Nativo</option><option value="fluent">Fluente</option>
+        <option value="intermediate">Intermédio</option><option value="basic">Básico</option>
+      </select>
+      <button type="button" onclick="this.closest('.lang-row').remove()" style="background:rgba(224,82,82,.15);border:1px solid rgba(224,82,82,.3);color:#FF8F8F;border-radius:var(--radius);padding:.7rem .9rem;cursor:pointer" aria-label="Remover língua">✕</button>
+    </div>`;
+  document.getElementById('langs').appendChild(d);
+}
+
+// ── Upload ────────────────────────────────────────────────────
+let selFile = null;
+const uZone = document.getElementById('uZone');
+uZone.addEventListener('dragover', e => { e.preventDefault(); uZone.classList.add('dragover'); });
+uZone.addEventListener('dragleave', () => uZone.classList.remove('dragover'));
+uZone.addEventListener('drop', e => { e.preventDefault(); uZone.classList.remove('dragover'); if(e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]); });
+document.getElementById('cvFile').addEventListener('change', e => { if(e.target.files[0]) setFile(e.target.files[0]); });
+
+function setFile(f) {
+  if(f.type !== 'application/pdf') { showErr('Apenas PDF aceite.'); return; }
+  if(f.size > 10*1024*1024) { showErr('Ficheiro demasiado grande (máx 10 MB).'); return; }
+  selFile = f;
+  document.getElementById('uName').textContent = f.name;
+  document.getElementById('uPrev').classList.add('show');
+  clearErr();
+}
+function rmFile() { selFile=null; document.getElementById('cvFile').value=''; document.getElementById('uPrev').classList.remove('show'); }
+
+// ── Alerts ────────────────────────────────────────────────────
+function showFieldErr(id, show) {
+  document.getElementById('e-'+id)?.classList.toggle('show', show);
+  document.getElementById(id)?.classList.toggle('error', show);
+}
+function clearErr() { document.getElementById('gErr').classList.remove('show'); }
+function showErr(m) {
+  document.getElementById('gErrMsg').textContent = m;
+  document.getElementById('gErr').classList.add('show');
+  document.getElementById('gErr').scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+// ── Validação por step ────────────────────────────────────────
+function validateStep(step) {
+  let ok = true;
+  if(step===1) {
+    const n = document.getElementById('full_name').value.trim();
+    const e = document.getElementById('email').value.trim();
+    const p = document.getElementById('password').value;
+    const p2 = document.getElementById('password2').value;
+    showFieldErr('full_name', n.length<2); if(n.length<2) ok=false;
+    const eOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); showFieldErr('email',!eOk); if(!eOk) ok=false;
+    const pOk = p.length>=8&&/[A-Z]/.test(p)&&/[a-z]/.test(p)&&/\d/.test(p)&&/[^A-Za-z0-9]/.test(p);
+    showFieldErr('password',!pOk); if(!pOk) ok=false;
+    showFieldErr('password2', p!==p2); if(p!==p2) ok=false;
+  }
+  if(step===2) {
+    const d = document.getElementById('discipline').value;
+    const sl = document.getElementById('seniority_level').value;
+    const ey = parseInt(document.getElementById('experience_years').value);
+    showFieldErr('discipline',!d); if(!d) ok=false;
+    showFieldErr('seniority_level',!sl); if(!sl) ok=false;
+    showFieldErr('experience_years', isNaN(ey)||ey<0||ey>60); if(isNaN(ey)||ey<0||ey>60) ok=false;
+  }
+  return ok;
+}
+
+// ── Navegação entre steps ─────────────────────────────────────
+function showStep(n) {
+  for(let i=1;i<=4;i++) {
+    document.getElementById('s'+i).style.display = i===n?'block':'none';
+    const ind = document.getElementById('si'+i);
+    ind.className = 'step'+(i===n?' active':i<n?' done':'');
+    ind.setAttribute('aria-current', i===n?'step':'false');
+  }
+  window.scrollTo({ top:0, behavior:'smooth' });
+  clearErr();
+}
+function next(c) { if(!validateStep(c)) { showErr('Por favor corrija os erros antes de continuar.'); return; } showStep(c+1); }
+function prev(c) { showStep(c-1); }
+
+// ── SUBMIT ────────────────────────────────────────────────────
+async function submitAll() {
+  const btn = document.getElementById('subBtn');
+  btn.disabled = true; btn.textContent = '⏳ A registar...'; clearErr();
+
+  const body = {
+    email:     document.getElementById('email').value.trim().toLowerCase(),
+    password:  document.getElementById('password').value,
+    full_name: document.getElementById('full_name').value.trim(),
+    role:      document.getElementById('role').value,
+    phone:     document.getElementById('phone').value.trim() || undefined,
+  };
+
+  try {
+    // 1. Registar conta
+    const r = await fetch(`${API}/auth/register`, {
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body),
+    });
+    const d = await r.json();
+    if(!r.ok) { showErr(d.error||'Erro ao criar conta.'); btn.disabled=false; btn.textContent='Submeter Registo ✓'; return; }
+
+    // 2. Login automático
+    const lr = await fetch(`${API}/auth/login`, {
+      method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include',
+      body: JSON.stringify({ email:body.email, password:body.password }),
+    });
+    const ld = await lr.json();
+
+    if(lr.ok && ld.accessToken) {
+      sessionStorage.setItem('meroe_token', ld.accessToken);
+      sessionStorage.setItem('meroe_user', JSON.stringify(ld.user));
+      // 3. Guardar perfil
+      await saveProfile(ld.accessToken);
+      // 4. Upload CV (se existir)
+      if(selFile) await uploadCV(ld.accessToken);
+    }
+
+    // Mostrar sucesso
+    document.getElementById('s4').style.display = 'none';
+    document.getElementById('successScreen').style.display = 'block';
+    window.scrollTo({ top:0, behavior:'smooth' });
+
+  } catch {
+    showErr('Erro de ligação. Verifique a sua internet e tente novamente.');
+    btn.disabled=false; btn.textContent='Submeter Registo ✓';
+  }
+}
+
+async function saveProfile(token) {
+  const data = {
+    nationality:          document.getElementById('nationality').value.trim(),
+    location_city:        document.getElementById('location_city').value.trim(),
+    location_country:     document.getElementById('location_country').value,
+    discipline:           document.getElementById('discipline').value,
+    seniority_level:      document.getElementById('seniority_level').value,
+    experience_years:     parseInt(document.getElementById('experience_years').value)||0,
+    professional_summary: document.getElementById('professional_summary').value.trim(),
+    linkedin_url:         document.getElementById('linkedin_url').value.trim(),
+    daily_rate_usd:       parseFloat(document.getElementById('daily_rate_usd').value)||null,
+    available_for_tars:   document.getElementById('available_for_tars').checked,
+    availability_from:    document.getElementById('availability_from').value||null,
+    availability_notes:   document.getElementById('availability_notes').value.trim(),
+    certifications: [...document.querySelectorAll('#certs input:checked')].map(c=>({name:c.value})),
+    skills: document.getElementById('skills_input').value.split(',').map(s=>s.trim()).filter(Boolean),
+    languages: [...document.querySelectorAll('.lang-row')].map(r=>({
+      language: r.querySelector('.lang-name')?.value?.trim()||'',
+      level:    r.querySelector('.lang-level')?.value||'fluent',
+    })).filter(l=>l.language),
+  };
+  await fetch(`${API}/profiles/me`, {
+    method:'PUT', headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},
+    credentials:'include', body:JSON.stringify(data),
+  }).catch(()=>{});
+}
+
+async function uploadCV(token) {
+  const fd = new FormData();
+  fd.append('cv', selFile);
+  await fetch(`${API}/upload/cv`, {
+    method:'POST', headers:{'Authorization':`Bearer ${token}`},
+    credentials:'include', body:fd,
+  }).catch(()=>{});
+}
+</script>
+</body>
+</html>

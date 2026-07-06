@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="pt" data-lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://generativelanguage.googleapis.com; img-src 'self' data:; frame-ancestors 'none';"/>
+<meta http-equiv="X-Content-Type-Options" content="nosniff"/>
+<meta http-equiv="X-Frame-Options" content="DENY"/>
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/>
+<title>MEROE – Soluções em Engenharia Lda.</title>
+<meta name="description" content="MEROE é uma empresa angolana de engenharia especializada em soluções técnicas para os sectores de energia e Oil & Gas — Upstream, Downstream e TARs."/>
+<meta property="og:title" content="MEROE – Soluções em Engenharia"/>
+<meta property="og:description" content="Engenharia de excelência para o sector energético angolano."/>
+<meta property="og:type" content="website"/>
+<meta name="keywords" content="MEROE, engenharia Angola, Oil Gas Angola, TARs, turnarounds, upstream downstream, engenharia industrial, Luanda"/>
+<meta name="robots" content="index, follow"/>
+<meta name="author" content="MEROE – Soluções em Engenharia Lda."/>
+<meta property="og:url" content="https://meroe-engineering.com/"/>
+<meta property="og:site_name" content="MEROE – Soluções em Engenharia"/>
+<link rel="canonical" href="https://meroe-digital.vercel.app/"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230A1628'/><text y='.9em' font-size='60' font-family='Arial' font-weight='900' fill='%23C9820A' x='50' text-anchor='middle' dominant-baseline='middle' dy='0.05em'>M</text></svg>"/>
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230A1628'/><text y='.9em' font-size='60' font-family='Arial' font-weight='900' fill='%23C9820A' x='50' text-anchor='middle' dominant-baseline='middle' dy='0.05em'>M</text></svg>"/>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&display=swap" as="style"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "MEROE – Soluções em Engenharia Lda.",
+  "url": "https://meroe-engineering.com",
+  "logo": "https://meroe-engineering.com/favicon.svg",
+  "description": "Empresa angolana de engenharia especializada em Oil & Gas, Upstream, Downstream e TARs.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Luanda",
+    "addressCountry": "AO"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "info@meroe-engineering.com",
+    "contactType": "customer service"
+  },
+  "sameAs": [],
+  "areaServed": "AO",
+  "knowsAbout": ["Oil and Gas Engineering", "Turnarounds", "Industrial Construction", "Maintenance Operations"]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="dns-prefetch" href="https://generativelanguage.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet"/>
+<style>
+/* ══════════════════════════════════════════════
+   MEROE WEBSITE — CSS COMPLETO
+══════════════════════════════════════════════ */
+:root {
+  /* Vibrant & Premium Colors */
+  --azul:      #040D1A;
+  --azul-mid:  #0A1A33;
+  --azul-clr:  #102A52;
+  --ouro:      #E69500;
+  --ouro-clr:  #FFB01A;
+  --ouro-pale: #FFDA73;
+  --branco:    #FAFCFF;
+  --cinza:     #9BA8B8;
+  --cinza-clr: #D4DBE2;
+  --preto:     #02060C;
+  --verde:     #1E8A4A;
+  
+  /* Modern Accents */
+  --accent-glow: rgba(230, 149, 0, 0.4);
+  --linha:     rgba(230, 149, 0, 0.35);
+  
+  /* Glassmorphism */
+  --glass-bg:    rgba(10, 26, 51, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --glass-blur:  blur(12px);
+
+  /* Effects */
+  --trans:     0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow:    0 10px 50px rgba(0,0,0,0.5);
+  --radius:    8px;
+}
+
+/* ══ UTILITY CLASSES (DRY — evita repetição) ══ */
+.font-condensed{font-family:'Barlow Condensed',sans-serif}
+.uppercase{text-transform:uppercase}
+.transition-all{transition:all var(--trans)}
+.radius{border-radius:var(--radius)}
+.flex-center{display:flex;align-items:center;justify-content:center}
+.flex-between{display:flex;align-items:center;justify-content:space-between}
+/* ══════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Barlow',sans-serif;
+  background:var(--azul);
+  color:var(--branco);
+  overflow-x:hidden;
+  line-height:1.7;
+}
+::-webkit-scrollbar{width:4px}
+/* ── UTILITÁRIOS REUTILIZÁVEIS (DRY) ── */
+.u-condensed{font-family:"Barlow Condensed",sans-serif}
+.u-uppercase{text-transform:uppercase}
+.u-ouro{color:var(--ouro)}
+.u-cinza{color:var(--cinza)}
+.u-bold{font-weight:600}
+.u-letter-wide{letter-spacing:.14em}
+.u-trans{transition:all var(--trans)}
+::-webkit-scrollbar-track{background:var(--preto)}
+::-webkit-scrollbar-thumb{background:var(--ouro);border-radius:2px}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.container{max-width:1200px;margin:0 auto;padding:0 5%}
+
+
+/* ── UTILITÁRIOS GLOBAIS — DRY (não repetir no CSS) ── */
+.flex        { display:flex }
+.flex-col    { display:flex; flex-direction:column }
+.items-c     { align-items:center }
+.gap-sm      { gap:.5rem }
+.gap-md      { gap:1rem }
+.gap-lg      { gap:2rem }
+.upper       { text-transform:uppercase }
+.fw-300      { font-weight:300 }
+.fw-500      { font-weight:500 }
+.fw-600      { font-weight:600 }
+.fw-700      { font-weight:700 }
+.c-ouro      { color:var(--ouro) }
+.c-cinza     { color:var(--cinza) }
+.c-branco    { color:var(--branco) }
+.bg-ouro     { background:var(--ouro) }
+.condensed   { font-family:'Barlow Condensed',sans-serif }
+.trans       { transition:all var(--trans) }
+.ls-wide     { letter-spacing:.14em }
+.ls-wider    { letter-spacing:.22em }
+.hidden      { display:none }
+.pointer     { cursor:pointer }
+
+/* ── NAVBAR ─────────────────────────────────── */
+#navbar{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.4rem 5%;
+  transition:all var(--trans);
+}
+#navbar.scrolled{
+  background:rgba(5,12,24,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--linha);
+  padding:.9rem 5%;
+  box-shadow:0 4px 32px rgba(0,0,0,0.5);
+}
+.nav-logo{display:flex;flex-direction:column;line-height:1}
+.nav-logo .logo-main{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:2rem;font-weight:800;letter-spacing:.08em;
+  color:var(--branco);
+}
+.nav-logo .logo-sub{
+  font-size:.58rem;font-weight:400;letter-spacing:.32em;
+  color:var(--ouro);text-transform:uppercase;margin-top:1px;
+}
+.nav-links{
+  display:flex;align-items:center;gap:2.2rem;list-style:none;
+}
+.nav-links a{
+  font-size:.78rem;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--cinza);
+  transition:color var(--trans);position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;
+  width:0;height:1px;background:var(--ouro);
+  transition:width var(--trans);
+}
+.nav-links a:hover{color:var(--branco)}
+.nav-links a:hover::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.lang-btn{
+  font-size:.72rem;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--cinza);
+  background:none;border:1px solid rgba(138,151,170,0.3);
+  padding:.3rem .8rem;border-radius:2px;cursor:pointer;
+  transition:all var(--trans);
+}
+.lang-btn:hover{color:var(--ouro);border-color:var(--ouro)}
+.nav-cta{
+  font-size:.75rem;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;
+  background:var(--ouro);color:var(--preto);
+  padding:.55rem 1.3rem;border-radius:2px;
+  transition:all var(--trans);white-space:nowrap;
+}
+.nav-cta:hover{background:var(--ouro-clr);transform:translateY(-1px)}
+.hamburger{
+  display:none;flex-direction:column;gap:5px;
+  background:none;border:none;cursor:pointer;padding:4px;
+}
+.hamburger span{
+  display:block;width:24px;height:2px;
+  background:var(--branco);border-radius:1px;
+  transition:all var(--trans);
+}
+
+/* ── HERO ────────────────────────────────────── */
+#hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  position:relative;overflow:hidden;
+  padding:8rem 5% 5rem;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 60% 40%, rgba(22,43,85,0.8) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 80% at 10% 80%, rgba(201,130,10,0.08) 0%, transparent 60%),
+    linear-gradient(160deg, #050C18 0%, #0A1628 50%, #0E1F3D 100%);
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(201,130,10,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,130,10,0.06) 1px, transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 70% 70% at 70% 40%, black 0%, transparent 80%);
+}
+.hero-line{
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg, transparent, var(--ouro), transparent);
+}
+.hero-content{
+  position:relative;z-index:1;
+  max-width:780px;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:.72rem;font-weight:600;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--ouro);
+  border:1px solid var(--linha);
+  padding:.4rem 1rem;border-radius:2px;
+  margin-bottom:2rem;
+  opacity:0;animation:fadeUp .8s .2s forwards;
+}
+.hero-tag::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--ouro);animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
+.hero-h1{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(3rem, 7vw, 5.5rem);
+  font-weight:800;line-height:1.0;
+  letter-spacing:.02em;text-transform:uppercase;
+  margin-bottom:1.5rem;
+  opacity:0;animation:fadeUp .8s .4s forwards;
+}
+.hero-h1 em{
+  font-style:normal;color:var(--ouro);display:block;
+}
+.hero-sub{
+  font-size:1.05rem;font-weight:300;color:var(--cinza-clr);
+  max-width:560px;line-height:1.8;margin-bottom:2.5rem;
+  opacity:0;animation:fadeUp .8s .6s forwards;
+}
+.hero-btns{
+  display:flex;gap:1rem;flex-wrap:wrap;
+  opacity:0;animation:fadeUp .8s .8s forwards;
+}
+.btn-primary{
+  font-size:.8rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;
+  background:var(--ouro);color:var(--preto);
+  padding:.85rem 2rem;border-radius:2px;
+  transition:all var(--trans);display:inline-block;
+}
+.btn-primary:hover{background:var(--ouro-clr);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,130,10,0.3)}
+.btn-outline{
+  font-size:.8rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;
+  background:transparent;color:var(--branco);
+  border:1px solid rgba(240,244,250,0.3);
+  padding:.85rem 2rem;border-radius:2px;
+  transition:all var(--trans);display:inline-block;
+}
+.btn-outline:hover{border-color:var(--ouro);color:var(--ouro);transform:translateY(-2px)}
+.hero-stats{
+  position:absolute;right:5%;bottom:10%;
+  display:flex;flex-direction:column;gap:1.5rem;
+  opacity:0;animation:fadeLeft .8s 1s forwards;
+}
+.stat-item{text-align:right}
+.stat-num{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:2.8rem;font-weight:800;color:var(--ouro);
+  line-height:1;display:block;
+}
+.stat-label{
+  font-size:.68rem;font-weight:500;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--cinza);
+}
+.hero-scroll{
+  position:absolute;bottom:2rem;left:50%;
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  opacity:0;animation:fadeUp .8s 1.2s forwards;
+}
+.hero-scroll span{
+  font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cinza);
+}
+.scroll-line{
+  width:1px;height:40px;
+  background:linear-gradient(var(--ouro),transparent);
+  animation:scrollAnim 1.5s ease-in-out infinite;
+}
+@keyframes scrollAnim{0%{opacity:1;transform:scaleY(1)}100%{opacity:0;transform:scaleY(0) translateY(20px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeLeft{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+
+/* ── SECÇÕES GERAIS ───────────────────────────── */
+section{padding:6rem 0}
+.section-tag{
+  font-size:.7rem;font-weight:600;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--ouro);
+  display:flex;align-items:center;gap:.8rem;
+  margin-bottom:1rem;
+}
+.section-tag::before{content:'';width:28px;height:1px;background:var(--ouro)}
+.section-h2{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(2rem,4vw,3rem);font-weight:800;
+  letter-spacing:.04em;text-transform:uppercase;
+  line-height:1.1;margin-bottom:1.2rem;
+}
+.section-desc{
+  font-size:1rem;font-weight:300;color:var(--cinza-clr);
+  max-width:580px;line-height:1.8;
+}
+.divider{
+  width:48px;height:2px;background:var(--ouro);
+  margin:1.5rem 0;
+}
+
+/* ── SOBRE ───────────────────────────────────── */
+#sobre{background:var(--azul-mid)}
+.sobre-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:5rem;align-items:center;
+}
+.sobre-visual{
+  position:relative;
+}
+.sobre-box{
+  background:var(--glass-bg);
+  backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--glass-shadow);
+  border-radius:var(--radius);
+  padding:3rem;
+  position:relative;overflow:hidden;
+}
+.sobre-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--ouro),var(--ouro-pale),transparent);
+}
+.sobre-values{
+  display:grid;gap:1.2rem;margin-top:2rem;
+}
+.value-card{
+  background:var(--glass-bg);
+  backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius);
+  padding:1.2rem 1.4rem;
+  transition:all var(--trans);
+}
+.value-card:hover{border-color:var(--ouro)}
+.value-icon{
+  font-size:1.4rem;margin-bottom:.5rem;
+}
+.value-title{
+  font-size:.8rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ouro);
+  margin-bottom:.3rem;
+}
+.value-text{
+  font-size:.88rem;font-weight:300;color:var(--cinza-clr);
+  line-height:1.6;
+}
+.sobre-numbers{
+  display:grid;grid-template-columns:1fr 1fr;gap:1rem;
+  margin-bottom:2rem;
+}
+.sobre-num-item{
+  background:var(--azul);
+  border:1px solid var(--linha);
+  border-radius:var(--radius);
+  padding:1.2rem;text-align:center;
+}
+.sobre-num{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:2.2rem;font-weight:800;color:var(--ouro);
+  display:block;line-height:1;
+}
+.sobre-num-label{
+  font-size:.68rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--cinza);
+  margin-top:.3rem;
+}
+
+/* ── SERVIÇOS ────────────────────────────────── */
+#servicos{background:var(--azul)}
+.servicos-header{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:3rem;align-items:end;margin-bottom:3.5rem;
+}
+.servicos-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5px;
+  background:var(--linha);
+  border:1px solid var(--linha);
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+.servico-card{
+  background:var(--glass-bg);
+  backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);
+  padding:2.2rem;
+  transition:all var(--trans);
+  position:relative;overflow:hidden;
+  cursor:default;
+}
+.servico-card::before{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:var(--ouro);
+  transform:scaleX(0);transition:transform var(--trans);
+}
+.servico-card:hover{background:var(--azul-clr)}
+.servico-card:hover::before{transform:scaleX(1)}
+.servico-num{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:.8rem;font-weight:600;letter-spacing:.2em;
+  color:var(--ouro);opacity:.6;margin-bottom:1.5rem;
+}
+.servico-icon{
+  font-size:2rem;margin-bottom:1rem;
+  display:block;
+}
+.servico-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.3rem;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;margin-bottom:.8rem;
+}
+.servico-desc{
+  font-size:.88rem;font-weight:300;
+  color:var(--cinza-clr);line-height:1.7;
+}
+.servico-tags{
+  display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.2rem;
+}
+.servico-tag{
+  font-size:.66rem;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;
+  background:rgba(201,130,10,0.1);
+  color:var(--ouro);
+  border:1px solid rgba(201,130,10,0.2);
+  padding:.25rem .7rem;border-radius:1px;
+}
+
+/* ── GOVERNANÇA ──────────────────────────────── */
+#governanca{background:var(--azul-mid)}
+.gov-grid{
+  display:grid;grid-template-columns:1fr 1.4fr;
+  gap:4rem;align-items:center;
+}
+.gov-items{display:grid;gap:1rem}
+.gov-item{
+  display:flex;gap:1.2rem;align-items:flex-start;
+  background:var(--glass-bg);
+  backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius);
+  padding:1.4rem;
+  transition:all var(--trans);
+}
+.gov-item:hover{border-color:var(--ouro)}
+.gov-item-icon{
+  font-size:1.6rem;flex-shrink:0;margin-top:.1rem;
+}
+.gov-item-title{
+  font-size:.85rem;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ouro);
+  margin-bottom:.4rem;
+}
+.gov-item-text{
+  font-size:.88rem;font-weight:300;color:var(--cinza-clr);
+  line-height:1.6;
+}
+.gov-badges{
+  display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem;
+}
+.gov-badge{
+  font-size:.72rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;
+  background:rgba(201,130,10,0.12);
+  border:1px solid var(--linha);
+  color:var(--ouro-clr);
+  padding:.5rem 1.1rem;border-radius:2px;
+}
+
+/* ── PROJECTOS ───────────────────────────────── */
+#projectos{background:var(--azul)}
+.projectos-header{margin-bottom:3rem}
+.projectos-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;
+}
+.proj-card{
+  background:var(--glass-bg);
+  backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius);
+  padding:2rem;
+  transition:all var(--trans);
+}
+.proj-card:hover{
+  border-color:var(--ouro);
+  transform:translateY(-4px);
+  box-shadow:0 16px 40px rgba(0,0,0,0.3);
+}
+.proj-cat{
+  font-size:.66rem;font-weight:600;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--ouro);
+  margin-bottom:1rem;
+}
+.proj-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.4rem;font-weight:700;
+  letter-spacing:.04em;text-transform:uppercase;
+  margin-bottom:.8rem;
+}
+.proj-desc{
+  font-size:.88rem;font-weight:300;
+  color:var(--cinza-clr);line-height:1.7;
+}
+.proj-status{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.68rem;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;margin-top:1.2rem;
+  color:var(--ouro);
+}
+.proj-status::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--ouro);
+}
+
+/* ── TALENTOS ────────────────────────────────── */
+#talentos{background:var(--azul-mid)}
+.talentos-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;
+  margin-top:3rem;
+}
+.talento-card{
+  border-radius:var(--radius);
+  padding:2.5rem;
+  position:relative;overflow:hidden;
+}
+.talento-card.azul{
+  background:var(--glass-bg);
+  backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--glass-shadow);
+}
+.talento-card.ouro{
+  background:linear-gradient(135deg, var(--ouro) 0%, #8B5E0A 100%);
+}
+.talento-card::before{
+  content:'';position:absolute;
+  top:-40px;right:-40px;
+  width:120px;height:120px;border-radius:50%;
+  background:rgba(255,255,255,0.04);
+}
+.talento-card-tag{
+  font-size:.68rem;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;
+  margin-bottom:1.2rem;display:block;
+}
+.talento-card.azul .talento-card-tag{color:var(--ouro)}
+.talento-card.ouro .talento-card-tag{color:rgba(5,12,24,0.7)}
+.talento-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.6rem;font-weight:800;
+  letter-spacing:.04em;text-transform:uppercase;
+  margin-bottom:1rem;line-height:1.1;
+}
+.talento-card.ouro .talento-title{color:var(--preto)}
+.talento-list{
+  list-style:none;display:flex;flex-direction:column;gap:.7rem;
+  margin-bottom:2rem;
+}
+.talento-list li{
+  display:flex;gap:.8rem;align-items:flex-start;
+  font-size:.9rem;font-weight:300;color:var(--cinza-clr);
+}
+.talento-card.ouro .talento-list li{color:rgba(5,12,24,0.8)}
+.talento-list li::before{
+  content:'→';color:var(--ouro);flex-shrink:0;
+  font-weight:600;
+}
+.talento-card.ouro .talento-list li::before{color:var(--preto)}
+.btn-dark{
+  font-size:.78rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;
+  background:var(--preto);color:var(--ouro);
+  padding:.8rem 1.8rem;border-radius:2px;
+  transition:all var(--trans);display:inline-block;
+  border:1px solid transparent;
+}
+.btn-dark:hover{background:transparent;border-color:var(--preto);color:var(--preto)}
+.btn-light{
+  font-size:.78rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;
+  background:transparent;color:var(--ouro);
+  padding:.8rem 1.8rem;border-radius:2px;
+  transition:all var(--trans);display:inline-block;
+  border:1px solid var(--ouro);
+}
+.btn-light:hover{background:var(--ouro);color:var(--preto)}
+
+/* ── CONTACTO ────────────────────────────────── */
+#contacto{background:var(--azul)}
+.contacto-grid{
+  display:grid;grid-template-columns:1fr 1.3fr;gap:5rem;
+}
+.contacto-info{display:flex;flex-direction:column;gap:1.5rem}
+.contacto-item{
+  display:flex;gap:1.2rem;align-items:flex-start;
+  padding-bottom:1.5rem;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.contacto-item:last-child{border-bottom:none}
+.contacto-icon{
+  font-size:1.4rem;flex-shrink:0;color:var(--ouro);
+}
+.contacto-label{
+  font-size:.68rem;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--cinza);
+  margin-bottom:.3rem;
+}
+.contacto-val{
+  font-size:.95rem;color:var(--branco);
+}
+.contacto-form{
+  background:var(--glass-bg);
+  backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--glass-shadow);
+  border-radius:var(--radius);
+  padding:2.5rem;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-group{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem}
+.form-label{
+  font-size:.72rem;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--cinza);
+}
+.form-input,.form-textarea{
+  background:rgba(10,22,40,0.8);
+  border:1px solid rgba(138,151,170,0.2);
+  border-radius:var(--radius);
+  padding:.8rem 1rem;
+  font-family:'Barlow',sans-serif;
+  font-size:.9rem;color:var(--branco);
+  transition:border-color var(--trans);
+  outline:none;
+  width:100%;
+}
+.form-input:focus,.form-textarea:focus{border-color:var(--ouro)}
+.form-textarea{min-height:120px;resize:vertical}
+.form-btn{
+  width:100%;
+  font-family:'Barlow',sans-serif;
+  font-size:.8rem;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;
+  background:var(--ouro);color:var(--preto);
+  border:none;padding:1rem;border-radius:2px;
+  cursor:pointer;transition:all var(--trans);
+  margin-top:.5rem;
+}
+.form-btn:hover{background:var(--ouro-clr);transform:translateY(-1px)}
+.form-success{
+  display:none;text-align:center;padding:2rem;
+  color:var(--ouro);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.2rem;font-weight:700;letter-spacing:.08em;
+}
+
+/* ── FOOTER ──────────────────────────────────── */
+footer{
+  background:var(--preto);
+  border-top:1px solid var(--linha);
+  padding:3rem 0 1.5rem;
+}
+.footer-top{
+  display:grid;grid-template-columns:1.5fr 1fr 1fr;
+  gap:3rem;margin-bottom:2.5rem;
+  padding-bottom:2.5rem;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.footer-brand .logo-main{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.8rem;font-weight:800;letter-spacing:.08em;
+  color:var(--branco);
+}
+.footer-brand .logo-sub{
+  font-size:.56rem;letter-spacing:.3em;
+  color:var(--ouro);text-transform:uppercase;
+  display:block;margin-bottom:1rem;
+}
+.footer-desc{
+  font-size:.85rem;font-weight:300;color:var(--cinza);
+  line-height:1.7;margin-bottom:1.2rem;
+}
+.footer-col-title{
+  font-size:.72rem;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--ouro);
+  margin-bottom:1.2rem;
+}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.footer-links a{
+  font-size:.88rem;font-weight:300;color:var(--cinza);
+  transition:color var(--trans);
+}
+.footer-links a:hover{color:var(--ouro)}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-copy{
+  font-size:.78rem;color:var(--cinza);font-weight:300;
+}
+.footer-legal{
+  display:flex;gap:1.5rem;list-style:none;
+}
+.footer-legal a{
+  font-size:.75rem;color:var(--cinza);
+  transition:color var(--trans);
+}
+.footer-legal a:hover{color:var(--ouro)}
+
+/* ── COOKIE BANNER ───────────────────────────── */
+#cookie-banner{
+  position:fixed;bottom:0;left:0;right:0;z-index:999;
+  background:rgba(5,12,24,0.97);
+  border-top:1px solid var(--linha);
+  padding:1.2rem 5%;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:2rem;flex-wrap:wrap;
+  transform:translateY(100%);
+  transition:transform .5s ease;
+}
+#cookie-banner.show{transform:translateY(0)}
+.cookie-text{
+  font-size:.85rem;font-weight:300;color:var(--cinza-clr);
+  flex:1;min-width:200px;
+}
+.cookie-text a{color:var(--ouro);text-decoration:underline}
+.cookie-btn{
+  font-size:.75rem;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;
+  background:var(--ouro);color:var(--preto);
+  border:none;padding:.6rem 1.6rem;border-radius:2px;
+  cursor:pointer;white-space:nowrap;transition:all var(--trans);
+}
+.cookie-btn:hover{background:var(--ouro-clr)}
+
+/* ── IA CHAT WIDGET ──────────────────────────── */
+#ai-widget{
+  position:fixed;bottom:2rem;right:2rem;z-index:998;
+}
+.ai-bubble{
+  width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,var(--ouro),#8B5E0A);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;box-shadow:0 8px 24px rgba(201,130,10,0.4);
+  font-size:1.4rem;
+  transition:all var(--trans);
+}
+.ai-bubble:hover{transform:scale(1.1);box-shadow:0 12px 32px rgba(201,130,10,0.5)}
+.ai-panel{
+  position:absolute;bottom:70px;right:0;
+  width:320px;
+  background:var(--azul-mid);
+  border:1px solid var(--linha);
+  border-radius:8px;
+  overflow:hidden;
+  display:none;
+  box-shadow:var(--shadow);
+}
+.ai-panel.open{display:block}
+.ai-header{
+  background:var(--azul);
+  border-bottom:1px solid var(--linha);
+  padding:1rem 1.2rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.ai-header-title{
+  font-size:.8rem;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ouro);
+}
+.ai-close{background:none;border:none;color:var(--cinza);cursor:pointer;font-size:1.2rem}
+.ai-msgs{
+  height:200px;overflow-y:auto;padding:1rem;
+  display:flex;flex-direction:column;gap:.8rem;
+}
+.ai-msg{
+  font-size:.85rem;line-height:1.6;
+  padding:.7rem 1rem;border-radius:4px;max-width:85%;
+}
+.ai-msg.bot{
+  background:var(--azul);
+  color:var(--cinza-clr);
+  align-self:flex-start;
+  border:1px solid rgba(255,255,255,0.06);
+}
+.ai-msg.user{
+  background:rgba(201,130,10,0.15);
+  color:var(--ouro-clr);
+  align-self:flex-end;
+  border:1px solid var(--linha);
+}
+.ai-input-row{
+  display:flex;gap:0;
+  border-top:1px solid var(--linha);
+}
+.ai-input{
+  flex:1;background:var(--azul);
+  border:none;padding:.8rem 1rem;
+  font-family:'Barlow',sans-serif;
+  font-size:.85rem;color:var(--branco);outline:none;
+}
+.ai-send{
+  background:var(--ouro);border:none;
+  padding:.8rem 1.2rem;cursor:pointer;
+  font-size:1rem;transition:background var(--trans);
+}
+.ai-send:hover{background:var(--ouro-clr)}
+.ai-loading{
+  font-size:.8rem;color:var(--cinza);
+  padding:.5rem 1rem;
+  display:none;
+}
+
+/* ── MOBILE MENU ─────────────────────────────── */
+.mobile-menu{
+  display:none;position:fixed;
+  top:0;left:0;right:0;bottom:0;z-index:999;
+  background:rgba(5,12,24,0.98);
+  flex-direction:column;align-items:center;justify-content:center;
+  gap:2rem;
+}
+.mobile-menu.open{display:flex}
+.mobile-menu a{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:2rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--branco);
+  transition:color var(--trans);
+}
+.mobile-menu a:hover{color:var(--ouro)}
+.mobile-close{
+  position:absolute;top:1.5rem;right:5%;
+  background:none;border:none;color:var(--branco);
+  font-size:2rem;cursor:pointer;
+}
+
+/* ── SCROLL REVEAL ───────────────────────────── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ──────────────────────────────── */
+@media(max-width:900px){
+  .nav-links,.nav-right{display:none}
+  .hamburger{display:flex}
+  .hero-stats{display:none}
+  .sobre-grid,.gov-grid,.contacto-grid,
+  .servicos-header,.footer-top{grid-template-columns:1fr}
+  .servicos-grid{grid-template-columns:1fr 1fr}
+  .talentos-grid,.projectos-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .servicos-grid{grid-template-columns:1fr}
+  .sobre-numbers{grid-template-columns:1fr 1fr}
+  #hero{padding:6rem 5% 4rem}
+  .hero-h1{font-size:2.8rem}
+  .ai-panel{width:280px;right:-16px}
+}
+</style>
+<meta property="og:image" content="https://meroe-digital.vercel.app/og-image.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:locale" content="pt_AO"/>
+<meta property="og:locale:alternate" content="en_GB"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="MEROE – Soluções em Engenharia Lda."/>
+<meta name="twitter:description" content="Empresa angolana de engenharia Oil & Gas — Upstream, Downstream, TARs."/>
+<meta name="twitter:image" content="https://meroe-digital.vercel.app/og-image.png"/>
+<link rel="alternate" hreflang="pt" href="https://meroe-digital.vercel.app/"/>
+<link rel="alternate" hreflang="en" href="https://meroe-digital.vercel.app/?lang=en"/>
+<link rel="alternate" hreflang="x-default" href="https://meroe-digital.vercel.app/"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "MEROE – Soluções em Engenharia Lda.",
+  "url": "https://meroe-digital.vercel.app",
+  "logo": "https://meroe-digital.vercel.app/og-image.png",
+  "description": "Empresa angolana de engenharia especializada em Oil & Gas — Upstream, Downstream, TARs e Major Events.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Luanda",
+    "addressCountry": "AO"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "info@meroe-engineering.com",
+    "contactType": "customer service",
+    "availableLanguage": ["Portuguese","English"]
+  },
+  "sameAs": [],
+  "foundingLocation": "Luanda, Angola",
+  "knowsLanguage": ["pt","en"],
+  "industry": "Oil and Gas Engineering"
+}
+</script>
+</head>
+<body>
+<a href="#sobre" class="sr-skip" style="position:absolute;top:-100px;left:0;background:var(--ouro);color:var(--preto);padding:.5rem 1rem;z-index:9999;font-size:.85rem;font-weight:600;transition:top .2s" onfocus="this.style.top='0'" onblur="this.style.top='-100px'">Ir para o conteúdo principal</a>
+
+<!-- NAVBAR -->
+<nav id="navbar" role="navigation" aria-label="Navegação principal">
+  <a href="#hero" class="nav-logo">
+    <span class="logo-main">MEROE</span>
+    <span class="logo-sub">Soluções em Engenharia</span>
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="#sobre" data-pt="Sobre" data-en="About">Sobre</a></li>
+    <li><a href="#servicos" data-pt="Serviços" data-en="Services">Serviços</a></li>
+    <li><a href="#governanca" data-pt="Governança" data-en="Governance">Governança</a></li>
+    <li><a href="#projectos" data-pt="Projectos" data-en="Projects">Projectos</a></li>
+    <li><a href="#talentos" data-pt="Talentos" data-en="Talent">Talentos</a></li>
+    <li><a href="#contacto" data-pt="Contacto" data-en="Contact">Contacto</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="lang-btn" id="langBtn" onclick="toggleLang()" aria-label="Mudar idioma para inglês">EN</button>
+    <a href="#talentos" class="nav-cta" data-pt="Aceder à Plataforma" data-en="Access Platform">Aceder à Plataforma</a>
+  </div>
+  <button class="hamburger" onclick="openMenu()" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mobileMenu" id="hamburgerBtn">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu de navegação" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMenu()" aria-label="Fechar menu">✕</button>
+  <a href="#sobre" onclick="closeMenu()" data-pt="Sobre" data-en="About">Sobre</a>
+  <a href="#servicos" onclick="closeMenu()" data-pt="Serviços" data-en="Services">Serviços</a>
+  <a href="#governanca" onclick="closeMenu()" data-pt="Governança" data-en="Governance">Governança</a>
+  <a href="#projectos" onclick="closeMenu()" data-pt="Projectos" data-en="Projects">Projectos</a>
+  <a href="#talentos" onclick="closeMenu()" data-pt="Talentos" data-en="Talent">Talentos</a>
+  <a href="#contacto" onclick="closeMenu()" data-pt="Contacto" data-en="Contact">Contacto</a>
+</div>
+
+<!-- HERO -->
+<main role="main">
+<section id="hero" aria-label="Apresentação MEROE">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-line"></div>
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span data-pt="Angola · Oil & Gas · Engenharia Industrial" data-en="Angola · Oil & Gas · Industrial Engineering">Angola · Oil & Gas · Engenharia Industrial</span>
+    </div>
+    <h1 class="hero-h1">
+      <span data-pt="Engenharia de" data-en="Engineering">Engenharia de</span>
+      <em data-pt="Excelência" data-en="Excellence">Excelência</em>
+      <span data-pt="para o Sector Energético" data-en="for the Energy Sector">para o Sector Energético</span>
+    </h1>
+    <p class="hero-sub" data-pt="MEROE é uma empresa angolana de engenharia especializada em soluções técnicas integradas para os sectores de energia e Oil & Gas — Upstream, Downstream e TARs." data-en="MEROE is an Angolan engineering company specialised in integrated technical solutions for the energy and Oil & Gas sectors — Upstream, Downstream and TARs.">
+      MEROE é uma empresa angolana de engenharia especializada em soluções técnicas integradas para os sectores de energia e Oil & Gas — Upstream, Downstream e TARs.
+    </p>
+    <div class="hero-btns">
+      <a href="#servicos" class="btn-primary" data-pt="Os nossos serviços" data-en="Our services">Os nossos serviços</a>
+      <a href="#talentos" class="btn-outline" data-pt="Registe o seu perfil" data-en="Register your profile">Registe o seu perfil</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <span class="stat-num" data-count="15">0</span>
+      <span class="stat-label" data-pt="Anos de Experiência" data-en="Years of Experience">Anos de Experiência</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" data-count="6">0</span>
+      <span class="stat-label" data-pt="Áreas de Serviço" data-en="Service Areas">Áreas de Serviço</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" data-count="100">0</span>
+      <span class="stat-label" data-pt="% Angolano" data-en="% Angolan">% Angolano</span>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span data-pt="Explorar" data-en="Explore">Explorar</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="container">
+    <div class="sobre-grid">
+      <div class="reveal">
+        <div class="section-tag" data-pt="Quem somos" data-en="Who we are">Quem somos</div>
+        <h2 class="section-h2" data-pt="Sobre a MEROE" data-en="About MEROE">Sobre a MEROE</h2>
+        <div class="divider"></div>
+        <p class="section-desc" data-pt="A MEROE – Soluções em Engenharia Lda. é uma empresa angolana em fase de consolidação, actuando ao longo da cadeia de valor upstream e downstream do sector de energia e Oil & Gas, alinhada com as melhores práticas internacionais." data-en="MEROE – Soluções em Engenharia Lda. is an Angolan company in the consolidation phase, operating along the upstream and downstream value chain of the energy and Oil & Gas sector, aligned with international best practices.">
+          A MEROE – Soluções em Engenharia Lda. é uma empresa angolana em fase de consolidação, actuando ao longo da cadeia de valor upstream e downstream do sector de energia e Oil & Gas, alinhada com as melhores práticas internacionais.
+        </p>
+        <div class="sobre-values">
+          <div class="value-card">
+            <div class="value-icon">🎯</div>
+            <div class="value-title" data-pt="Visão" data-en="Vision">Visão</div>
+            <div class="value-text" data-pt="Ser a referência angolana em serviços de engenharia industrial para o sector energético, com excelência técnica reconhecida internacionalmente." data-en="To be the Angolan reference in industrial engineering services for the energy sector, with internationally recognised technical excellence.">Ser a referência angolana em serviços de engenharia industrial para o sector energético, com excelência técnica reconhecida internacionalmente.</div>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">⚙️</div>
+            <div class="value-title" data-pt="Missão" data-en="Mission">Missão</div>
+            <div class="value-text" data-pt="Fornecer serviços de engenharia, construção, manutenção e operações com excelência técnica, controlo operacional e compromisso com os mais altos padrões de segurança." data-en="To provide engineering, construction, maintenance and operations services with technical excellence, operational control and commitment to the highest safety standards.">Fornecer serviços de engenharia, construção, manutenção e operações com excelência técnica, controlo operacional e compromisso com os mais altos padrões de segurança.</div>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">🏛️</div>
+            <div class="value-title" data-pt="Valores" data-en="Values">Valores</div>
+            <div class="value-text" data-pt="Governança · Excelência Técnica · Controlo Operacional · Integridade · Visão de Longo Prazo" data-en="Governance · Technical Excellence · Operational Control · Integrity · Long-Term Vision">Governança · Excelência Técnica · Controlo Operacional · Integridade · Visão de Longo Prazo</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="sobre-numbers">
+          <div class="sobre-num-item">
+            <span class="sobre-num" data-count="6">0</span>
+            <span class="sobre-num-label" data-pt="Linhas de Serviço" data-en="Service Lines">Linhas de Serviço</span>
+          </div>
+          <div class="sobre-num-item">
+            <span class="sobre-num">O&G</span>
+            <span class="sobre-num-label" data-pt="Especialização" data-en="Specialisation">Especialização</span>
+          </div>
+          <div class="sobre-num-item">
+            <span class="sobre-num">LDA</span>
+            <span class="sobre-num-label" data-pt="Empresa Angolana" data-en="Angolan Company">Empresa Angolana</span>
+          </div>
+          <div class="sobre-num-item">
+            <span class="sobre-num">24/7</span>
+            <span class="sobre-num-label" data-pt="Suporte Técnico" data-en="Technical Support">Suporte Técnico</span>
+          </div>
+        </div>
+        <div class="sobre-box">
+          <p style="font-size:.95rem;font-weight:300;color:var(--cinza-clr);line-height:1.9;font-style:italic;" data-pt='"Alinhada com as melhores práticas internacionais de governança, excelência técnica e controlo operacional, a MEROE visa fortalecer a sua presença institucional e capacidades operacionais em Angola e na região."' data-en='"Aligned with international best practices in governance, technical excellence and operational control, MEROE aims to strengthen its institutional presence and operational capabilities in Angola and the region."'>
+            "Alinhada com as melhores práticas internacionais de governança, excelência técnica e controlo operacional, a MEROE visa fortalecer a sua presença institucional e capacidades operacionais em Angola e na região."
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos">
+  <div class="container">
+    <div class="servicos-header reveal">
+      <div>
+        <div class="section-tag" data-pt="O que fazemos" data-en="What we do">O que fazemos</div>
+        <h2 class="section-h2" data-pt="As nossas capacidades" data-en="Our capabilities">As nossas capacidades</h2>
+        <div class="divider"></div>
+      </div>
+      <p class="section-desc" data-pt="A MEROE oferece um portfólio integrado de serviços de engenharia para o sector de energia e Oil & Gas, cobrindo toda a cadeia de valor industrial." data-en="MEROE offers an integrated portfolio of engineering services for the energy and Oil & Gas sector, covering the entire industrial value chain.">A MEROE oferece um portfólio integrado de serviços de engenharia para o sector de energia e Oil & Gas, cobrindo toda a cadeia de valor industrial.</p>
+    </div>
+    <div class="servicos-grid reveal">
+      <div class="servico-card">
+        <div class="servico-num">01</div>
+        <span class="servico-icon">🔼</span>
+        <div class="servico-title" data-pt="Upstream Oil & Gas" data-en="Upstream Oil & Gas">Upstream Oil & Gas</div>
+        <p class="servico-desc" data-pt="Suporte técnico especializado para operações de exploração e produção, com engenheiros certificados e experiência em campo." data-en="Specialised technical support for exploration and production operations, with certified engineers and field experience.">Suporte técnico especializado para operações de exploração e produção, com engenheiros certificados e experiência em campo.</p>
+        <div class="servico-tags">
+          <span class="servico-tag">Exploração</span>
+          <span class="servico-tag">Produção</span>
+          <span class="servico-tag">Drilling</span>
+        </div>
+      </div>
+      <div class="servico-card">
+        <div class="servico-num">02</div>
+        <span class="servico-icon">🔽</span>
+        <div class="servico-title" data-pt="Downstream Oil & Gas" data-en="Downstream Oil & Gas">Downstream Oil & Gas</div>
+        <p class="servico-desc" data-pt="Serviços de engenharia para refinação, petroquímica e distribuição, garantindo eficiência operacional e conformidade regulatória." data-en="Engineering services for refining, petrochemicals and distribution, ensuring operational efficiency and regulatory compliance.">Serviços de engenharia para refinação, petroquímica e distribuição, garantindo eficiência operacional e conformidade regulatória.</p>
+        <div class="servico-tags">
+          <span class="servico-tag">Refinação</span>
+          <span class="servico-tag">Petroquímica</span>
+          <span class="servico-tag">Distribuição</span>
+        </div>
+      </div>
+      <div class="servico-card">
+        <div class="servico-num">03</div>
+        <span class="servico-icon">🔧</span>
+        <div class="servico-title" data-pt="TARs & Major Events" data-en="TARs & Major Events">TARs & Major Events</div>
+        <p class="servico-desc" data-pt="Gestão e execução de Turnarounds, shutdowns planeados, startups e eventos maiores com equipas especializadas e mobilização rápida." data-en="Management and execution of Turnarounds, planned shutdowns, startups and major events with specialised teams and rapid mobilisation.">Gestão e execução de Turnarounds, shutdowns planeados, startups e eventos maiores com equipas especializadas e mobilização rápida.</p>
+        <div class="servico-tags">
+          <span class="servico-tag">Turnarounds</span>
+          <span class="servico-tag">Shutdowns</span>
+          <span class="servico-tag">Startups</span>
+        </div>
+      </div>
+      <div class="servico-card">
+        <div class="servico-num">04</div>
+        <span class="servico-icon">🏗️</span>
+        <div class="servico-title" data-pt="Construção Industrial" data-en="Industrial Construction">Construção Industrial</div>
+        <p class="servico-desc" data-pt="Construção e montagem de unidades industriais, infraestruturas e equipamentos para o sector de energia com padrões internacionais." data-en="Construction and assembly of industrial units, infrastructure and equipment for the energy sector to international standards.">Construção e montagem de unidades industriais, infraestruturas e equipamentos para o sector de energia com padrões internacionais.</p>
+        <div class="servico-tags">
+          <span class="servico-tag">Construção</span>
+          <span class="servico-tag">Montagem</span>
+          <span class="servico-tag">EPCM</span>
+        </div>
+      </div>
+      <div class="servico-card">
+        <div class="servico-num">05</div>
+        <span class="servico-icon">⚡</span>
+        <div class="servico-title" data-pt="Manutenção & Operações" data-en="Maintenance & Operations">Manutenção & Operações</div>
+        <p class="servico-desc" data-pt="Serviços de manutenção preventiva, correctiva e gestão de operações industriais para maximizar a disponibilidade e segurança dos activos." data-en="Preventive and corrective maintenance services and industrial operations management to maximise asset availability and safety.">Serviços de manutenção preventiva, correctiva e gestão de operações industriais para maximizar a disponibilidade e segurança dos activos.</p>
+        <div class="servico-tags">
+          <span class="servico-tag">Preventiva</span>
+          <span class="servico-tag">Correctiva</span>
+          <span class="servico-tag">Preditiva</span>
+        </div>
+      </div>
+      <div class="servico-card">
+        <div class="servico-num">06</div>
+        <span class="servico-icon">📦</span>
+        <div class="servico-title" data-pt="Supply Chain & Suporte" data-en="Supply Chain & Support">Supply Chain & Suporte</div>
+        <p class="servico-desc" data-pt="Gestão de cadeia de abastecimento e suporte técnico especializado para garantir continuidade operacional em ambientes industriais exigentes." data-en="Supply chain management and specialised technical support to ensure operational continuity in demanding industrial environments.">Gestão de cadeia de abastecimento e suporte técnico especializado para garantir continuidade operacional em ambientes industriais exigentes.</p>
+        <div class="servico-tags">
+          <span class="servico-tag">Procurement</span>
+          <span class="servico-tag">Logística</span>
+          <span class="servico-tag">Suporte</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GOVERNANÇA -->
+<section id="governanca">
+  <div class="container">
+    <div class="gov-grid">
+      <div class="reveal">
+        <div class="section-tag" data-pt="Comprometidos" data-en="Committed">Comprometidos</div>
+        <h2 class="section-h2" data-pt="Governança & Compliance" data-en="Governance & Compliance">Governança & Compliance</h2>
+        <div class="divider"></div>
+        <p class="section-desc" data-pt="A MEROE opera em total conformidade com as melhores práticas internacionais de governança corporativa, gestão de risco e protecção de dados." data-en="MEROE operates in full compliance with international best practices in corporate governance, risk management and data protection.">A MEROE opera em total conformidade com as melhores práticas internacionais de governança corporativa, gestão de risco e protecção de dados.</p>
+        <div class="gov-badges">
+          <span class="gov-badge">ISO Compliance</span>
+          <span class="gov-badge">HSE Standards</span>
+          <span class="gov-badge">Data Protection</span>
+          <span class="gov-badge">Auditável</span>
+          <span class="gov-badge">RGPD Compatible</span>
+        </div>
+      </div>
+      <div class="gov-items reveal">
+        <div class="gov-item">
+          <div class="gov-item-icon">📋</div>
+          <div>
+            <div class="gov-item-title" data-pt="Governança Corporativa" data-en="Corporate Governance">Governança Corporativa</div>
+            <div class="gov-item-text" data-pt="Estruturas de gestão transparentes, políticas documentadas e processos de decisão rastreáveis alinhados com padrões internacionais." data-en="Transparent management structures, documented policies and traceable decision processes aligned with international standards.">Estruturas de gestão transparentes, políticas documentadas e processos de decisão rastreáveis alinhados com padrões internacionais.</div>
+          </div>
+        </div>
+        <div class="gov-item">
+          <div class="gov-item-icon">🛡️</div>
+          <div>
+            <div class="gov-item-title" data-pt="HSE & Segurança" data-en="HSE & Safety">HSE & Segurança</div>
+            <div class="gov-item-text" data-pt="Compromisso absoluto com Health, Safety & Environment em todas as operações, com protocolos rigorosos e formação contínua." data-en="Absolute commitment to Health, Safety & Environment in all operations, with rigorous protocols and continuous training.">Compromisso absoluto com Health, Safety & Environment em todas as operações, com protocolos rigorosos e formação contínua.</div>
+          </div>
+        </div>
+        <div class="gov-item">
+          <div class="gov-item-icon">📊</div>
+          <div>
+            <div class="gov-item-title" data-pt="Compliance Regulatório" data-en="Regulatory Compliance">Compliance Regulatório</div>
+            <div class="gov-item-text" data-pt="Conformidade com regulação angolana e internacional aplicável ao sector de energia e Oil & Gas, incluindo normas da ANPG." data-en="Compliance with Angolan and international regulations applicable to the energy and Oil & Gas sector, including ANPG standards.">Conformidade com regulação angolana e internacional aplicável ao sector de energia e Oil & Gas, incluindo normas da ANPG.</div>
+          </div>
+        </div>
+        <div class="gov-item">
+          <div class="gov-item-icon">🔒</div>
+          <div>
+            <div class="gov-item-title" data-pt="Protecção de Dados" data-en="Data Protection">Protecção de Dados</div>
+            <div class="gov-item-text" data-pt="Sistemas digitais seguros com encriptação, controlo de acesso por papéis e conformidade com regulação de protecção de dados pessoais." data-en="Secure digital systems with encryption, role-based access control and compliance with personal data protection regulations.">Sistemas digitais seguros com encriptação, controlo de acesso por papéis e conformidade com regulação de protecção de dados pessoais.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTOS -->
+<section id="projectos">
+  <div class="container">
+    <div class="projectos-header reveal">
+      <div class="section-tag" data-pt="Capacidades" data-en="Capabilities">Capacidades</div>
+      <h2 class="section-h2" data-pt="Projectos & Capacidades" data-en="Projects & Capabilities">Projectos & Capacidades</h2>
+      <div class="divider"></div>
+      <p class="section-desc" data-pt="A MEROE está posicionada para responder a desafios complexos no sector energético angolano, com capacidade para consórcios e joint ventures." data-en="MEROE is positioned to respond to complex challenges in the Angolan energy sector, with capacity for consortia and joint ventures.">A MEROE está posicionada para responder a desafios complexos no sector energético angolano, com capacidade para consórcios e joint ventures.</p>
+    </div>
+    <div class="projectos-grid">
+      <div class="proj-card reveal">
+        <div class="proj-cat" data-pt="Upstream · Angola" data-en="Upstream · Angola">Upstream · Angola</div>
+        <div class="proj-title" data-pt="Suporte Técnico a Operações de Produção" data-en="Technical Support for Production Operations">Suporte Técnico a Operações de Produção</div>
+        <p class="proj-desc" data-pt="Mobilização de equipas técnicas especializadas para suporte a operações de produção offshore e onshore em Angola, com engenheiros certificados em múltiplas disciplinas." data-en="Mobilisation of specialised technical teams to support offshore and onshore production operations in Angola, with certified engineers in multiple disciplines.">Mobilização de equipas técnicas especializadas para suporte a operações de produção offshore e onshore em Angola, com engenheiros certificados em múltiplas disciplinas.</p>
+        <span class="proj-status" data-pt="Capacidade activa" data-en="Active capability">Capacidade activa</span>
+      </div>
+      <div class="proj-card reveal">
+        <div class="proj-cat" data-pt="TARs · Refinação" data-en="TARs · Refining">TARs · Refinação</div>
+        <div class="proj-title" data-pt="Turnarounds em Unidades de Refinação" data-en="Turnarounds in Refining Units">Turnarounds em Unidades de Refinação</div>
+        <p class="proj-desc" data-pt="Gestão completa de turnarounds em unidades de refinação e petroquímica, com equipas multidisciplinares, planeamento rigoroso e execução dentro do prazo e orçamento." data-en="Complete turnaround management in refining and petrochemical units, with multidisciplinary teams, rigorous planning and execution within schedule and budget.">Gestão completa de turnarounds em unidades de refinação e petroquímica, com equipas multidisciplinares, planeamento rigoroso e execução dentro do prazo e orçamento.</p>
+        <span class="proj-status" data-pt="Capacidade activa" data-en="Active capability">Capacidade activa</span>
+      </div>
+      <div class="proj-card reveal">
+        <div class="proj-cat" data-pt="Parcerias · Consórcios" data-en="Partnerships · Consortia">Parcerias · Consórcios</div>
+        <div class="proj-title" data-pt="Joint Ventures & Consórcios" data-en="Joint Ventures & Consortia">Joint Ventures & Consórcios</div>
+        <p class="proj-desc" data-pt="A MEROE está estruturada para participar em joint ventures e consórcios para grandes projectos de energia em Angola, trazendo capacidade técnica local e redes de talentos qualificados." data-en="MEROE is structured to participate in joint ventures and consortia for major energy projects in Angola, bringing local technical capability and qualified talent networks.">A MEROE está estruturada para participar em joint ventures e consórcios para grandes projectos de energia em Angola, trazendo capacidade técnica local e redes de talentos qualificados.</div>
+        <span class="proj-status" data-pt="Em desenvolvimento" data-en="In development">Em desenvolvimento</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TALENTOS -->
+<section id="talentos">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-tag" data-pt="Rede de Profissionais" data-en="Professional Network">Rede de Profissionais</div>
+      <h2 class="section-h2" data-pt="Técnicos & Parceiros" data-en="Technicians & Partners">Técnicos & Parceiros</h2>
+      <div class="divider"></div>
+      <p class="section-desc" data-pt="A MEROE mantém uma plataforma digital de talentos com base de dados de profissionais de engenharia qualificados, gerida com Inteligência Artificial." data-en="MEROE maintains a digital talent platform with a database of qualified engineering professionals, managed with Artificial Intelligence.">A MEROE mantém uma plataforma digital de talentos com base de dados de profissionais de engenharia qualificados, gerida com Inteligência Artificial.</p>
+    </div>
+    <div class="talentos-grid">
+      <div class="talento-card azul reveal">
+        <span class="talento-card-tag" data-pt="Para Engenheiros & Especialistas" data-en="For Engineers & Specialists">Para Engenheiros & Especialistas</span>
+        <div class="talento-title" data-pt="Registe o seu Perfil Técnico" data-en="Register your Technical Profile">Registe o seu Perfil Técnico</div>
+        <ul class="talento-list">
+          <li data-pt="Perfil analisado por Inteligência Artificial" data-en="Profile analysed by Artificial Intelligence">Perfil analisado por Inteligência Artificial</li>
+          <li data-pt="Oportunidades em TARs, shutdowns e projectos" data-en="Opportunities in TARs, shutdowns and projects">Oportunidades em TARs, shutdowns e projectos</li>
+          <li data-pt="Rede de engenharia de Oil & Gas em Angola" data-en="Oil & Gas engineering network in Angola">Rede de engenharia de Oil & Gas em Angola</li>
+          <li data-pt="Gestão de disponibilidade e certificações" data-en="Availability and certification management">Gestão de disponibilidade e certificações</li>
+        </ul>
+        <a href="platform/register.html" class="btn-light" data-pt="Registar como Técnico →" data-en="Register as Technician →">Registar como Técnico →</a>
+      </div>
+      <div class="talento-card ouro reveal">
+        <span class="talento-card-tag" data-pt="Para Empresas & Parceiros" data-en="For Companies & Partners">Para Empresas & Parceiros</span>
+        <div class="talento-title" data-pt="Torne-se Parceiro MEROE" data-en="Become a MEROE Partner">Torne-se Parceiro MEROE</div>
+        <ul class="talento-list">
+          <li data-pt="Acesso a pool de talentos qualificados e certificados" data-en="Access to pool of qualified and certified talents">Acesso a pool de talentos qualificados e certificados</li>
+          <li data-pt="Parcerias estratégicas em projectos de Oil & Gas" data-en="Strategic partnerships in Oil & Gas projects">Parcerias estratégicas em projectos de Oil & Gas</li>
+          <li data-pt="Consórcios e joint ventures em Angola" data-en="Consortia and joint ventures in Angola">Consórcios e joint ventures em Angola</li>
+          <li data-pt="Suporte técnico integrado e especializado" data-en="Integrated and specialised technical support">Suporte técnico integrado e especializado</li>
+        </ul>
+        <a href="platform/register.html" class="btn-dark" data-pt="Tornar-se Parceiro →" data-en="Become a Partner →">Tornar-se Parceiro →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="container">
+    <div class="reveal" style="margin-bottom:3rem">
+      <div class="section-tag" data-pt="Fale connosco" data-en="Get in touch">Fale connosco</div>
+      <h2 class="section-h2" data-pt="Contacto" data-en="Contact">Contacto</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="contacto-grid">
+      <div class="contacto-info reveal">
+        <div class="contacto-item">
+          <div class="contacto-icon">📍</div>
+          <div>
+            <div class="contacto-label" data-pt="Localização" data-en="Location">Localização</div>
+            <div class="contacto-val">Luanda, Angola</div>
+          </div>
+        </div>
+        <div class="contacto-item">
+          <div class="contacto-icon">✉️</div>
+          <div>
+            <div class="contacto-label" data-pt="Email geral" data-en="General email">Email geral</div>
+            <div class="contacto-val">info@meroe-engineering.com</div>
+          </div>
+        </div>
+        <div class="contacto-item">
+          <div class="contacto-icon">⚙️</div>
+          <div>
+            <div class="contacto-label" data-pt="Operações" data-en="Operations">Operações</div>
+            <div class="contacto-val">operations@meroe-engineering.com</div>
+          </div>
+        </div>
+        <div class="contacto-item">
+          <div class="contacto-icon">🏗️</div>
+          <div>
+            <div class="contacto-label" data-pt="Projectos & TARs" data-en="Projects & TARs">Projectos & TARs</div>
+            <div class="contacto-val">turnarounds@meroe-engineering.com</div>
+          </div>
+        </div>
+        <div class="contacto-item">
+          <div class="contacto-icon">👤</div>
+          <div>
+            <div class="contacto-label" data-pt="Recrutamento técnico" data-en="Technical recruitment">Recrutamento técnico</div>
+            <div class="contacto-val">hr@meroe-engineering.com</div>
+          </div>
+        </div>
+        <p style="font-size:.82rem;color:var(--cinza);font-weight:300;margin-top:.5rem" data-pt="Para registo na plataforma de talentos, utilize o portal de técnicos acima." data-en="For talent platform registration, use the technicians portal above.">Para registo na plataforma de talentos, utilize o portal de técnicos acima.</p>
+      </div>
+      <div class="contacto-form reveal">
+        <div id="formContainer">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" data-pt="Nome" data-en="Name">Nome</label>
+              <input type="text" id="fname" class="form-input" placeholder="Seu nome completo" maxlength="100" autocomplete="name"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" id="femail" class="form-input" placeholder="seu@email.com" maxlength="255" autocomplete="email"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-pt="Assunto" data-en="Subject">Assunto</label>
+            <input type="text" id="fsubject" class="form-input" data-pt-placeholder="Como podemos ajudar?" data-en-placeholder="How can we help?" placeholder="Como podemos ajudar?" maxlength="200"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-pt="Mensagem" data-en="Message">Mensagem</label>
+            <textarea id="fmessage" class="form-textarea" data-pt-placeholder="Descreva o seu pedido ou projecto..." data-en-placeholder="Describe your request or project..." placeholder="Descreva o seu pedido ou projecto..."></textarea>
+          </div>
+          <button class="form-btn" onclick="submitForm()" type="button" data-pt="Enviar mensagem" data-en="Send message">Enviar mensagem</button>
+        </div>
+        <div class="form-success" id="formSuccess">
+          ✓ <span data-pt="Mensagem enviada! Entraremos em contacto em breve." data-en="Message sent! We will be in touch shortly.">Mensagem enviada! Entraremos em contacto em breve.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="logo-main">MEROE</span>
+        <span class="logo-sub">Soluções em Engenharia Lda.</span>
+        <p class="footer-desc" data-pt="Empresa angolana de engenharia especializada em soluções técnicas integradas para os sectores de energia e Oil & Gas." data-en="Angolan engineering company specialised in integrated technical solutions for the energy and Oil & Gas sectors.">Empresa angolana de engenharia especializada em soluções técnicas integradas para os sectores de energia e Oil & Gas.</p>
+      </div>
+      <div>
+        <div class="footer-col-title" data-pt="Serviços" data-en="Services">Serviços</div>
+        <ul class="footer-links">
+          <li><a href="#servicos" data-pt="Upstream Oil & Gas" data-en="Upstream Oil & Gas">Upstream Oil & Gas</a></li>
+          <li><a href="#servicos" data-pt="Downstream Oil & Gas" data-en="Downstream Oil & Gas">Downstream Oil & Gas</a></li>
+          <li><a href="#servicos" data-pt="TARs & Major Events" data-en="TARs & Major Events">TARs & Major Events</a></li>
+          <li><a href="#servicos" data-pt="Construção Industrial" data-en="Industrial Construction">Construção Industrial</a></li>
+          <li><a href="#servicos" data-pt="Manutenção & Operações" data-en="Maintenance & Operations">Manutenção & Operações</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title" data-pt="Empresa" data-en="Company">Empresa</div>
+        <ul class="footer-links">
+          <li><a href="#sobre" data-pt="Sobre a MEROE" data-en="About MEROE">Sobre a MEROE</a></li>
+          <li><a href="#governanca" data-pt="Governança" data-en="Governance">Governança</a></li>
+          <li><a href="#talentos" data-pt="Portal de Talentos" data-en="Talent Portal">Portal de Talentos</a></li>
+          <li><a href="#contacto" data-pt="Contacto" data-en="Contact">Contacto</a></li>
+          <li><a href="privacy.html" data-pt="Política de Privacidade" data-en="Privacy Policy">Política de Privacidade</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 MEROE – Soluções em Engenharia Lda. <span data-pt="Todos os direitos reservados." data-en="All rights reserved.">Todos os direitos reservados.</span></span>
+      <ul class="footer-legal">
+        <li><a href="privacy.html" data-pt="Privacidade" data-en="Privacy">Privacidade</a></li>
+        <li><a href="terms.html" data-pt="Termos" data-en="Terms">Termos</a></li>
+        <li><a href="cookies.html" data-pt="Cookies" data-en="Cookies">Cookies</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<!-- COOKIE BANNER -->
+<div id="cookie-banner">
+  <p class="cookie-text">
+    <span data-pt="Utilizamos cookies para melhorar a sua experiência. Ao continuar, aceita a nossa " data-en="We use cookies to improve your experience. By continuing, you accept our ">Utilizamos cookies para melhorar a sua experiência. Ao continuar, aceita a nossa </span>
+    <a href="cookies.html" data-pt="Política de Cookies" data-en="Cookie Policy">Política de Cookies</a>.
+  </p>
+  <button class="cookie-btn" onclick="acceptCookies()" type="button" aria-label="Aceitar cookies" data-pt="Aceitar" data-en="Accept">Aceitar</button>
+</div>
+
+<!-- AI CHAT WIDGET (Gemini) -->
+<div id="ai-widget">
+  <div class="ai-panel" id="aiPanel">
+    <div class="ai-header">
+      <span class="ai-header-title">MEROE AI Assistant</span>
+      <button class="ai-close" onclick="toggleAI()" aria-label="Fechar assistente">✕</button>
+    </div>
+    <div class="ai-msgs" id="aiMsgs">
+      <div class="ai-msg bot" data-pt="Olá! Sou o assistente digital da MEROE. Posso responder perguntas sobre os nossos serviços, TARs, ou como registar o seu perfil técnico." data-en="Hello! I'm MEROE's digital assistant. I can answer questions about our services, TARs, or how to register your technical profile.">
+        Olá! Sou o assistente digital da MEROE. Posso responder perguntas sobre os nossos serviços, TARs, ou como registar o seu perfil técnico.
+      </div>
+    </div>
+    <div class="ai-loading" id="aiLoading" aria-live="polite">● A pensar...</div>
+    <div class="ai-input-row">
+      <input type="text" class="ai-input" id="aiInput" placeholder="Escreva a sua pergunta..." onkeydown="if(event.key==='Enter')sendAI()"/>
+      <button class="ai-send" onclick="sendAI()">➤</button>
+    </div>
+  </div>
+  <div class="ai-bubble" onclick="toggleAI()" title="Assistente MEROE" role="button" aria-label="Abrir assistente digital MEROE" tabindex="0">🤖</div>
+</div>
+
+<script>
+// ── TECLADO: AI bubble acessível por teclado
+document.addEventListener('DOMContentLoaded', () => {
+  const bubble = document.querySelector('.ai-bubble');
+  if (bubble) {
+    bubble.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleAI(); }
+    });
+  }
+});
+
+// SECURITY: CSRF token generation para formulários
+function generateCSRF(){
+  const token = Array.from(crypto.getRandomValues(new Uint8Array(16)))
+    .map(b=>b.toString(16).padStart(2,'0')).join('');
+  sessionStorage.setItem('_csrf',token);
+  return token;
+}
+const _csrfToken = generateCSRF();
+
+// ── IDIOMA ────────────────────────────────────────────────────
+let currentLang = 'pt';
+
+function toggleLang() {
+  currentLang = currentLang === 'pt' ? 'en' : 'pt';
+  const btn = document.getElementById('langBtn');
+  btn.textContent = currentLang === 'pt' ? 'EN' : 'PT';
+  btn.setAttribute('aria-label', currentLang === 'pt' ? 'Switch to English' : 'Mudar para Português');
+  document.documentElement.setAttribute('data-lang', currentLang);
+  document.querySelectorAll('[data-pt]').forEach(el => {
+    const txt = el.getAttribute('data-' + currentLang);
+    if (txt) el.textContent = txt;
+  });
+  document.querySelectorAll('[data-pt-placeholder]').forEach(el => {
+    const ph = el.getAttribute('data-' + currentLang + '-placeholder');
+    if (ph) el.placeholder = ph;
+  });
+  // Update AI widget first message
+  const firstMsg = document.querySelector('.ai-msg.bot');
+  if (firstMsg) {
+    const txt = firstMsg.getAttribute('data-' + currentLang);
+    if (txt) firstMsg.textContent = txt;
+  }
+}
+
+// ── NAVBAR SCROLL ─────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  let lastY = window.scrollY;
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+  // Esconder navbar ao fazer scroll rápido para baixo em mobile
+  if (window.innerWidth < 900) {
+    if (window.scrollY > lastY + 10 && window.scrollY > 200) {
+      nav.style.transform = 'translateY(-100%)';
+    } else if (window.scrollY < lastY - 10) {
+      nav.style.transform = 'translateY(0)';
+    }
+  }
+  lastY = window.scrollY;
+});
+
+// ── SCROLL REVEAL ─────────────────────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── COUNT-UP ANIMAÇÃO ─────────────────────────────────────────
+function animateCount(el) {
+  const target = parseInt(el.getAttribute('data-count'));
+  if (!target) return;
+  let current = 0;
+  const step = Math.ceil(target / 40);
+  const timer = setInterval(() => {
+    current = Math.min(current + step, target);
+    el.textContent = current + (el.closest('.stat-item') ? (target === 100 ? '' : '+') : '');
+    if (current >= target) clearInterval(timer);
+  }, 40);
+}
+const countObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('[data-count]').forEach(animateCount);
+      countObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('#hero, #sobre').forEach(s => countObs.observe(s));
+
+// ── MOBILE MENU ───────────────────────────────────────────────
+function openMenu() {
+  document.getElementById('mobileMenu').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  const btn = document.getElementById('hamburgerBtn');
+  if(btn) btn.setAttribute('aria-expanded','true');
+  document.getElementById('mobileMenu').focus();
+}
+function closeMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.body.style.overflow = '';
+  const btn = document.getElementById('hamburgerBtn');
+  if(btn) btn.setAttribute('aria-expanded','false');
+}
+
+// ── FORMULÁRIO CONTACTO ───────────────────────────────────────
+function submitForm() {
+  const n = document.getElementById('fname').value.trim();
+  const e = document.getElementById('femail').value.trim();
+  const s = document.getElementById('fsubject').value.trim();
+  const m = document.getElementById('fmessage').value.trim();
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+  const csrfOk = sessionStorage.getItem('_csrf') === _csrfToken;
+  if(!csrfOk){ alert('Sessão inválida. Recarregue a página.'); return; }
+  const showErr = (msg) => {
+    let err = document.getElementById('formError');
+    if (!err) {
+      err = document.createElement('p');
+      err.id = 'formError';
+      err.style.cssText = 'color:#FF6B6B;font-size:.85rem;margin-top:.5rem;font-weight:500';
+      document.querySelector('.form-btn').before(err);
+    }
+    err.textContent = msg;
+    err.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  };
+  if (!n || !e || !s || !m) {
+    showErr(currentLang === 'pt' ? '⚠ Por favor preencha todos os campos.' : '⚠ Please fill in all fields.');
+    return;
+  }
+  if (!emailOk) {
+    showErr(currentLang === 'pt' ? '⚠ Por favor introduza um email válido.' : '⚠ Please enter a valid email.');
+    return;
+  }
+  const errEl = document.getElementById('formError');
+  if (errEl) errEl.remove();
+  const btn = document.querySelector('.form-btn');
+  btn.textContent = currentLang === 'pt' ? 'A enviar...' : 'Sending...';
+  btn.disabled = true;
+  setTimeout(() => {
+    document.getElementById('formContainer').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }, 800);
+}
+
+// ── COOKIES ───────────────────────────────────────────────────
+function acceptCookies() {
+  localStorage.setItem('meroe_cookies', '1');
+  document.getElementById('cookie-banner').classList.remove('show');
+}
+window.addEventListener('load', () => {
+  if (!localStorage.getItem('meroe_cookies')) {
+    setTimeout(() => document.getElementById('cookie-banner').classList.add('show'), 1500);
+  }
+});
+
+// ── AI CHAT WIDGET ────────────────────────────────────────────
+let aiOpen = false;
+const aiHistory = [];
+
+const SYSTEM_PROMPT = `Você é o assistente digital da MEROE – Soluções em Engenharia Lda., uma empresa angolana de engenharia especializada em Oil & Gas.
+Responda sempre de forma profissional, concisa e útil.
+Sobre a MEROE: empresa angolana de engenharia, serviços upstream e downstream Oil & Gas, TARs, construção industrial, manutenção, supply chain, baseada em Luanda Angola.
+Para questões de recrutamento, indique que há uma plataforma de talentos onde podem registar o perfil.
+Responda em português a menos que o utilizador escreva em inglês. Máximo 3 frases por resposta.`;
+
+function toggleAI() {
+  aiOpen = !aiOpen;
+  document.getElementById('aiPanel').classList.toggle('open', aiOpen);
+  if (aiOpen) document.getElementById('aiInput').focus();
+}
+
+// Rate limiting: máx 10 mensagens por minuto por sessão
+const AI_MSG_LOG = [];
+const AI_RATE_LIMIT = 10;
+const AI_RATE_WINDOW = 60000;
+
+async function sendAI() {
+  // Rate limit check
+  const now = Date.now();
+  const recent = AI_MSG_LOG.filter(t => now - t < AI_RATE_WINDOW);
+  if (recent.length >= AI_RATE_LIMIT) {
+    addMsg('Por favor aguarde um momento antes de enviar mais mensagens.', 'bot');
+    return;
+  }
+  AI_MSG_LOG.push(now);
+  const input = document.getElementById('aiInput');
+  const msg = input.value.trim().substring(0, 500); // max 500 chars
+  if (!msg || msg.length < 2) return;
+  input.value = '';
+
+  addMsg(msg, 'user');
+  aiHistory.push({ role: 'user', parts: [{ text: msg }] });
+
+  document.getElementById('aiLoading').style.display = 'block';
+
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: msg,
+        history: aiHistory.slice(-10)
+      })
+    });
+    if (res.status === 429) {
+      addMsg(currentLang === 'pt' ? 'Limite de pedidos atingido. Por favor aguarde alguns minutos.' : 'Request limit reached. Please wait a few minutes.', 'bot');
+      document.getElementById('aiLoading').style.display = 'none';
+      return;
+    }
+    if (!res.ok) {
+      throw new Error('API error');
+    }
+    const data = await res.json();
+    const reply = data.reply || (currentLang === 'pt' ? 'Desculpe, não consegui responder. Contacte info@meroe-engineering.com' : 'Sorry, I could not respond. Contact info@meroe-engineering.com');
+    aiHistory.push({ role: 'model', parts: [{ text: reply }] });
+    addMsg(reply, 'bot');
+  } catch {
+    addMsg(currentLang === 'pt' ? 'Erro de ligação. Por favor contacte info@meroe-engineering.com' : 'Connection error. Please contact info@meroe-engineering.com', 'bot');
+  }
+  document.getElementById('aiLoading').style.display = 'none';
+}
+
+function sanitize(str) {
+  const d = document.createElement('div');
+  d.appendChild(document.createTextNode(str));
+  return d.innerHTML;
+}
+function addMsg(text, who) {
+  const msgs = document.getElementById('aiMsgs');
+  const div = document.createElement('div');
+  div.className = `ai-msg ${who}`;
+  div.textContent = sanitize(text);
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /platform/admin/
+Disallow: /api/
+
+Sitemap: https://meroe-engineering.com/sitemap.xml
