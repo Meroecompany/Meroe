@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 // PATCH /api/users/:id/activate — activar/desactivar
 router.patch('/:id/activate', async (req, res) => {
   const { active } = req.body;
-  if (req.params.id === req.user.id) return res.status(400).json({ error: 'Não pode desactivar a própria conta' });
+  if (req.params.id === req.user.id) {return res.status(400).json({ error: 'Não pode desactivar a própria conta' });}
   try {
     await query(`UPDATE users SET is_active = $1 WHERE id = $2`, [!!active, req.params.id]);
     await auditLog({ userId: req.user.id, action: active ? 'user.activate' : 'user.deactivate', resourceType: 'user', resourceId: req.params.id, ipAddress: req.ip });
@@ -41,8 +41,8 @@ router.patch('/:id/activate', async (req, res) => {
 router.patch('/:id/role', async (req, res) => {
   const { role } = req.body;
   const valid = ['super_admin','recruiter','technician','partner'];
-  if (!valid.includes(role)) return res.status(400).json({ error: 'Papel inválido' });
-  if (req.params.id === req.user.id) return res.status(400).json({ error: 'Não pode alterar o próprio papel' });
+  if (!valid.includes(role)) {return res.status(400).json({ error: 'Papel inválido' });}
+  if (req.params.id === req.user.id) {return res.status(400).json({ error: 'Não pode alterar o próprio papel' });}
   try {
     await query(`UPDATE users SET role = $1 WHERE id = $2`, [role, req.params.id]);
     await auditLog({ userId: req.user.id, action: 'user.role_change', resourceType: 'user', resourceId: req.params.id, newValue: { role }, ipAddress: req.ip });
@@ -52,7 +52,7 @@ router.patch('/:id/role', async (req, res) => {
 
 // DELETE /api/users/:id — apagar conta (RGPD)
 router.delete('/:id', async (req, res) => {
-  if (req.params.id === req.user.id) return res.status(400).json({ error: 'Não pode apagar a própria conta' });
+  if (req.params.id === req.user.id) {return res.status(400).json({ error: 'Não pode apagar a própria conta' });}
   try {
     // Anonimizar em vez de apagar fisicamente (preserva audit logs)
     await query(`UPDATE users SET email = 'deleted_' || id || '@deleted.meroe', password_hash = 'DELETED', is_active = FALSE WHERE id = $1`, [req.params.id]);

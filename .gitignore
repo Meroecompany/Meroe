@@ -19,7 +19,8 @@ RFP_MEROE-DIGITAL-2026-001.pdf
 **/coverage/
 .nyc_output/
 
-# Entornos y secretos (¡NUNCA SUBIR AL REPOSITORIO!)
+# Documentos sensíveis e BÍBLIA
+BIBLIA_MEROE.md
 **/.env
 **/.env.local
 **/.env.production

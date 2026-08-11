@@ -26,9 +26,9 @@ const aiLimiter = rateLimit({
 // Lazy init — evita crash se GEMINI_API_KEY não estiver definida ao arrancar
 let _model = null;
 function getModel() {
-  if (_model) return _model;
+  if (_model) {return _model;}
   const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) throw new Error('GEMINI_API_KEY não configurada');
+  if (!apiKey) {throw new Error('GEMINI_API_KEY não configurada');}
   const genAI = new GoogleGenerativeAI(apiKey);
   _model = genAI.getGenerativeModel({
     model: 'gemini-2.0-flash',
@@ -44,7 +44,7 @@ async function callGemini(prompt, retries = 2) {
       const result = await getModel().generateContent(prompt);
       return result.response.text();
     } catch (err) {
-      if (attempt === retries) throw err;
+      if (attempt === retries) {throw err;}
       await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
     }
   }
@@ -54,7 +54,7 @@ async function callGemini(prompt, retries = 2) {
 function extractJSON(text) {
   const match = text.match(/```json\s*([\s\S]*?)```/) ||
                 text.match(/\{[\s\S]*\}/);
-  if (!match) throw new Error('JSON não encontrado na resposta da IA');
+  if (!match) {throw new Error('JSON não encontrado na resposta da IA');}
   return JSON.parse(match[1] || match[0]);
 }
 
@@ -276,6 +276,7 @@ router.get('/searches', requireRole('super_admin','recruiter'), async (req, res)
     );
     res.json(result.rows);
   } catch (err) {
+    logger.error('Erro ao obter histórico:', err);
     res.status(500).json({ error: 'Erro ao obter histórico' });
   }
 });

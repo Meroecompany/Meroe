@@ -86,7 +86,7 @@ async function connectDB(retries = 5, delay = 2000) {
       return;
     } catch (err) {
       logger.warn(`DB connection attempt ${i}/${retries} failed: ${err.message}`);
-      if (i === retries) throw err;
+      if (i === retries) {throw err;}
       await new Promise(r => setTimeout(r, delay * i));
     }
   }

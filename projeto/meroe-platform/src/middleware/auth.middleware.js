@@ -20,11 +20,11 @@ const REFRESH_SECRET  = process.env.REFRESH_TOKEN_SECRET;
 // Validar segredos ao arrancar (fail-fast)
 if (!JWT_SECRET || JWT_SECRET.length < 32) {
   logger.error('JWT_SECRET não configurado ou demasiado curto (mínimo 32 chars)');
-  if (process.env.NODE_ENV === 'production') process.exit(1);
+  if (process.env.NODE_ENV === 'production') {process.exit(1);}
 }
 if (!REFRESH_SECRET || REFRESH_SECRET.length < 32) {
   logger.error('REFRESH_TOKEN_SECRET não configurado ou demasiado curto');
-  if (process.env.NODE_ENV === 'production') process.exit(1);
+  if (process.env.NODE_ENV === 'production') {process.exit(1);}
 }
 
 // ── VERIFICAR ACCESS TOKEN ─────────────────────────────────────
@@ -155,7 +155,7 @@ async function verifyRefreshToken(token) {
     throw new Error('Refresh token inválido');
   }
 
-  if (payload.type !== 'refresh') throw new Error('Tipo de token inválido');
+  if (payload.type !== 'refresh') {throw new Error('Tipo de token inválido');}
 
   const result = await query(
     `SELECT s.id, s.user_id, u.role, u.is_active
@@ -167,8 +167,8 @@ async function verifyRefreshToken(token) {
     [token]
   );
 
-  if (!result.rows.length)     throw new Error('Sessão inválida ou expirada');
-  if (!result.rows[0].is_active) throw new Error('Conta desactivada');
+  if (!result.rows.length)     {throw new Error('Sessão inválida ou expirada');}
+  if (!result.rows[0].is_active) {throw new Error('Conta desactivada');}
 
   return result.rows[0];
 }

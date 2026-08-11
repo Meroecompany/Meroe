@@ -12,6 +12,7 @@
         { "key": "Referrer-Policy",            "value": "strict-origin-when-cross-origin" },
         { "key": "Permissions-Policy",         "value": "camera=(), microphone=(), geolocation=(), payment=()" },
         { "key": "Strict-Transport-Security",  "value": "max-age=63072000; includeSubDomains; preload" },
+        { "key": "Content-Security-Policy",    "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://generativelanguage.googleapis.com;" },
         { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
         { "key": "Cross-Origin-Resource-Policy","value": "same-origin" }
       ]
@@ -35,7 +36,7 @@
     {
       "source": "/(.*\\.css|.*\\.js)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        { "key": "Cache-Control", "value": "public, max-age=86400, must-revalidate" }
       ]
     }
   ],
@@ -49,7 +50,7 @@
     { "source": "/termos",       "destination": "/terms.html" },
     { "source": "/cookies",      "destination": "/cookies.html" },
     { "source": "/api/chat",     "destination": "/api/chat.js" },
-    { "source": "/api/:path*",   "destination": "https://SEU-PROJETO.up.railway.app/api/:path*" }
+    { "source": "/api/:path*",   "destination": "https://meroe-api-production.up.railway.app/api/:path*" }
   ],
   "functions": {
     "api/chat.js": {

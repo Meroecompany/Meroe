@@ -17,6 +17,9 @@ const ALLOWED_ORIGINS = [
   'http://127.0.0.1:5500',
 ];
 
+// Nota de Arquitectura: In-memory rate limiting por IP para instâncias locais.
+// Em produção Vercel Serverless multi-região, para isolamento distribuído estrito,
+// recomenda-se integrar @vercel/kv ou Redis (@upstash/redis).
 const RATE_LIMIT_MAP = new Map(); // IP → { count, resetAt }
 const MAX_REQUESTS = 20;          // por IP por hora
 const WINDOW_MS = 60 * 60 * 1000; // 1 hora

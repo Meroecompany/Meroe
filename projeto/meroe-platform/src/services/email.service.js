@@ -85,7 +85,7 @@ const templates = {
 // ── TRANSPORTER com verificação lazy ─────────────────────────
 let _transporter = null;
 function getTransporter() {
-  if (_transporter) return _transporter;
+  if (_transporter) {return _transporter;}
   _transporter = nodemailer.createTransport({
     host:   process.env.SMTP_HOST || 'smtp.zoho.com',
     port:   parseInt(process.env.SMTP_PORT) || 587,

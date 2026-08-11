@@ -30,6 +30,9 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
+      - name: Auditoria de Segurança
+        run: npm audit --audit-level=high
+
       - name: Lint
         run: npm run lint --if-present
 

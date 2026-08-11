@@ -89,8 +89,8 @@ app.use(compression());
 app.use(cookieParser(process.env.COOKIE_SECRET || process.env.JWT_SECRET));
 
 // ── BODY PARSING ───────────────────────────────────────────────
-app.use(express.json({ limit: '2mb' }));
-app.use(express.urlencoded({ extended: true, limit: '2mb' }));
+app.use(express.json({ limit: '512kb' }));
+app.use(express.urlencoded({ extended: true, limit: '512kb' }));
 
 // ── HPP (HTTP Parameter Pollution) ────────────────────────────
 app.use(hpp());
@@ -138,10 +138,14 @@ app.use((req, res, next) => {
   res.on('finish', () => {
     const ms = Date.now() - start;
     const level = res.statusCode >= 500 ? 'error' : res.statusCode >= 400 ? 'warn' : 'info';
+    const cleanUserAgent = (req.get('User-Agent') || '')
+      .replace(/[\x00-\x1F\x7F]/g, '')  // Remove todos os chars de controlo (M5 — log injection)
+      .trim()
+      .substring(0, 200);
     logger[level](`${req.method} ${req.path} ${res.statusCode} ${ms}ms`, {
       ip: req.ip,
       requestId: req.id,
-      userAgent: req.get('User-Agent')?.substring(0, 100),
+      userAgent: cleanUserAgent,
     });
   });
   next();

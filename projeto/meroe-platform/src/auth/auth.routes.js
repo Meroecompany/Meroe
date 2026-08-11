@@ -146,7 +146,7 @@ router.post('/register', validate(registerSchema), async (req, res) => {
       });
     });
   } catch (err) {
-    if (err.status) return res.status(err.status).json({ error: err.message });
+    if (err.status) {return res.status(err.status).json({ error: err.message });}
     logger.error('Register error:', err);
     res.status(500).json({ error: 'Erro ao criar conta. Tente novamente.' });
   }
@@ -209,7 +209,7 @@ router.post('/login', validate(loginSchema), async (req, res) => {
 
     // MFA
     if (user.mfa_enabled) {
-      if (!mfa_code) return res.status(200).json({ mfa_required: true });
+      if (!mfa_code) {return res.status(200).json({ mfa_required: true });}
       const mfaOk = speakeasy.totp.verify({
         secret:   user.mfa_secret,
         encoding: 'base32',
@@ -262,7 +262,7 @@ router.post('/login', validate(loginSchema), async (req, res) => {
 // ─────────────────────────────────────────────────────────────
 router.post('/refresh', async (req, res) => {
   const token = req.cookies?.refresh_token;
-  if (!token) return res.status(401).json({ error: 'Sessão expirada', code: 'SESSION_EXPIRED' });
+  if (!token) {return res.status(401).json({ error: 'Sessão expirada', code: 'SESSION_EXPIRED' });}
 
   try {
     const session = await verifyRefreshToken(token);
@@ -311,7 +311,7 @@ router.get('/me', requireAuth, (req, res) => {
 // ─────────────────────────────────────────────────────────────
 router.get('/verify', async (req, res) => {
   const { token } = req.query;
-  if (!token) return res.status(400).json({ error: 'Token em falta' });
+  if (!token) {return res.status(400).json({ error: 'Token em falta' });}
 
   try {
     const result = await query(
@@ -447,17 +447,17 @@ router.post('/mfa/setup', requireAuth, async (req, res) => {
 // ─────────────────────────────────────────────────────────────
 router.post('/mfa/confirm', requireAuth, async (req, res) => {
   const { code } = req.body;
-  if (!code) return res.status(400).json({ error: 'Código obrigatório' });
+  if (!code) {return res.status(400).json({ error: 'Código obrigatório' });}
 
   try {
     const user = await query('SELECT mfa_secret FROM users WHERE id = $1', [req.user.id]);
     const secret = user.rows[0]?.mfa_secret;
-    if (!secret) return res.status(400).json({ error: 'Configure o MFA primeiro' });
+    if (!secret) {return res.status(400).json({ error: 'Configure o MFA primeiro' });}
 
     const valid = speakeasy.totp.verify({
       secret, encoding: 'base32', token: String(code), window: 1,
     });
-    if (!valid) return res.status(401).json({ error: 'Código inválido' });
+    if (!valid) {return res.status(401).json({ error: 'Código inválido' });}
 
     await query('UPDATE users SET mfa_enabled = TRUE WHERE id = $1', [req.user.id]);
     await auditLog({ userId: req.user.id, action: 'user.mfa_enabled', ipAddress: req.ip });
@@ -473,12 +473,12 @@ router.post('/mfa/confirm', requireAuth, async (req, res) => {
 // ─────────────────────────────────────────────────────────────
 router.delete('/mfa', requireAuth, async (req, res) => {
   const { password } = req.body;
-  if (!password) return res.status(400).json({ error: 'Password obrigatória para desactivar MFA' });
+  if (!password) {return res.status(400).json({ error: 'Password obrigatória para desactivar MFA' });}
 
   try {
     const user = await query('SELECT password_hash FROM users WHERE id = $1', [req.user.id]);
     const ok = await bcrypt.compare(password, user.rows[0].password_hash);
-    if (!ok) return res.status(401).json({ error: 'Password incorrecta' });
+    if (!ok) {return res.status(401).json({ error: 'Password incorrecta' });}
 
     await query(
       'UPDATE users SET mfa_enabled = FALSE, mfa_secret = NULL WHERE id = $1',
@@ -504,12 +504,12 @@ router.post('/change-password', requireAuth, async (req, res) => {
   const { error } = Joi.string().min(8).max(128)
     .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])/)
     .validate(new_password);
-  if (error) return res.status(400).json({ error: 'Nova password fraca' });
+  if (error) {return res.status(400).json({ error: 'Nova password fraca' });}
 
   try {
     const user = await query('SELECT password_hash FROM users WHERE id = $1', [req.user.id]);
     const ok = await bcrypt.compare(current_password, user.rows[0].password_hash);
-    if (!ok) return res.status(401).json({ error: 'Password actual incorrecta' });
+    if (!ok) {return res.status(401).json({ error: 'Password actual incorrecta' });}
 
     const hash = await bcrypt.hash(new_password, BCRYPT_ROUNDS);
     await query('UPDATE users SET password_hash = $1 WHERE id = $2', [hash, req.user.id]);

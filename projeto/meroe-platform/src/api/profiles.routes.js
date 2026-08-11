@@ -57,7 +57,7 @@ router.get('/me', async (req, res) => {
        WHERE p.user_id = $1`,
       [req.user.id]
     );
-    if (!result.rows.length) return res.status(404).json({ error: 'Perfil não encontrado' });
+    if (!result.rows.length) {return res.status(404).json({ error: 'Perfil não encontrado' });}
     res.json(result.rows[0]);
   } catch (err) {
     logger.error('GET /profiles/me error:', err);
@@ -73,7 +73,7 @@ router.put('/me', async (req, res) => {
   }
   try {
     const fields = Object.keys(value);
-    if (fields.length === 0) return res.status(400).json({ error: 'Nenhum campo para actualizar' });
+    if (fields.length === 0) {return res.status(400).json({ error: 'Nenhum campo para actualizar' });}
 
     // Tipos PostgreSQL por campo — TEXT[] precisa de ser passado como array JS (o driver pg converte)
     // JSONB (certifications, languages) também aceita array JS directamente
@@ -82,17 +82,17 @@ router.put('/me', async (req, res) => {
     const JSONB_FIELDS      = new Set(['certifications', 'languages']);
 
     const sets = fields.map((f, i) => {
-      if (TEXT_ARRAY_FIELDS.has(f)) return `${f} = $${i + 1}::text[]`;
-      if (JSONB_FIELDS.has(f))      return `${f} = $${i + 1}::jsonb`;
+      if (TEXT_ARRAY_FIELDS.has(f)) {return `${f} = $${i + 1}::text[]`;}
+      if (JSONB_FIELDS.has(f))      {return `${f} = $${i + 1}::jsonb`;}
       return `${f} = $${i + 1}`;
     });
 
     const vals = fields.map(f => {
       const v = value[f];
       // TEXT[]: passar array JS — o driver pg serializa correctamente
-      if (TEXT_ARRAY_FIELDS.has(f)) return Array.isArray(v) ? v : [];
+      if (TEXT_ARRAY_FIELDS.has(f)) {return Array.isArray(v) ? v : [];}
       // JSONB: passar array/objecto JS — o driver pg serializa para JSON
-      if (JSONB_FIELDS.has(f))      return Array.isArray(v) ? v : [];
+      if (JSONB_FIELDS.has(f))      {return Array.isArray(v) ? v : [];}
       return v;
     });
 
@@ -158,14 +158,14 @@ router.get('/:id', async (req, res) => {
       `SELECT p.*, u.email FROM profiles p JOIN users u ON p.user_id = u.id WHERE p.id = $1`,
       [req.params.id]
     );
-    if (!result.rows.length) return res.status(404).json({ error: 'Perfil não encontrado' });
+    if (!result.rows.length) {return res.status(404).json({ error: 'Perfil não encontrado' });}
 
     // CORREÇÃO: req.params.id é o UUID do registo na tabela profiles (profiles.id).
     // req.user.id é o UUID do utilizador autenticado (users.id).
     // Estes dois UUIDs nunca coincidem — são PKs de tabelas diferentes.
     // A comparação correcta é entre profiles.user_id (FK) e users.id.
     const isSelf = result.rows[0].user_id === req.user.id;
-    if (!isAdmin && !isSelf) return res.status(403).json({ error: 'Acesso negado' });
+    if (!isAdmin && !isSelf) {return res.status(403).json({ error: 'Acesso negado' });}
 
     if (isAdmin && !isSelf) {
       await query('UPDATE profiles SET views_count = views_count + 1 WHERE id = $1', [req.params.id]);

@@ -118,7 +118,7 @@ JSON esperado:
 
     // Extrair JSON da resposta
     const jsonMatch = text.match(/```json\s*([\s\S]*?)```/) || text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('JSON não encontrado na resposta IA');
+    if (!jsonMatch) {throw new Error('JSON não encontrado na resposta IA');}
 
     const data = JSON.parse(jsonMatch[1] || jsonMatch[0]);
 
@@ -175,7 +175,7 @@ JSON esperado:
 // POST /api/upload/cv — upload do CV com análise IA automática
 // ═══════════════════════════════════════════════════════════════
 router.post('/cv', upload.single('cv'), async (req, res) => {
-  if (!req.file) return res.status(400).json({ error: 'Ficheiro em falta' });
+  if (!req.file) {return res.status(400).json({ error: 'Ficheiro em falta' });}
 
   if (!isPDF(req.file.buffer)) {
     return res.status(400).json({ error: 'O ficheiro não é um PDF válido' });
@@ -294,7 +294,7 @@ router.post('/cv', upload.single('cv'), async (req, res) => {
 // ═══════════════════════════════════════════════════════════════
 router.get('/cv/refresh', async (req, res) => {
   const bucket = getBucket();
-  if (!bucket) return res.status(503).json({ error: 'Storage não configurado' });
+  if (!bucket) {return res.status(503).json({ error: 'Storage não configurado' });}
 
   try {
     const docResult = await query(
@@ -379,7 +379,7 @@ router.delete('/cv', async (req, res) => {
 });
 
 // ── TRATAMENTO DE ERROS MULTER ────────────────────────────────
-// eslint-disable-next-line no-unused-vars
+ 
 router.use((err, _req, res, _next) => {
   if (err instanceof multer.MulterError) {
     if (err.code === 'LIMIT_FILE_SIZE') {

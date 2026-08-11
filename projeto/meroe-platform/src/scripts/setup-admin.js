@@ -9,7 +9,6 @@ require('dotenv').config();
 const bcrypt   = require('bcrypt');
 const readline = require('readline');
 const { pool } = require('../db/connection');
-const { logger } = require('../utils/logger');
 
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 const ask = (q) => new Promise(r => rl.question(q, r));

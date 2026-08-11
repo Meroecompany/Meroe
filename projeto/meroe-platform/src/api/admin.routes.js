@@ -76,7 +76,7 @@ const candidatesQuerySchema = Joi.object({
 
 router.get('/candidates', async (req, res) => {
   const { error, value } = candidatesQuerySchema.validate(req.query, { abortEarly: false, allowUnknown: false });
-  if (error) return res.status(400).json({ error: 'Parâmetros inválidos', details: error.details.map(d=>d.message) });
+  if (error) {return res.status(400).json({ error: 'Parâmetros inválidos', details: error.details.map(d=>d.message) });}
 
   const {
     page, limit, status, discipline, available_for_tars,
@@ -208,7 +208,7 @@ router.patch('/candidates/:id/reject', requireRole(ADMIN_ROLES), async (req, res
       [req.user.id, reason.trim(), req.params.id]
     );
 
-    if (!result.rows.length) return res.status(404).json({ error: 'Perfil não encontrado' });
+    if (!result.rows.length) {return res.status(404).json({ error: 'Perfil não encontrado' });}
 
     await Promise.all([
       query(
@@ -268,7 +268,7 @@ router.get('/export/csv', SUPERADMIN_ONLY, async (req, res) => {
       r.experience_years, r.seniority_level || '',
       r.location_city || '', r.location_country,
       r.available_for_tars ? 'Sim' : 'Não',
-      r.ai_score != null ? r.ai_score : '',
+      r.ai_score !== null && r.ai_score !== undefined ? r.ai_score : '',
       r.status,
       new Date(r.created_at).toLocaleDateString('pt-PT'),
     ]);
@@ -298,7 +298,7 @@ router.get('/export/csv', SUPERADMIN_ONLY, async (req, res) => {
 // FIX: estava sem requireRole explícito
 router.post('/pools', requireRole(ADMIN_ROLES), async (req, res) => {
   const { name, description, profile_ids } = req.body;
-  if (!name || !name.trim()) return res.status(400).json({ error: 'Nome obrigatório' });
+  if (!name || !name.trim()) {return res.status(400).json({ error: 'Nome obrigatório' });}
 
   try {
     await withTransaction(async (client) => {
@@ -381,7 +381,7 @@ router.get('/candidates/:id', async (req, res) => {
        WHERE p.id = $1`,
       [req.params.id]
     );
-    if (!result.rows.length) return res.status(404).json({ error: 'Candidato não encontrado' });
+    if (!result.rows.length) {return res.status(404).json({ error: 'Candidato não encontrado' });}
 
     // Incrementar views
     await query('UPDATE profiles SET views_count = views_count + 1 WHERE id = $1', [req.params.id]);
