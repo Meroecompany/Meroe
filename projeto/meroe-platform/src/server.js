@@ -209,8 +209,8 @@ app.use((err, req, res, _next) => {
 // ── INICIAR SERVIDOR ───────────────────────────────────────────
 async function start() {
   try {
-    const server = app.listen(PORT, () => {
-      logger.info(`🚀 MEROE Platform API → http://localhost:${PORT}`);
+    const server = app.listen(PORT, '0.0.0.0', () => {
+      logger.info(`🚀 MEROE Platform API → http://0.0.0.0:${PORT}`);
       logger.info(`   Ambiente: ${process.env.NODE_ENV || 'development'}`);
     });
 
