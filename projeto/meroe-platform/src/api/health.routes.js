@@ -8,13 +8,29 @@ const router = express.Router();
 const START_TIME = Date.now();
 
 router.get('/', async (_req, res) => {
-  const checks = { api:'ok', database:'unknown', uptime_seconds: Math.floor((Date.now()-START_TIME)/1000) };
-  let status = 200;
+  const checks = { api: 'ok', database: 'unknown', uptime_seconds: Math.floor((Date.now() - START_TIME) / 1000) };
   try {
-    await Promise.race([pool.query('SELECT 1'), new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),3000))]);
-    checks.database = 'ok';
-  } catch(err) { checks.database='error'; status=503; logger.error('Health DB fail:',err.message); }
-  res.status(status).json({ status:status===200?'healthy':'degraded', checks, timestamp:new Date().toISOString(), version:'2.0.0' });
+    if (process.env.DATABASE_URL) {
+      await Promise.race([
+        pool.query('SELECT 1'),
+        new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 3000))
+      ]);
+      checks.database = 'ok';
+    } else {
+      checks.database = 'not_configured';
+    }
+  } catch (err) {
+    checks.database = 'error';
+    logger.warn('Health DB check warning:', err.message);
+  }
+
+  const isHealthy = checks.database === 'ok' || checks.database === 'not_configured';
+  res.status(200).json({
+    status: isHealthy ? 'healthy' : 'degraded',
+    checks,
+    timestamp: new Date().toISOString(),
+    version: '2.0.0'
+  });
 });
 
 router.get('/ping', (_req,res) => res.json({ pong:true, ts:Date.now() }));

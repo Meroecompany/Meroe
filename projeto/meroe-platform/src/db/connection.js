@@ -14,9 +14,9 @@ const { logger } = require('../utils/logger');
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production'
-    ? { rejectUnauthorized: true }
-    : false,
+  ssl: (process.env.DATABASE_URL && process.env.DATABASE_URL.includes('localhost'))
+    ? false
+    : { rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true' },
   max:                  parseInt(process.env.DB_POOL_MAX)  || 25,
   min:                  parseInt(process.env.DB_POOL_MIN)  || 5,
   idleTimeoutMillis:    parseInt(process.env.DB_IDLE_TIMEOUT) || 30000,

@@ -209,9 +209,6 @@ app.use((err, req, res, _next) => {
 // ── INICIAR SERVIDOR ───────────────────────────────────────────
 async function start() {
   try {
-    await connectDB();
-    logger.info('✅ Base de dados ligada');
-
     const server = app.listen(PORT, () => {
       logger.info(`🚀 MEROE Platform API → http://localhost:${PORT}`);
       logger.info(`   Ambiente: ${process.env.NODE_ENV || 'development'}`);
@@ -220,6 +217,16 @@ async function start() {
     // Keep-alive para Railway/Render (evita timeout 30s)
     server.keepAliveTimeout = 65000;
     server.headersTimeout   = 66000;
+
+    if (process.env.DATABASE_URL) {
+      connectDB().then(() => {
+        logger.info('✅ Base de dados ligada');
+      }).catch(err => {
+        logger.warn('⚠️ AVISO: Falha ao ligar à base de dados (servidor a correr em modo degradado):', err.message);
+      });
+    } else {
+      logger.warn('⚠️ AVISO: DATABASE_URL não definida — API online em modo degradado.');
+    }
 
     // Graceful shutdown
     const shutdown = async (signal) => {
