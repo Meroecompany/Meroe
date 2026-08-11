@@ -50,7 +50,7 @@
     { "source": "/termos",       "destination": "/terms.html" },
     { "source": "/cookies",      "destination": "/cookies.html" },
     { "source": "/api/chat",     "destination": "/api/chat.js" },
-    { "source": "/api/:path*",   "destination": "https://meroe-api-production.up.railway.app/api/:path*" }
+    { "source": "/api/:path*",   "destination": "https://meroe-production.up.railway.app/api/:path*" }
   ],
   "functions": {
     "api/chat.js": {
